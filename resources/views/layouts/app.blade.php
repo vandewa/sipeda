@@ -66,14 +66,13 @@
         <!-- /.content-wrapper -->
         <footer class="main-footer">
             <strong>Copyright &copy;
-                @if (date('Y') == 2023)
-                    2023
+                @if (date('Y') == 2024)
+                    2024
                 @else
-                    {{ '2023 - ' . date('Y') }};
+                    {{ '2024 - ' . date('Y') }};
                 @endif
 
-                <a href="https://instagram.com/lpkmarzuba?igshid=OGQ5ZDc2ODk2ZA==" target="_blank">LPK Marzuba Sejahtera
-                    Indonesia</a>.
+                <a href="#">Dinas Sosial dan Pemberdayaan Desa</a>.
             </strong>
             All rights reserved.
 
