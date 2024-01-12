@@ -32,4 +32,9 @@ class Pengajuan extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function pengumpulan()
+    {
+        return $this->belongsTo(Pengumpulan::class, 'pengumpulan_id');
+    }
+
 }

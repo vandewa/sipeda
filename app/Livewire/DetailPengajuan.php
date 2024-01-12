@@ -9,6 +9,7 @@ use App\Livewire\Pengajuan;
 use Livewire\WithFileUploads;
 use App\Models\StatusPengajuan;
 use App\Models\Pengajuan as ModelsPengajuan;
+use App\Models\Pengumpulan as ModelsPengumpulan;
 
 class DetailPengajuan extends Component
 {
@@ -19,7 +20,6 @@ class DetailPengajuan extends Component
     public $lokasi;
     public $path;
     public $namaPath;
-
     public $formPengajuan = [
         'path' => '',
         'judul' => '',
@@ -43,6 +43,7 @@ class DetailPengajuan extends Component
         $this->cek = $dataPengajuan['pengajuan_tp'];
         $this->cekStatus = $dataPengajuan['status_tp'];
 
+        $this->judul = ModelsPengajuan::with(['pengumpulan'])->find($id)->toArray();
         $a = ModelsPengajuan::find($this->idnya)->toArray();
         $this->formPengajuan['judul'] = $a['judul'];
 

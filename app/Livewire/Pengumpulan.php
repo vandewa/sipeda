@@ -25,6 +25,9 @@ class Pengumpulan extends Component
 
     public function mount()
     {
+        if (!auth()->user()->hasRole('desa')) {
+            $this->redirect(route('pengajuan'));
+        }
         $this->form['time_start'] = date('Y-m-d');
         $this->form['time_end'] = date('Y-m-d');
     }
@@ -116,7 +119,7 @@ class Pengumpulan extends Component
     public function render()
     {
         $data = ModelsPengumpulan::where('time_start', '>=', date('Y-m-d'))
-            ->where('time_end', '>=', date('Y-m-d'))
+            ->orWhere('time_end', '>=', date('Y-m-d'))
             ->get();
 
         return view('livewire.pengumpulan', [

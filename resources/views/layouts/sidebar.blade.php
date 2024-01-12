@@ -69,6 +69,7 @@
                           <a href="{{ route('admin.pengajuan') }}"
                               class="nav-link  
                               {{ Request::segment(1) == 'pengajuan' ? 'active' : '' }}
+                              {{ Request::segment(2) == 'pengajuan' ? 'active' : '' }}
                               {{ Request::segment(1) == 'detail-pengajuan' ? 'active' : '' }}
                               ">
                               <i class="nav-icon fas fa-book-open"></i>

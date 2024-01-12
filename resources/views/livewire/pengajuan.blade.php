@@ -2,12 +2,20 @@
     <x-slot name="header">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Master Data</h1>
+                @if ($judul)
+                    <h1 class="m-0">{{ $judul['judul'] ?? '' }}</h1>
+                @else
+                    <h1 class="m-0">Pengajuan</h1>
+                @endif
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Master</a></li>
-                    <li class="breadcrumb-item active">Spesialis</li>
+                    @if ($judul)
+                        <li class="breadcrumb-item"><a href="{{ route('admin.pengajuan') }}">Kembali</a></li>
+                        <li class="breadcrumb-item active">Pengajuan {{ $judul['judul'] ?? '' }}</li>
+                    @else
+                        <li class="breadcrumb-item active">Pengajuan</li>
+                    @endif
                 </ol>
             </div>
         </div>
@@ -80,7 +88,7 @@
                     <div class="card card-success card-outline">
                         <div class="card-header">
                             <div class="card-title">
-                                Data Spesialis
+                                Data Pengajuan
                             </div>
                         </div>
                         <div class="card-body">
@@ -95,6 +103,8 @@
                                 <thead>
                                     <th>No</th>
                                     <th>Tanggal</th>
+                                    <th>Jenis Pengajuan</th>
+                                    <th>Desa</th>
                                     <th>Judul</th>
                                     <th>Posisi</th>
                                     <th>Status</th>
@@ -103,11 +113,24 @@
                                 <tbody>
                                     @foreach ($post as $item)
                                         <tr wire:key='{{ $item->id }}'>
-
                                             <td>{{ $loop->index + $post->firstItem() }}</td>
                                             <td>{{ $item->created_at ?? '' }}</td>
+                                            <td>-</td>
+                                            <td>-</td>
                                             <td>{{ $item->judul ?? '' }}</td>
-                                            <td>{{ $item->statusTerbaru->posisinya->code_nm ?? '' }}</td>
+                                            @if ($item->statusTerbaru->posisinya->code_nm == 'Desa')
+                                                <td>
+                                                    <span class="badge bg-dark">Desa</span>
+                                                </td>
+                                            @elseif($item->statusTerbaru->posisinya->code_nm == 'Kecamatan')
+                                                <td>
+                                                    <span class="badge bg-info text-dark">Kecamatan</span>
+                                                </td>
+                                            @else
+                                                <td>
+                                                    <span class="badge bg-success">DINSOSPMD</span>
+                                                </td>
+                                            @endif
                                             @if ($item->statusTerbaru->pengajuannya)
                                                 <td>{{ $item->statusTerbaru->pengajuannya->code_nm ?? '' }}</td>
                                             @else

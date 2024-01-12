@@ -2,13 +2,14 @@
 
 namespace App\Livewire;
 
-use App\Models\StatusPengajuan;
 use Livewire\Component;
-use Livewire\Attributes\On;
 use Livewire\WithPagination;
+use App\Livewire\Pengumpulan;
 use Livewire\WithFileUploads;
-use Livewire\Attributes\Validate;
+use App\Models\StatusPengajuan;
 use App\Models\Pengajuan as ModelsPengajuan;
+use App\Models\Pengumpulan as ModelsPengumpulan;
+
 
 class Pengajuan extends Component
 {
@@ -16,12 +17,11 @@ class Pengajuan extends Component
 
     use WithFileUploads;
 
-    // #[Validate(['path' => 'required|mimes:pdf|max:4000'])]
-
     public $form = [
         'judul' => '',
         'path' => '',
         'user_id' => '',
+        'pengumpulan_id' => '',
     ];
 
     public $cari, $edit = false;
@@ -29,12 +29,16 @@ class Pengajuan extends Component
     public $lokasi;
     public $path;
     public $namaPath;
-
+    public $judul;
     public $idnya;
 
     public function mount($id = '')
     {
-        $this->idnya = $id;
+        if ($id) {
+            $this->idnya = $id;
+            $this->judul = ModelsPengumpulan::find($id)->toArray();
+        }
+
     }
 
 
@@ -69,7 +73,7 @@ class Pengajuan extends Component
           })
         JS);
 
-        $this->redirect(Pengajuan::class);
+        $this->redirect(Pengumpulan::class);
     }
 
     public function store()
@@ -84,6 +88,7 @@ class Pengajuan extends Component
         $nama = date('Ymdhis') . '.pdf';
         $this->form['path'] = $this->path->storeAs('public/pengajuan', $nama);
         $this->form['user_id'] = auth()->user()->id;
+        $this->form['pengumpulan_id'] = $this->idnya;
 
         $pengajuan = ModelsPengajuan::create($this->form);
 
