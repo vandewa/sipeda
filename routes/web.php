@@ -1,17 +1,19 @@
 <?php
 
-use App\Livewire\JenisPengajuan;
+use App\Livewire\User;
+use App\Livewire\Pengajuan;
 use App\Livewire\User\Role;
+use App\Livewire\UserIndex;
+use App\Livewire\Pengumuman;
+use App\Livewire\Pengumpulan;
 use App\Livewire\User\ListRole;
+use App\Livewire\JenisPengajuan;
+use App\Livewire\DetailPengajuan;
 use App\Livewire\User\Permission;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
-use App\Livewire\DetailPengajuan;
-use App\Livewire\Pengajuan;
-use App\Livewire\Pengumpulan;
-use App\Livewire\Pengumuman;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +52,8 @@ Route::middleware([
         Route::get('jenis-pengajuan', JenisPengajuan::class)->name('jenis-pengajuan');
         Route::get('pengumuman', Pengumuman::class)->name('pengumuman');
         Route::get('pengajuan', Pengumpulan::class)->name('pengajuan');
+        Route::get('user-index', UserIndex::class)->name('user.index');
+        Route::get('user/{id?}', User::class)->name('user');
     });
 
     Route::get('/pengajuan/{id?}', Pengajuan::class)->name('pengajuan');
