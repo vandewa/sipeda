@@ -7,5 +7,6 @@
             Info alert preview. This alert is dismissable.
         </div>
 
+
     </div>
 @endsection
