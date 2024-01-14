@@ -1,6 +1,6 @@
 <div>
     <x-slot name="header">
-        <div class="row mb-2">
+        <div class="mb-2 row">
             <div class="col-sm-6">
                 <h1 class="m-0">Master Data</h1>
             </div>
@@ -19,7 +19,7 @@
                 <div class="col-md-12">
                     <!-- general form elements -->
                     <div class="card card-success card-outline">
-                        <form class="form-horizontal mt-2" wire:submit='save'>
+                        <form class="mt-2 form-horizontal" wire:submit='save'>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -59,7 +59,7 @@
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-info">Simpan</button>
-                                <button type="button" class="btn btn-default float-right"
+                                <button type="button" class="float-right btn btn-default"
                                     wire:click='batal'>Batal</button>
                             </div>
                             <!-- /.card-footer -->
@@ -104,6 +104,9 @@
                                             @endif
 
                                             <td>
+                                                <a href="{{ route('pengajuan', $item->id) }}"
+                                                    class="btn btn-info btn-sm">
+                                                    <i class="fas fa-eye"></i></a>
                                                 <button type="button" wire:click="getEdit('{{ $item->id }}')"
                                                     class="btn btn-warning btn-flat btn-sm" data-toggle="tooltip"
                                                     data-placement="left" title="Edit"><i

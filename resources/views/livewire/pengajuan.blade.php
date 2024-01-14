@@ -1,6 +1,6 @@
 <div>
     <x-slot name="header">
-        <div class="row mb-2">
+        <div class="mb-2 row">
             <div class="col-sm-6">
                 @if ($judul)
                     <h1 class="m-0">{{ $judul['judul'] ?? '' }}</h1>
@@ -25,63 +25,65 @@
             <div class="row">
                 <!-- left column -->
                 <div class="col-md-12">
-                    @if (auth()->user()->hasRole('desa'))
+                    @role('desa')
                         <!-- general form elements -->
-                        <div class="card card-success card-outline">
-                            <form class="form-horizontal mt-2" wire:submit='save'>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-12">
+                        @if (!count($post))
+                            <div class="card card-success card-outline">
+                                <form class="mt-2 form-horizontal" wire:submit='save'>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
 
-                                            <div class="form-group row">
-                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Judul</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" wire:model='form.judul'
-                                                        placeholder="Judul">
-                                                    @error('form.judul')
-                                                        <span class="form-text text-danger">{{ $message }}</span>
-                                                    @enderror
+                                                <div class="form-group row">
+                                                    <label for="inputEmail3" class="col-sm-3 col-form-label">Judul</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" wire:model='form.judul'
+                                                            placeholder="Judul">
+                                                        @error('form.judul')
+                                                            <span class="form-text text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="form-group row">
-                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Upload File
-                                                    <small class="text-danger">(*pdf)</small></label>
-                                                <div class="col-sm-9">
-                                                    <input type="file" wire:model="path" class="form-control"
-                                                        accept="application/pdf">
-                                                    @error('path')
-                                                        <span class="form-text text-danger">{{ $message }}</span>
-                                                    @enderror
+                                                <div class="form-group row">
+                                                    <label for="inputEmail3" class="col-sm-3 col-form-label">Upload File
+                                                        <small class="text-danger">(*pdf)</small></label>
+                                                    <div class="col-sm-9">
+                                                        <input type="file" wire:model="path" class="form-control"
+                                                            accept="application/pdf">
+                                                        @error('path')
+                                                            <span class="form-text text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
                                                 </div>
+
+                                                @if ($path)
+                                                    <object data="{{ $lokasi }}" type="application/pdf" width="100%"
+                                                        height="500" style="border: solid 1px #ccc;"></object>
+                                                @endif
+
+
+
+                                                @error('path')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+
                                             </div>
-
-                                            @if ($path)
-                                                <object data="{{ $lokasi }}" type="application/pdf" width="100%"
-                                                    height="500" style="border: solid 1px #ccc;"></object>
-                                            @endif
-
-
-
-                                            @error('path')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-
                                         </div>
                                     </div>
-                                </div>
-                                <!-- /.card-body -->
-                                <div class="card-footer">
-                                    <button type="submit" class="btn btn-info">Simpan</button>
-                                    <button type="button" class="btn btn-default float-right"
-                                        wire:click='batal'>Batal</button>
-                                </div>
-                                <!-- /.card-footer -->
-                            </form>
-                            <!-- /.card-header -->
-                            <!-- form start -->
-                        </div>
-                    @endif
+                                    <!-- /.card-body -->
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-info">Simpan</button>
+                                        <button type="button" class="float-right btn btn-default"
+                                            wire:click='batal'>Batal</button>
+                                    </div>
+                                    <!-- /.card-footer -->
+                                </form>
+                                <!-- /.card-header -->
+                                <!-- form start -->
+                            </div>
+                        @endif
+                    @endrole
 
                     <!-- /.card -->
 
@@ -90,8 +92,77 @@
                             <div class="card-title">
                                 Data Pengajuan
                             </div>
+                            <div class="card-tools">
+                                <select name="" class="form-control" id="" wire:model.live='idnya'>
+                                    <option value="">Semua</option>
+                                    @foreach ($pengumpulan as $item)
+                                        <option value="{{ $item->id }}">{{ $item->judul }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <div class="card-body">
+                            @role(['dinsos', 'superadmin'])
+                                @if ($idnya)
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-6 col-12">
+                                            <div class="info-box bg-info">
+                                                <span class="info-box-icon"><i class="far fa-bookmark"></i></span>
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text">Desa</span>
+                                                    <span class="info-box-number">236</span>
+                                                    <div class="progress">
+                                                        <div class="progress-bar" style="width: 100%"></div>
+                                                    </div>
+                                                    <span class="progress-description">
+                                                        Jumlah Keseluruhan Desa
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-4 col-sm-6 col-12">
+                                            <div class="info-box bg-success">
+                                                <span class="info-box-icon"><i class="far fa-thumbs-up"></i></span>
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text">Mengumpulkan</span>
+                                                    <span class="info-box-number">236</span>
+                                                    <div class="progress">
+                                                        <div class="progress-bar" style="width: 70%"></div>
+                                                    </div>
+                                                    <span class="progress-description">
+                                                        Jumlah Desa Yang Menhumpulkan
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="col-md-4 col-sm-6 col-12">
+                                            <div class="info-box bg-danger">
+                                                <span class="info-box-icon"><i class="fas fa-comments"></i></span>
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text">Belum Mengumpulkan</span>
+                                                    <span class="info-box-number">236</span>
+                                                    <div class="progress">
+                                                        <div class="progress-bar" style="width: 70%"></div>
+                                                    </div>
+                                                    <span class="progress-description">
+                                                        Jumlah Desa Belum Mengumpulkan
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                @endif
+                            @endrole
                             <div class="row">
                                 <div class="col-md-2">
                                     <input type="text" class="form-control" placeholder="cari"
@@ -104,6 +175,7 @@
                                     <th>No</th>
                                     <th>Tanggal</th>
                                     <th>Jenis Pengajuan</th>
+                                    <th>Kecamatan</th>
                                     <th>Desa</th>
                                     <th>Judul</th>
                                     <th>Posisi</th>
@@ -115,6 +187,7 @@
                                         <tr wire:key='{{ $item->id }}'>
                                             <td>{{ $loop->index + $post->firstItem() }}</td>
                                             <td>{{ $item->created_at ?? '' }}</td>
+                                            <td>{{ $item->pengumpulan->judul ?? '' }}</td>
                                             <td>-</td>
                                             <td>-</td>
                                             <td>{{ $item->judul ?? '' }}</td>
@@ -140,13 +213,13 @@
                                                 <a href="{{ route('detail.pengajuan', $item->id) }}"
                                                     class="btn btn-primary btn-flat btn-sm" data-toggle="tooltip"
                                                     data-placement="left" title="Detail"><i
-                                                        class="fas fa-eye mr-2"></i>Detail</a>
+                                                        class="mr-2 fas fa-eye"></i>Detail</a>
                                                 @if ($item->statusTerbaru->pengajuan_tp == 'PENGAJUAN_TP_01' && $item->statusTerbaru->posisi_st == 'POSISI_ST_03')
                                                 @else
                                                     @if (auth()->user()->hasRole('desa'))
                                                         <button type="button" class="btn btn-danger btn-flat btn-sm"
                                                             wire:click="delete('{{ $item->id }}')"><i
-                                                                class="fas fa-trash mr-2"></i>Hapus</button>
+                                                                class="mr-2 fas fa-trash"></i>Hapus</button>
                                                     @endif
                                                 @endif
                                             </td>

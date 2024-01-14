@@ -156,10 +156,23 @@ class Pengajuan extends Component
     }
     public function render()
     {
-        $data = ModelsPengajuan::with(['statusTerbaru'])->cari($this->cari)->orderBy('created_at', 'desc')->paginate(10);
+        $pengumpulan = ModelsPengumpulan::all();
+        $data = ModelsPengajuan::with(['statusTerbaru', 'pengumpulan'])->cari($this->cari);
+        if($this->idnya){
+            $data->where('pengumpulan_id',$this->idnya);
+        }
+        if(auth()->user()->hasRole('kecamatan')){
+            $data->where('region_kec', auth()->user()->region_kec);
+        }
+        if(auth()->user()->hasRole('desa')){
+            $data->where('region_kel', auth()->user()->region_kel);
+        }
+
+       $data = $data->orderBy('created_at', 'desc')->paginate(10);
 
         return view('livewire.pengajuan', [
-            'post' => $data
+            'post' => $data,
+            'pengumpulan' => $pengumpulan
         ]);
     }
 }
