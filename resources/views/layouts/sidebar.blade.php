@@ -85,6 +85,8 @@
                                 {{ Request::segment(2) == 'user-index' ? 'menu-is-opening menu-open' : '' }}
                                 {{ Request::segment(2) == 'user' ? 'menu-is-opening menu-open' : '' }}
                                 {{ Request::segment(2) == 'background' ? 'menu-is-opening menu-open' : '' }}
+                                {{ Request::segment(2) == 'region' ? 'menu-is-opening menu-open' : '' }}
+                                {{ Request::segment(2) == 'region-index' ? 'menu-is-opening menu-open' : '' }}
                               ">
                           <a href="#"
                               class="nav-link
@@ -93,6 +95,8 @@
                                   {{ Request::segment(2) == 'user-index' ? 'active' : '' }}
                                   {{ Request::segment(2) == 'user' ? 'active' : '' }}
                                   {{ Request::segment(2) == 'background' ? 'active' : '' }}
+                                  {{ Request::segment(2) == 'region' ? 'active' : '' }}
+                                  {{ Request::segment(2) == 'region-index' ? 'active' : '' }}
                                   ">
                               <i class="nav-icon fas fa-database"></i>
                               <p>
@@ -150,6 +154,22 @@
                                       <p>Background</p>
                                   </a>
                               </li> --}}
+                              <li class="nav-item">
+                                  <a href="{{ route('admin.region-index') }}"
+                                      class="nav-link 
+                              {{ Request::segment(2) == 'region-index' ? 'active' : '' }}
+                              {{ Request::segment(2) == 'region' ? 'active' : '' }}
+                              ">
+                                      @if (Request::segment(2) == 'region')
+                                          <i class="far fa-dot-circle nav-icon ml-2"></i>
+                                      @elseif(Request::segment(2) == 'region-index')
+                                          <i class="far fa-dot-circle nav-icon ml-2"></i>
+                                      @else
+                                          <i class="far fa-circle nav-icon ml-2"></i>
+                                      @endif
+                                      <p>Region</p>
+                                  </a>
+                              </li>
                           </ul>
                       </li>
                       <li

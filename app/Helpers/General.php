@@ -259,7 +259,7 @@ if (!function_exists('gen_no_resep')) {
         if ($terakhir) {
             $no = Date('y') . str_pad((int) substr($terakhir->resep_no, -8) + 1, 8, 0, STR_PAD_LEFT);
         }
-        return "RSP-".$no;
+        return "RSP-" . $no;
     }
 }
 
@@ -270,6 +270,18 @@ if (!function_exists('gen_no_rm')) {
         $terakhir = \App\Models\His\TrxPasien::orderBy('created_at', 'desc')->first();
         if ($terakhir) {
             $no = str_pad((int) substr($terakhir->no_rm, -8) + 1, 8, 0, STR_PAD_LEFT);
+        }
+        return $no;
+    }
+}
+
+if (!function_exists('gen_region')) {
+    function gen_region($value)
+    {
+        $no = str_pad(1, 10, '0', STR_PAD_LEFT);
+        $terakhir = \App\Models\ComRegion::where('region_root', $value)->orderBy('region_cd', 'desc')->first();
+        if ($terakhir) {
+            $no = str_pad((int) substr($terakhir->region_cd, -10) + 1, 10, 0, STR_PAD_LEFT);
         }
         return $no;
     }

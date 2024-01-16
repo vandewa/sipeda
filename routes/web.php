@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Livewire\Region;
+use App\Livewire\RegionIndex;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +58,8 @@ Route::middleware([
         Route::get('user-index', UserIndex::class)->name('user-index');
         Route::get('user/{id?}', User::class)->name('user');
         Route::get('background', BackgroundLogin::class)->name('background');
+        Route::get('region-index', RegionIndex::class)->name('region-index');
+        Route::get('region/{id?}', Region::class)->name('region');
     });
 
     Route::get('/pengajuan/{id?}', Pengajuan::class)->name('pengajuan');

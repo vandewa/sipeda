@@ -16,4 +16,17 @@ class ComRegion extends Model
     protected $primaryKey = "region_cd";
     protected $guarded = [];
     public $incrementing = false;
+
+    public function root()
+    {
+        return $this->belongsTo(ComRegion::class, 'region_root');
+    }
+
+    public function scopeCari($filter, $value)
+    {
+        if ($value) {
+            return $this->where('region_nm', 'like', "%$value%");
+        }
+
+    }
 }

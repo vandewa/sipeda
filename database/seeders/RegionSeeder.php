@@ -58,6 +58,7 @@ class RegionSeeder extends Seeder
             ["region_cd" => "3307020021", "region_nm" => "Warangan", "region_root" => "3307020", "region_level" => "4"],
             ["region_cd" => "3307020022", "region_nm" => "Ropoh", "region_root" => "3307020", "region_level" => "4"],
             ["region_cd" => "3307020023", "region_nm" => "Pulosaren", "region_root" => "3307020", "region_level" => "4"],
+            ["region_cd" => "3307020023", "region_nm" => "Pulosaren", "region_root" => "3307020", "region_level" => "4"],
             ["region_cd" => "3307030", "region_nm" => "Sapuran", "region_root" => "3307", "region_level" => "3"],
             ["region_cd" => "3307030004", "region_nm" => "Bogoran", "region_root" => "3307030", "region_level" => "4"],
             ["region_cd" => "3307030005", "region_nm" => "Karangsari", "region_root" => "3307030", "region_level" => "4"],
