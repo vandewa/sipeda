@@ -134,7 +134,7 @@
                                                                 <div class="card-footer">
                                                                     <button type="submit" class="btn btn-info">Simpan
                                                                     </button>
-                                                                    <a href="{{ route('admin.user.index') }}"
+                                                                    <a href="{{ route('admin.user-index') }}"
                                                                         class="btn btn-warning float-right">Kembali
                                                                     </a>
                                                                 </div>

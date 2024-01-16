@@ -37,7 +37,7 @@
                   class="brand-image img-circle elevation-3" style="opacity: .8"> --}}
               <img src="{{ asset('pemda.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                   style="opacity: .8">
-              <span class="brand-text font-weight-light">SIPEDA</span>
+              <span class="brand-text font-weight-light">PRIMADONA DESA</span>
           </a>
 
           <!-- Sidebar -->
@@ -84,6 +84,7 @@
                                 {{ Request::segment(2) == 'pengumuman' ? 'menu-is-opening menu-open' : '' }}
                                 {{ Request::segment(2) == 'user-index' ? 'menu-is-opening menu-open' : '' }}
                                 {{ Request::segment(2) == 'user' ? 'menu-is-opening menu-open' : '' }}
+                                {{ Request::segment(2) == 'background' ? 'menu-is-opening menu-open' : '' }}
                               ">
                           <a href="#"
                               class="nav-link
@@ -91,6 +92,7 @@
                                   {{ Request::segment(2) == 'pengumuman' ? 'active' : '' }}
                                   {{ Request::segment(2) == 'user-index' ? 'active' : '' }}
                                   {{ Request::segment(2) == 'user' ? 'active' : '' }}
+                                  {{ Request::segment(2) == 'background' ? 'active' : '' }}
                                   ">
                               <i class="nav-icon fas fa-database"></i>
                               <p>
@@ -100,7 +102,7 @@
                           </a>
                           <ul class="nav nav-treeview">
                               <li class="nav-item">
-                                  <a href="{{ route('admin.user.index') }}"
+                                  <a href="{{ route('admin.user-index') }}"
                                       class="nav-link 
                                       {{ Request::segment(2) == 'user-index' ? 'active' : '' }}
                                       {{ Request::segment(2) == 'user' ? 'active' : '' }}
@@ -137,6 +139,17 @@
                                       <p>Pengumuman</p>
                                   </a>
                               </li>
+                              {{-- <li class="nav-item">
+                                  <a href="{{ route('admin.background') }}"
+                                      class="nav-link {{ Request::segment(2) == 'background' ? 'active' : '' }}">
+                                      @if (Request::segment(2) == 'background')
+                                          <i class="far fa-dot-circle nav-icon ml-2"></i>
+                                      @else
+                                          <i class="far fa-circle nav-icon ml-2"></i>
+                                      @endif
+                                      <p>Background</p>
+                                  </a>
+                              </li> --}}
                           </ul>
                       </li>
                       <li
@@ -153,7 +166,7 @@
                                   ">
                               <i class="nav-icon fa-solid fa-user"></i>
                               <p>
-                                  User
+                                  Setting User
                                   <i class="fas fa-angle-left right"></i>
                               </p>
                           </a>

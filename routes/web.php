@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\BackgroundLogin;
 use App\Livewire\User;
 use App\Livewire\Pengajuan;
 use App\Livewire\User\Role;
@@ -52,8 +53,9 @@ Route::middleware([
         Route::get('jenis-pengajuan', JenisPengajuan::class)->name('jenis-pengajuan');
         Route::get('pengumuman', Pengumuman::class)->name('pengumuman');
         Route::get('pengajuan', Pengumpulan::class)->name('pengajuan');
-        Route::get('user-index', UserIndex::class)->name('user.index');
+        Route::get('user-index', UserIndex::class)->name('user-index');
         Route::get('user/{id?}', User::class)->name('user');
+        Route::get('background', BackgroundLogin::class)->name('background');
     });
 
     Route::get('/pengajuan/{id?}', Pengajuan::class)->name('pengajuan');

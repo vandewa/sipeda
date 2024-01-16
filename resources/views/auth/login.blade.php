@@ -10,7 +10,7 @@
     <meta name="author" content="Dinas Sosial">
     <meta name="keyword" content="Sipeda">
     <link rel="icon" href="{{ asset('snacked/ltr/assets/images/favicon/favicon-32x32.png') }}" type="image/png" />
-    <title>Login SIPEDA</title>
+    <title>Login PRIMADONA DESA</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Teko&display=swap" rel="stylesheet">
@@ -26,7 +26,8 @@
                     <img src="{{ asset('pemda.png') }}" style="width: 120px;">
                     <h2 class="heading-section">
                         <span
-                            style="margin-left: 10px; font-weight: bold; font-family: 'Teko', sans-serif; color: #ffffff; font-size: 40pt">SIPEDA
+                            style="margin-left: 10px; font-weight: bold; font-family: 'Teko', sans-serif; color: #ffffff; font-size: 40pt">PRIMADONA
+                            DESA
                         </span>
                     </h2>
                 </div>

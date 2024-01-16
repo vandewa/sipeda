@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(LaratrustSeeder::class);
         $this->call(ComCodeSeeder::class);
         $this->call(RegionSeeder::class);
+        $this->call(BackgroundSeeder::class);
 
     }
 }

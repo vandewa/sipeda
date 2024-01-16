@@ -13,6 +13,8 @@ use App\Models\Pengumpulan as ModelsPengumpulan;
 class JenisPengajuan extends Component
 {
     use WithPagination;
+    public $syarat = [];
+    public $isianSyarat;
 
     public $form = [
         'judul' => '',
@@ -22,6 +24,19 @@ class JenisPengajuan extends Component
 
     public $cari, $edit = false;
     public $idHapus;
+
+    public function tambahSyarat()
+    {
+        $this->validate(['isianSyarat' => 'required']);
+        array_push($this->syarat, $this->isianSyarat);
+
+        $this->isianSyarat = null;
+    }
+
+    public function hapusSyarat($id)
+    {
+        unset($this->syarat[$id]);
+    }
 
     public function mount()
     {
@@ -70,7 +85,14 @@ class JenisPengajuan extends Component
             'form.time_end' => 'required|after:form.time_start',
         ]);
 
-        ModelsPengumpulan::create($this->form);
+        $a = ModelsPengumpulan::create($this->form);
+        foreach ($this->syarat as $item) {
+            $a->syarat()->create([
+                'name' => $item
+            ]);
+        }
+
+        $this->syarat = [];
     }
 
     public function delete($id)
@@ -115,7 +137,7 @@ class JenisPengajuan extends Component
 
     public function render()
     {
-        $data = ModelsPengumpulan::orderBy('time_start', 'desc')->paginate(10);
+        $data = ModelsPengumpulan::with(['syarat'])->orderBy('time_start', 'desc')->paginate(10);
 
         return view('livewire.jenis-pengajuan', [
             'post' => $data

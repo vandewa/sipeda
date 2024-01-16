@@ -53,6 +53,34 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" wire:model="isianSyarat"
+                                                placeholder="tambah_syarat" aria-label="Recipient's username"
+                                                aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary" type="button"
+                                                    wire:click="tambahSyarat">Tambah</button>
+                                            </div>
+                                        </div>
+
+                                        <table class="table table-strip">
+                                            <thead>
+                                                <th>Syarat</th>
+                                                <th>Action</th>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($syarat ?? [] as $index => $item)
+                                                    <tr>
+                                                        <td>{{ $item }}</td>
+                                                        <td>
+                                                            <button class="btn btn-danger btn-sm" type="button"
+                                                                wire:click="hapusSyarat({{ $index }})"><span
+                                                                    class="fas fa-trash"></span></button>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -83,6 +111,7 @@
                                     <th>Judul</th>
                                     <th>Tanggal Mulai</th>
                                     <th>Tanggal Selesai</th>
+                                    <th>Syarat</th>
                                     <th>Action</th>
                                 </thead>
                                 <tbody>
@@ -102,6 +131,14 @@
                                             @else
                                                 <td>-</td>
                                             @endif
+
+                                            <td>
+                                                <ul>
+                                                    @foreach ($item->syarat ?? [] as $i)
+                                                        <li>{{ $i->name }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </td>
 
                                             <td>
                                                 <a href="{{ route('pengajuan', $item->id) }}"

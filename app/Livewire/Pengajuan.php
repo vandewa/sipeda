@@ -24,6 +24,8 @@ class Pengajuan extends Component
         'pengumpulan_id' => '',
     ];
 
+    public $syarat = [];
+
     public $cari, $edit = false;
     public $idHapus;
     public $lokasi;
@@ -36,7 +38,12 @@ class Pengajuan extends Component
     {
         if ($id) {
             $this->idnya = $id;
-            $this->judul = ModelsPengumpulan::find($id)->toArray();
+            $a = ModelsPengumpulan::with(['syarat'])->find($id);
+            $this->judul = $a->toArray();
+
+            foreach ($a->syarat ?? [] as $asu) {
+                array_push($this->syarat, ['pengumpulan_syarat_id' => $asu->id, 'path' => null, 'name' => $asu->name]);
+            }
         }
 
     }
@@ -78,6 +85,7 @@ class Pengajuan extends Component
 
     public function store()
     {
+        dd($this->syarat);
         $this->validate([
             'form.judul' => 'required',
             'path' => 'required|mimes:pdf|max:4000',
@@ -153,22 +161,24 @@ class Pengajuan extends Component
             ]);
         }
 
+      
+
     }
     public function render()
     {
         $pengumpulan = ModelsPengumpulan::all();
         $data = ModelsPengajuan::with(['statusTerbaru', 'pengumpulan'])->cari($this->cari);
-        if($this->idnya){
-            $data->where('pengumpulan_id',$this->idnya);
+        if ($this->idnya) {
+            $data->where('pengumpulan_id', $this->idnya);
         }
-        if(auth()->user()->hasRole('kecamatan')){
+        if (auth()->user()->hasRole('kecamatan')) {
             $data->where('region_kec', auth()->user()->region_kec);
         }
-        if(auth()->user()->hasRole('desa')){
+        if (auth()->user()->hasRole('desa')) {
             $data->where('region_kel', auth()->user()->region_kel);
         }
 
-       $data = $data->orderBy('created_at', 'desc')->paginate(10);
+        $data = $data->orderBy('created_at', 'desc')->paginate(10);
 
         return view('livewire.pengajuan', [
             'post' => $data,

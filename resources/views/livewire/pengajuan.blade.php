@@ -57,6 +57,27 @@
                                                     </div>
                                                 </div>
 
+                                                @foreach ($syarat as $index => $item)
+                                                    <div class="form-group row">
+                                                        <label for="inputEmail3"
+                                                            class="col-sm-3 col-form-label">{{ $item['name'] }}
+                                                            <small class="text-danger">(*pdf)</small></label>
+                                                        <div class="col-sm-9">
+                                                            <input type="file"
+                                                                wire:model="syarat.{{ $index }}.path"
+                                                                class="form-control" accept="application/pdf">
+                                                            @error('path')
+                                                                <span class="form-text text-danger">{{ $message }}</span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    @if ($item['path'])
+                                                        <object data="{{ $item['path'] }}" type="application/pdf"
+                                                            width="100%" height="500"
+                                                            style="border: solid 1px #ccc;"></object>
+                                                    @endif
+                                                @endforeach
+
                                                 @if ($path)
                                                     <object data="{{ $lokasi }}" type="application/pdf" width="100%"
                                                         height="500" style="border: solid 1px #ccc;"></object>
