@@ -25,7 +25,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h4>{{ $pengajuan->judul ?? '' }}</h4>
+                                        <h4>Nama Dokumen: {{ $pengajuan->judul ?? '' }}</h4>
                                         <object data="{{ asset(str_replace('public', 'storage', $pengajuan->path)) }}"
                                             type="application/pdf" width="100%" height="500"
                                             style="border: solid 1px #ccc;">
@@ -58,7 +58,7 @@
                                                 </div>
 
                                                 <div class="card-footer">
-                                                    <button type="submit" class="btn btn-info">Update</button>
+                                                    <button type="submit" class="btn btn-warning">Update</button>
                                                 </div>
                                             @endif
 
@@ -141,7 +141,7 @@
 
                                     @if ($pengajuan->statusTerbaru->status_tp ?? '' == 'kirimKecamatan')
                                         <div class="card-footer">
-                                            <button type="button" class="btn btn-info"
+                                            <button type="button" class="btn btn-primary"
                                                 wire:click='confirmKecamatan'>Kirim Ke Kecamatan</button>
                                         </div>
                                     @endif
@@ -280,3 +280,11 @@
     </section>
     <!-- /.content -->
 </div>
+
+@push('js')
+    <script>
+        setTimeout(() => {
+            window.scrollTo(0, document.body.scrollHeight);
+        }, 100);
+    </script>
+@endpush

@@ -36,24 +36,30 @@
 
                                                 <div class="form-group row">
                                                     <label for="inputEmail3" class="col-sm-3 col-form-label">Judul</label>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-8">
                                                         <input type="text" class="form-control" wire:model='form.judul'
                                                             placeholder="Judul">
                                                         @error('form.judul')
                                                             <span class="form-text text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
+
                                                 </div>
 
                                                 <div class="form-group row">
                                                     <label for="inputEmail3" class="col-sm-3 col-form-label">Upload File
                                                         <small class="text-danger">(*pdf)</small></label>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-8">
                                                         <input type="file" wire:model="path" class="form-control"
                                                             accept="application/pdf">
                                                         @error('path')
                                                             <span class="form-text text-danger">{{ $message }}</span>
                                                         @enderror
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <div wire:loading wire:target="save">
+                                                            <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -62,13 +68,16 @@
                                                         <label for="inputEmail3"
                                                             class="col-sm-3 col-form-label">{{ $item['name'] }}
                                                             <small class="text-danger">(*pdf)</small></label>
-                                                        <div class="col-sm-9">
+                                                        <div class="col-sm-8">
                                                             <input type="file"
                                                                 wire:model="syarat.{{ $index }}.path"
                                                                 class="form-control" accept="application/pdf">
                                                             @error('syarat.' . $index . '.path')
                                                                 <span class="form-text text-danger">{{ $message }}</span>
                                                             @enderror
+                                                        </div>
+                                                        <div class="col-md-1">
+
                                                         </div>
                                                     </div>
                                                 @endforeach

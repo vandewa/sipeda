@@ -67,7 +67,7 @@
                           </a>
                       <li class="nav-item">
                           <a href="{{ route('admin.pengajuan') }}"
-                              class="nav-link  
+                              class="nav-link
                               {{ Request::segment(1) == 'pengajuan' ? 'active' : '' }}
                               {{ Request::segment(2) == 'pengajuan' ? 'active' : '' }}
                               {{ Request::segment(1) == 'detail-pengajuan' ? 'active' : '' }}
@@ -78,8 +78,9 @@
                               </p>
                           </a>
                       </li>
-                      <li
-                          class="nav-item
+                      @role(['dinsos'])
+                          <li
+                              class="nav-item
                                 {{ Request::segment(2) == 'jenis-pengajuan' ? 'menu-is-opening menu-open' : '' }}
                                 {{ Request::segment(2) == 'pengumuman' ? 'menu-is-opening menu-open' : '' }}
                                 {{ Request::segment(2) == 'user-index' ? 'menu-is-opening menu-open' : '' }}
@@ -88,8 +89,8 @@
                                 {{ Request::segment(2) == 'region' ? 'menu-is-opening menu-open' : '' }}
                                 {{ Request::segment(2) == 'region-index' ? 'menu-is-opening menu-open' : '' }}
                               ">
-                          <a href="#"
-                              class="nav-link
+                              <a href="#"
+                                  class="nav-link
                                   {{ Request::segment(2) == 'jenis-pengajuan' ? 'active' : '' }}
                                   {{ Request::segment(2) == 'pengumuman' ? 'active' : '' }}
                                   {{ Request::segment(2) == 'user-index' ? 'active' : '' }}
@@ -98,52 +99,52 @@
                                   {{ Request::segment(2) == 'region' ? 'active' : '' }}
                                   {{ Request::segment(2) == 'region-index' ? 'active' : '' }}
                                   ">
-                              <i class="nav-icon fas fa-database"></i>
-                              <p>
-                                  Master
-                                  <i class="fas fa-angle-left right"></i>
-                              </p>
-                          </a>
-                          <ul class="nav nav-treeview">
-                              <li class="nav-item">
-                                  <a href="{{ route('admin.user-index') }}"
-                                      class="nav-link 
+                                  <i class="nav-icon fas fa-database"></i>
+                                  <p>
+                                      Master
+                                      <i class="fas fa-angle-left right"></i>
+                                  </p>
+                              </a>
+                              <ul class="nav nav-treeview">
+                                  <li class="nav-item">
+                                      <a href="{{ route('admin.user-index') }}"
+                                          class="nav-link
                                       {{ Request::segment(2) == 'user-index' ? 'active' : '' }}
                                       {{ Request::segment(2) == 'user' ? 'active' : '' }}
                                       ">
-                                      @if (Request::segment(2) == 'user')
-                                          <i class="far fa-dot-circle nav-icon ml-2"></i>
-                                      @elseif(Request::segment(2) == 'user-index')
-                                          <i class="far fa-dot-circle nav-icon ml-2"></i>
-                                      @else
-                                          <i class="far fa-circle nav-icon ml-2"></i>
-                                      @endif
-                                      <p>User</p>
-                                  </a>
-                              </li>
-                              <li class="nav-item">
-                                  <a href="{{ route('admin.jenis-pengajuan') }}"
-                                      class="nav-link {{ Request::segment(2) == 'jenis-pengajuan' ? 'active' : '' }}">
-                                      @if (Request::segment(2) == 'jenis-pengajuan')
-                                          <i class="far fa-dot-circle nav-icon ml-2"></i>
-                                      @else
-                                          <i class="far fa-circle nav-icon ml-2"></i>
-                                      @endif
-                                      <p>Jenis Pengajuan</p>
-                                  </a>
-                              </li>
-                              <li class="nav-item">
-                                  <a href="{{ route('admin.pengumuman') }}"
-                                      class="nav-link {{ Request::segment(2) == 'pengumuman' ? 'active' : '' }}">
-                                      @if (Request::segment(2) == 'pengumuman')
-                                          <i class="far fa-dot-circle nav-icon ml-2"></i>
-                                      @else
-                                          <i class="far fa-circle nav-icon ml-2"></i>
-                                      @endif
-                                      <p>Pengumuman</p>
-                                  </a>
-                              </li>
-                              {{-- <li class="nav-item">
+                                          @if (Request::segment(2) == 'user')
+                                              <i class="far fa-dot-circle nav-icon ml-2"></i>
+                                          @elseif(Request::segment(2) == 'user-index')
+                                              <i class="far fa-dot-circle nav-icon ml-2"></i>
+                                          @else
+                                              <i class="far fa-circle nav-icon ml-2"></i>
+                                          @endif
+                                          <p>User</p>
+                                      </a>
+                                  </li>
+                                  <li class="nav-item">
+                                      <a href="{{ route('admin.jenis-pengajuan') }}"
+                                          class="nav-link {{ Request::segment(2) == 'jenis-pengajuan' ? 'active' : '' }}">
+                                          @if (Request::segment(2) == 'jenis-pengajuan')
+                                              <i class="far fa-dot-circle nav-icon ml-2"></i>
+                                          @else
+                                              <i class="far fa-circle nav-icon ml-2"></i>
+                                          @endif
+                                          <p>Jenis Pengajuan</p>
+                                      </a>
+                                  </li>
+                                  <li class="nav-item">
+                                      <a href="{{ route('admin.pengumuman') }}"
+                                          class="nav-link {{ Request::segment(2) == 'pengumuman' ? 'active' : '' }}">
+                                          @if (Request::segment(2) == 'pengumuman')
+                                              <i class="far fa-dot-circle nav-icon ml-2"></i>
+                                          @else
+                                              <i class="far fa-circle nav-icon ml-2"></i>
+                                          @endif
+                                          <p>Pengumuman</p>
+                                      </a>
+                                  </li>
+                                  {{-- <li class="nav-item">
                                   <a href="{{ route('admin.background') }}"
                                       class="nav-link {{ Request::segment(2) == 'background' ? 'active' : '' }}">
                                       @if (Request::segment(2) == 'background')
@@ -154,70 +155,70 @@
                                       <p>Background</p>
                                   </a>
                               </li> --}}
-                              <li class="nav-item">
-                                  <a href="{{ route('admin.region-index') }}"
-                                      class="nav-link 
+                                  <li class="nav-item">
+                                      <a href="{{ route('admin.region-index') }}"
+                                          class="nav-link
                               {{ Request::segment(2) == 'region-index' ? 'active' : '' }}
                               {{ Request::segment(2) == 'region' ? 'active' : '' }}
                               ">
-                                      @if (Request::segment(2) == 'region')
-                                          <i class="far fa-dot-circle nav-icon ml-2"></i>
-                                      @elseif(Request::segment(2) == 'region-index')
-                                          <i class="far fa-dot-circle nav-icon ml-2"></i>
-                                      @else
-                                          <i class="far fa-circle nav-icon ml-2"></i>
-                                      @endif
-                                      <p>Region</p>
-                                  </a>
-                              </li>
-                          </ul>
-                      </li>
-                      <li
-                          class="nav-item
+                                          @if (Request::segment(2) == 'region')
+                                              <i class="far fa-dot-circle nav-icon ml-2"></i>
+                                          @elseif(Request::segment(2) == 'region-index')
+                                              <i class="far fa-dot-circle nav-icon ml-2"></i>
+                                          @else
+                                              <i class="far fa-circle nav-icon ml-2"></i>
+                                          @endif
+                                          <p>Region</p>
+                                      </a>
+                                  </li>
+                              </ul>
+                          </li>
+                          <li
+                              class="nav-item
                                 {{ Request::segment(2) == 'list-role' ? 'menu-is-opening menu-open' : '' }}
                                 {{ Request::segment(2) == 'role' ? 'menu-is-opening menu-open' : '' }}
                                 {{ Request::segment(2) == 'permission' ? 'menu-is-opening menu-open' : '' }}
                               ">
-                          <a href="#"
-                              class="nav-link
+                              <a href="#"
+                                  class="nav-link
                                   {{ Request::segment(2) == 'list-role' ? 'active' : '' }}
                                   {{ Request::segment(2) == 'role' ? 'active' : '' }}
                                   {{ Request::segment(2) == 'permission' ? 'active' : '' }}
                                   ">
-                              <i class="nav-icon fa-solid fa-user"></i>
-                              <p>
-                                  Setting User
-                                  <i class="fas fa-angle-left right"></i>
-                              </p>
-                          </a>
-                          <ul class="nav nav-treeview">
-                              <li class="nav-item">
-                                  <a href="{{ route('admin.list-role') }}"
-                                      class="nav-link {{ Request::segment(2) == 'list-role' ? 'active' : '' }} {{ Request::segment(2) == 'role' ? 'active' : '' }}">
-                                      @if (Request::segment(2) == 'list-role')
-                                          <i class="far fa-dot-circle nav-icon ml-2"></i>
-                                      @elseif (Request::segment(2) == 'role')
-                                          <i class="far fa-dot-circle nav-icon ml-2"></i>
-                                      @else
-                                          <i class="far fa-circle nav-icon ml-2"></i>
-                                      @endif
-                                      <p>Role</p>
-                                  </a>
-                              </li>
-                              <li class="nav-item">
-                                  <a href="{{ route('admin.permission') }}"
-                                      class="nav-link {{ Request::segment(2) == 'permission' ? 'active' : '' }}">
-                                      @if (Request::segment(2) == 'permission')
-                                          <i class="far fa-dot-circle nav-icon ml-2"></i>
-                                      @else
-                                          <i class="far fa-circle nav-icon ml-2"></i>
-                                      @endif
-                                      <p>Permission</p>
-                                  </a>
-                              </li>
-                          </ul>
-                      </li>
-
+                                  <i class="nav-icon fa-solid fa-user"></i>
+                                  <p>
+                                      Setting User
+                                      <i class="fas fa-angle-left right"></i>
+                                  </p>
+                              </a>
+                              <ul class="nav nav-treeview">
+                                  <li class="nav-item">
+                                      <a href="{{ route('admin.list-role') }}"
+                                          class="nav-link {{ Request::segment(2) == 'list-role' ? 'active' : '' }} {{ Request::segment(2) == 'role' ? 'active' : '' }}">
+                                          @if (Request::segment(2) == 'list-role')
+                                              <i class="far fa-dot-circle nav-icon ml-2"></i>
+                                          @elseif (Request::segment(2) == 'role')
+                                              <i class="far fa-dot-circle nav-icon ml-2"></i>
+                                          @else
+                                              <i class="far fa-circle nav-icon ml-2"></i>
+                                          @endif
+                                          <p>Role</p>
+                                      </a>
+                                  </li>
+                                  <li class="nav-item">
+                                      <a href="{{ route('admin.permission') }}"
+                                          class="nav-link {{ Request::segment(2) == 'permission' ? 'active' : '' }}">
+                                          @if (Request::segment(2) == 'permission')
+                                              <i class="far fa-dot-circle nav-icon ml-2"></i>
+                                          @else
+                                              <i class="far fa-circle nav-icon ml-2"></i>
+                                          @endif
+                                          <p>Permission</p>
+                                      </a>
+                                  </li>
+                              </ul>
+                          </li>
+                      @endrole
                   </ul>
 
               </nav>
