@@ -14,7 +14,7 @@ class UpdateSyarat extends Component
     public $file;
     public function simpan() {
         $this->validate([
-            'file' => 'required|required|mimes:pdf|max:4000'
+            'file' => 'required|required|mimes:pdf|max:40000'
         ]);
         $nama = date('Ymdhis') . '.pdf';
         $cek = PangajuanSyarat::find($this->idnya);
