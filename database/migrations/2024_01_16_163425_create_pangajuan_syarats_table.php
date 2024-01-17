@@ -12,8 +12,10 @@ return new class extends Migration {
     {
         Schema::create('pangajuan_syarats', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pengajuan_id');
-            $table->unsignedBigInteger('pengumpulan_syarat_id');
+            $table->foreignId('pengajuan_id')->constrained()->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->foreignId('pengumpulan_syarat_id')->constrained()->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->string('path')->nullable();
             $table->timestamps();
         });

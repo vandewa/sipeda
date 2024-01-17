@@ -13,9 +13,16 @@ return new class extends Migration
     {
         Schema::create('pengumpulan_syarats', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('pengumpulan_id');
+            $table->foreignId('pengumpulan_id')->constrained()->onUpdate('cascade')
+            ->onDelete('cascade');;
+            // $table->unsignedInteger('pengumpulan_id');
             $table->string('name');
             $table->timestamps();
+
+            // $table->foreign('pengumpulan_id')
+            // ->references('id')->on('pengumpulans')
+            // ->onDelete('cascade')
+            // ->onUpdate('cascade');
         });
     }
 
