@@ -26,11 +26,12 @@
                                         <div class="form-group row">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label">Isi
                                                 Pengumuman</label>
-                                            <div class="col-sm-9">
-                                                <textarea id="summernote" wire:model.live='form.isi'></textarea>
-                                                @error('form.isi')
-                                                    <span class="form-text text-danger">{{ $message }}</span>
-                                                @enderror
+                                            <div class="col-sm-9 ">
+                                                <div wire:ignore>
+                                                    <textarea id="summernote"></textarea>
+                                                </div>
+
+
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -81,7 +82,7 @@
                                     @foreach ($post as $item)
                                         <tr>
                                             <td>{{ $loop->index + $post->firstItem() }}</td>
-                                            <td>{!! substr($item->isi, 50) !!}</td>
+                                            <td>{!! substr($item->isi, 0, 50) !!}</td>
                                             @if ($item->status == 1)
                                                 <td>Aktif</td>
                                             @else
@@ -112,10 +113,24 @@
 
 @push('js')
     <script>
-        $(function() {
-            // Summernote
-            $('#summernote').summernote()
-        })
+        // Summernote
+
+        $('#summernote').summernote({
+            callbacks: {
+                onChange: function(contents, $editable) {
+                    // $wire.isi = contents;
+                    @this.set('form.isi', contents);
+                }
+            }
+            // $('#summernote').change(function(e) {
+
+            //     @this.set('isi', e.target.value);
+            // })
+        });
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('get-edit', (event) => {
+                $('#summernote').summernote('code', event.isi);
+            });
+        });
     </script>
-    @livewireScripts
 @endpush

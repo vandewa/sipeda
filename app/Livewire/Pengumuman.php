@@ -10,6 +10,8 @@ class Pengumuman extends Component
 {
     use WithPagination;
 
+    public $isi;
+
     public $form = [
         'isi' => '',
         'status' => '',
@@ -20,7 +22,7 @@ class Pengumuman extends Component
 
     public function mount()
     {
-        //    
+        //
     }
 
     public function getEdit($a)
@@ -29,13 +31,15 @@ class Pengumuman extends Component
         $this->edit = true;
         $this->idHapus = $a;
 
+        $this->dispatch('get-edit', isi: $this->form['isi']);
+
     }
 
     public function batal()
     {
         $this->edit = false;
         $this->reset();
-
+        $this->dispatch('get-edit', isi: '');
     }
 
     public function save()
@@ -60,7 +64,7 @@ class Pengumuman extends Component
 
     public function store()
     {
-        dd($this->form);
+        // dd($this->form);
         ModelsPengumuman::create($this->form);
     }
 
