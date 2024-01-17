@@ -25,7 +25,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h4>Nama Dokumen: {{ $pengajuan->judul ?? '' }}</h4>
+                                        <h4>Nama Dokumen: <b>{{ $pengajuan->judul ?? '' }}</b></h4>
                                         <object data="{{ asset(str_replace('public', 'storage', $pengajuan->path)) }}"
                                             type="application/pdf" width="100%" height="500"
                                             style="border: solid 1px #ccc;">
@@ -33,33 +33,44 @@
 
                                         @if (auth()->user()->hasRole('desa'))
                                             @if ($edit)
-                                                <div class="form-group row">
-                                                    <label for="inputEmail3" class="col-sm-3 col-form-label">Upload File
-                                                        <small class="text-danger">(*pdf)</small></label>
-                                                    <div class="col-sm-9">
-                                                        <input type="file" wire:model="path" class="form-control"
-                                                            accept="application/pdf">
-                                                        @error('path')
-                                                            <span class="form-text text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="inputEmail3"
-                                                        class="col-sm-3 col-form-label">Judul</label>
-                                                    <div class="col-sm-9">
-                                                        <input type="text" class="form-control"
-                                                            wire:model="formPengajuan.judul" placeholder="Judul"
-                                                            @if (!auth()->user()->hasRole('desa')) disabled @endif>
-                                                        @error('formPengajuan.judul')
-                                                            <span class="form-text text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
+                                                @if ($desa)
+                                                    @if ($pengajuan->statusTerbaru->status_tp ?? '' == 'kirimKecamatan')
+                                                        <div class="form-group row">
+                                                            <label for="inputEmail3"
+                                                                class="col-sm-3 col-form-label">Upload File
+                                                                <small class="text-danger">(*pdf)</small></label>
+                                                            <div class="col-sm-9">
+                                                                <input type="file" wire:model="path"
+                                                                    class="form-control" accept="application/pdf">
+                                                                @error('path')
+                                                                    <span
+                                                                        class="form-text text-danger">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="inputEmail3"
+                                                                class="col-sm-3 col-form-label">Judul</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" class="form-control"
+                                                                    wire:model="formPengajuan.judul" placeholder="Judul"
+                                                                    @if (!auth()->user()->hasRole('desa')) disabled @endif>
+                                                                @error('formPengajuan.judul')
+                                                                    <span
+                                                                        class="form-text text-danger">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
 
-                                                <div class="card-footer">
-                                                    <button type="submit" class="btn btn-warning">Update</button>
-                                                </div>
+
+                                                        <div class="card-footer">
+                                                            <button type="submit"
+                                                                class="btn btn-warning">Update</button>
+                                                        </div>
+                                                    @endif
+                                                @endif
+
+
                                             @endif
 
 
@@ -137,15 +148,14 @@
 
                             @if ($edit)
                                 @if (auth()->user()->hasRole('desa'))
-                                    {{-- @if ($desa) --}}
-
-                                    @if ($pengajuan->statusTerbaru->status_tp ?? '' == 'kirimKecamatan')
-                                        <div class="card-footer">
-                                            <button type="button" class="btn btn-primary"
-                                                wire:click='confirmKecamatan'>Kirim Ke Kecamatan</button>
-                                        </div>
+                                    @if ($desa)
+                                        @if ($pengajuan->statusTerbaru->status_tp ?? '' == 'kirimKecamatan')
+                                            <div class="card-footer">
+                                                <button type="button" class="btn btn-primary"
+                                                    wire:click='confirmKecamatan'>Kirim Ke Kecamatan</button>
+                                            </div>
+                                        @endif
                                     @endif
-                                    {{-- @endif --}}
                                 @elseif(auth()->user()->hasRole('kecamatan'))
                                     @if ($kecamatan)
                                         <div class="card-footer">
@@ -231,8 +241,10 @@
                                         @elseif($item->statusnya)
                                             @if ($item->statusnya->code_nm == 'Menunggu Respon')
                                                 <span class="badge badge-dark">
-                                                @else
-                                                    <span class="badge badge-warning">
+                                                @elseif($item->statusnya->code_nm == 'DRAFT')
+                                                    <span class="badge badge-light">
+                                                    @else
+                                                        <span class="badge badge-warning">
                                             @endif
                                             {{ $item->statusnya->code_nm ?? '' }}
                                             </span>

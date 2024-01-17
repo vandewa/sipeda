@@ -111,7 +111,8 @@
                                           class="nav-link
                                       {{ Request::segment(2) == 'user-index' ? 'active' : '' }}
                                       {{ Request::segment(2) == 'user' ? 'active' : '' }}
-                                      ">
+                                      "
+                                          wire:navigate>
                                           @if (Request::segment(2) == 'user')
                                               <i class="far fa-dot-circle nav-icon ml-2"></i>
                                           @elseif(Request::segment(2) == 'user-index')
@@ -124,7 +125,8 @@
                                   </li>
                                   <li class="nav-item">
                                       <a href="{{ route('admin.jenis-pengajuan') }}"
-                                          class="nav-link {{ Request::segment(2) == 'jenis-pengajuan' ? 'active' : '' }}">
+                                          class="nav-link {{ Request::segment(2) == 'jenis-pengajuan' ? 'active' : '' }}"
+                                          wire:navigate>
                                           @if (Request::segment(2) == 'jenis-pengajuan')
                                               <i class="far fa-dot-circle nav-icon ml-2"></i>
                                           @else
@@ -135,7 +137,8 @@
                                   </li>
                                   <li class="nav-item">
                                       <a href="{{ route('admin.pengumuman') }}"
-                                          class="nav-link {{ Request::segment(2) == 'pengumuman' ? 'active' : '' }}">
+                                          class="nav-link {{ Request::segment(2) == 'pengumuman' ? 'active' : '' }}"
+                                          wire:navigate>
                                           @if (Request::segment(2) == 'pengumuman')
                                               <i class="far fa-dot-circle nav-icon ml-2"></i>
                                           @else
@@ -158,9 +161,10 @@
                                   <li class="nav-item">
                                       <a href="{{ route('admin.region-index') }}"
                                           class="nav-link
-                              {{ Request::segment(2) == 'region-index' ? 'active' : '' }}
-                              {{ Request::segment(2) == 'region' ? 'active' : '' }}
-                              ">
+                                            {{ Request::segment(2) == 'region-index' ? 'active' : '' }}
+                                            {{ Request::segment(2) == 'region' ? 'active' : '' }}
+                                            "
+                                          wire:navigate>
                                           @if (Request::segment(2) == 'region')
                                               <i class="far fa-dot-circle nav-icon ml-2"></i>
                                           @elseif(Request::segment(2) == 'region-index')

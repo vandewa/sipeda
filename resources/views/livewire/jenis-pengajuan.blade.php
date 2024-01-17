@@ -23,9 +23,9 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="form-group row">
+                                        <div class="row mb-2">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label">Judul</label>
-                                            <div class="col-sm-9">
+                                            <div class="col-sm-10">
                                                 <input type="text" class="form-control" wire:model='form.judul'
                                                     placeholder="Masukkan Judul">
                                                 @error('form.judul')
@@ -33,7 +33,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="form-group row">
+                                        <div class="row mb-2">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label">Tanggal
                                                 Mulai</label>
                                             <div class="col-sm-2">
@@ -43,7 +43,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="form-group row">
+                                        <div class="row mb-2">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label">Tanggal
                                                 Selesai</label>
                                             <div class="col-sm-2">
@@ -53,34 +53,49 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="input-group mb-3">
-                                            <input type="text" class="form-control" wire:model="isianSyarat"
-                                                placeholder="tambah_syarat" aria-label="Recipient's username"
-                                                aria-describedby="basic-addon2">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="button"
-                                                    wire:click="tambahSyarat">Tambah</button>
+                                        <legend>Persyaratan</legend>
+                                        <div class="col-md-6">
+
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" wire:model="isianSyarat"
+                                                    placeholder="Tambah Syarat" aria-label="Recipient's username"
+                                                    aria-describedby="basic-addon2">
+
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-secondary" type="button"
+                                                        wire:click="tambahSyarat">Tambah</button>
+
+                                                </div>
+
                                             </div>
+                                            @error('isianSyarat')
+                                                <span class="form-text text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
 
-                                        <table class="table table-strip">
-                                            <thead>
-                                                <th>Syarat</th>
-                                                <th>Action</th>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($syarat ?? [] as $index => $item)
-                                                    <tr>
-                                                        <td>{{ $item }}</td>
-                                                        <td>
-                                                            <button class="btn btn-danger btn-sm" type="button"
-                                                                wire:click="hapusSyarat({{ $index }})"><span
-                                                                    class="fas fa-trash"></span></button>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+
+                                        <div class="col-md-6">
+
+                                            <table class="table table-strip">
+                                                <thead>
+                                                    <th>Syarat</th>
+                                                    <th>Action</th>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($syarat ?? [] as $index => $item)
+                                                        <tr>
+                                                            <td>{{ $item }}</td>
+                                                            <td>
+                                                                <button class="btn btn-danger btn-sm" type="button"
+                                                                    wire:click="hapusSyarat({{ $index }})"><span
+                                                                        class="fas fa-trash"></span></button>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
