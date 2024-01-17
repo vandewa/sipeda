@@ -13,5 +13,9 @@ class PangajuanSyarat extends Model
     public function dokumen() {
         return $this->belongsTo(PengumpulanSyarat::class, 'pengumpulan_syarat_id');
     }
+    public function pengajuan()  {
+        return $this->belongsTo(Pengajuan::class, 'pengajuan_id');
+
+    }
 
 }

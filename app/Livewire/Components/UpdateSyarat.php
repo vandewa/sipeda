@@ -14,7 +14,7 @@ class UpdateSyarat extends Component
     public $file;
     public function simpan() {
         $this->validate([
-            'file' => 'required'
+            'file' => 'required|required|mimes:pdf|max:4000'
         ]);
         $nama = date('Ymdhis') . '.pdf';
         $cek = PangajuanSyarat::find($this->idnya);
@@ -32,7 +32,7 @@ class UpdateSyarat extends Component
     }
     public function render()
     {
-        $data = PangajuanSyarat::with(['dokumen'])->find($this->idnya);
+        $data = PangajuanSyarat::with(['dokumen', 'pengajuan.statusTerbaru'])->find($this->idnya);
         return view('livewire.components.update-syarat', [
             'data' => $data
         ]);

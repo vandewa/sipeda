@@ -205,24 +205,27 @@
                                             <td>-</td>
                                             <td>-</td>
                                             <td>{{ $item->judul ?? '' }}</td>
-                                            @if ($item->statusTerbaru->posisinya->code_nm ?? '' == 'Desa')
+                                            @if ($item->statusTerbaru->posisi_st ?? '' == 'POSISI_ST_01')
                                                 <td>
-                                                    <span class="badge bg-dark">Desa</span>
+
+                                                    <span
+                                                        class="badge bg-dark">{{ $item->statusTerbaru->posisinya->code_nm }}</span>
                                                 </td>
-                                            @elseif($item->statusTerbaru->posisinya->code_nm ?? '' == 'Kecamatan')
+                                            @elseif($item->statusTerbaru->posisi_st ?? '' == 'POSISI_ST_02')
                                                 <td>
-                                                    <span class="badge bg-info text-dark">Kecamatan</span>
+                                                    <span
+                                                        class="badge bg-info text-dark">{{ $item->statusTerbaru->posisinya->code_nm }}</span>
+                                                </td>
+                                            @elseif($item->statusTerbaru->posisi_st ?? '' == 'POSISI_ST_03')
+                                                <td>
+                                                    <span
+                                                        class="badge bg-success">{{ $item->statusTerbaru->posisinya->code_nm }}</span>
                                                 </td>
                                             @else
-                                                @if (!$item->statusTerbaru)
-                                                    <td>
-                                                        <span class="badge bg-success">DRAFT</span>
-                                                    </td>
-                                                @else
-                                                    <td>
-                                                        <span class="badge bg-success">DINSOSPMD</span>
-                                                    </td>
-                                                @endif
+                                                <td>
+                                                    <span
+                                                        class="badge bg-danger">{{ $item->statusTerbaru->posisinya->code_nm }}</span>
+                                                </td>
                                             @endif
                                             @if ($item->statusTerbaru->pengajuannya ?? '')
                                                 <td>{{ $item->statusTerbaru->pengajuannya->code_nm ?? '' }}</td>

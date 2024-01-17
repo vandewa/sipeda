@@ -32,36 +32,36 @@
                                         </object>
 
                                         @if (auth()->user()->hasRole('desa'))
-                                            <div class="form-group row">
-                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Upload File
-                                                    <small class="text-danger">(*pdf)</small></label>
-                                                <div class="col-sm-9">
-                                                    <input type="file" wire:model="path" class="form-control"
-                                                        accept="application/pdf">
-                                                    @error('path')
-                                                        <span class="form-text text-danger">{{ $message }}</span>
-                                                    @enderror
+                                            @if ($edit)
+                                                <div class="form-group row">
+                                                    <label for="inputEmail3" class="col-sm-3 col-form-label">Upload File
+                                                        <small class="text-danger">(*pdf)</small></label>
+                                                    <div class="col-sm-9">
+                                                        <input type="file" wire:model="path" class="form-control"
+                                                            accept="application/pdf">
+                                                        @error('path')
+                                                            <span class="form-text text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Judul</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control"
-                                                        wire:model="formPengajuan.judul" placeholder="Judul"
-                                                        @if (!auth()->user()->hasRole('desa')) disabled @endif>
-                                                    @error('formPengajuan.judul')
-                                                        <span class="form-text text-danger">{{ $message }}</span>
-                                                    @enderror
+                                                <div class="form-group row">
+                                                    <label for="inputEmail3"
+                                                        class="col-sm-3 col-form-label">Judul</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control"
+                                                            wire:model="formPengajuan.judul" placeholder="Judul"
+                                                            @if (!auth()->user()->hasRole('desa')) disabled @endif>
+                                                        @error('formPengajuan.judul')
+                                                            <span class="form-text text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="card-footer">
-                                                <button type="button" class="btn btn-info">Update</button>
-                                            </div>
-                                            @if ($path)
-                                                <object data="{{ $lokasi }}" type="application/pdf" width="100%"
-                                                    height="500" style="border: solid 1px #ccc;"></object>
+                                                <div class="card-footer">
+                                                    <button type="submit" class="btn btn-info">Update</button>
+                                                </div>
                                             @endif
+
 
                                             @error('path')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -142,7 +142,7 @@
                                     @if ($pengajuan->statusTerbaru->status_tp ?? '' == 'kirimKecamatan')
                                         <div class="card-footer">
                                             <button type="button" class="btn btn-info"
-                                                wire:click='kirimKecamatan'>Kirim Ke Kecamatan</button>
+                                                wire:click='confirmKecamatan'>Kirim Ke Kecamatan</button>
                                         </div>
                                     @endif
                                     {{-- @endif --}}

@@ -10,6 +10,7 @@ use Livewire\WithFileUploads;
 use App\Models\StatusPengajuan;
 use App\Models\Pengajuan as ModelsPengajuan;
 use App\Models\Pengumpulan as ModelsPengumpulan;
+use Storage;
 
 class DetailPengajuan extends Component
 {
@@ -74,14 +75,6 @@ class DetailPengajuan extends Component
             }
         }
 
-        if ($property === 'path') {
-            $nama = date('Ymdhis') . '.pdf';
-            $this->lokasi = $this->path->storeAs('public/temporary', $nama);
-            $this->namaPath = $this->lokasi;
-            $this->lokasi = asset(str_replace('public', 'storage', $this->lokasi));
-            return view('livewire.detail-pengajuan', [
-            ]);
-        }
 
     }
 
@@ -205,7 +198,10 @@ class DetailPengajuan extends Component
             'path' => 'required|mimes:pdf|max:4000',
         ]);
 
-        unlink(storage_path('app/' . $this->namaPath));
+        $cek = ModelsPengajuan::find($this->idnya);
+        if(Storage::exists($cek->path)){
+            Storage::delete($cek->path);
+        }
         $nama = date('Ymdhis') . '.pdf';
         $this->formPengajuan['path'] = $this->path->storeAs('public/pengajuan', $nama);
 
@@ -214,12 +210,6 @@ class DetailPengajuan extends Component
             'judul' => $this->formPengajuan['judul'],
         ]);
 
-        StatusPengajuan::create([
-            'pengajuan_id' => $this->idnya,
-            'status_tp' => 'STATUS_TP_01',
-            'posisi_st' => 'POSISI_ST_02',
-            'oleh' => auth()->user()->id,
-        ]);
 
         $this->js(<<<'JS'
         Swal.fire({
@@ -229,8 +219,28 @@ class DetailPengajuan extends Component
           })
         JS);
 
-        $this->redirect(Pengajuan::class);
+        // $this->redirect(Pengajuan::class);
 
+    }
+
+
+    public function confirmKecamatan()  {
+        $this->js(<<<'JS'
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+                text: "Apakah kamu ingin submit data ini? proses ini tidak dapat dikembalikan.",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Iya!',
+                cancelButtonText: 'Batal'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                $wire.kirimKecamatan()
+            }
+          })
+        JS);
     }
 
     public function kirimKecamatan() {
@@ -240,6 +250,9 @@ class DetailPengajuan extends Component
             'posisi_st' => 'POSISI_ST_02',
             'oleh' => auth()->user()->id,
         ]);
+
+        $this->redirect(Pengajuan::class);
+
     }
 
 
