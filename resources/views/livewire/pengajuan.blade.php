@@ -77,7 +77,9 @@
                                                             @enderror
                                                         </div>
                                                         <div class="col-md-1">
-
+                                                            <div wire:loading wire:target="save">
+                                                                <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 @endforeach
