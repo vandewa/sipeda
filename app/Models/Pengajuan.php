@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\PangajuanSyarat;
 
 class Pengajuan extends Model
 {
@@ -35,6 +36,10 @@ class Pengajuan extends Model
     public function pengumpulan()
     {
         return $this->belongsTo(Pengumpulan::class, 'pengumpulan_id');
+    }
+
+    public function persyaratan()  {
+        return $this->hasMany(PangajuanSyarat::class, 'pengajuan_id');
     }
 
 }

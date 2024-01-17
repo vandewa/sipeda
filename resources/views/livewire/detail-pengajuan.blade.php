@@ -1,6 +1,6 @@
 <div>
     <x-slot name="header">
-        <div class="row mb-2">
+        <div class="mb-2 row">
             <div class="col-sm-6">
                 <h1 class="m-0">{{ $judul['pengumpulan']['judul'] ?? '' }}</h1>
             </div>
@@ -21,28 +21,15 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="card card-success card-outline">
-                        <form class="form-horizontal mt-2" wire:submit='save'>
+                        <form class="mt-2 form-horizontal" wire:submit='save'>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
-
+                                        <h4>{{ $pengajuan->judul ?? '' }}</h4>
                                         <object data="{{ asset(str_replace('public', 'storage', $pengajuan->path)) }}"
                                             type="application/pdf" width="100%" height="500"
                                             style="border: solid 1px #ccc;">
                                         </object>
-
-
-                                        <div class="form-group row">
-                                            <label for="inputEmail3" class="col-sm-3 col-form-label">Judul</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control"
-                                                    wire:model="formPengajuan.judul" placeholder="Judul"
-                                                    @if (!auth()->user()->hasRole('desa')) disabled @endif>
-                                                @error('formPengajuan.judul')
-                                                    <span class="form-text text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
 
                                         @if (auth()->user()->hasRole('desa'))
                                             <div class="form-group row">
@@ -56,6 +43,21 @@
                                                     @enderror
                                                 </div>
                                             </div>
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Judul</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control"
+                                                        wire:model="formPengajuan.judul" placeholder="Judul"
+                                                        @if (!auth()->user()->hasRole('desa')) disabled @endif>
+                                                    @error('formPengajuan.judul')
+                                                        <span class="form-text text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            <div class="card-footer">
+                                                <button type="button" class="btn btn-info">Update</button>
+                                            </div>
                                             @if ($path)
                                                 <object data="{{ $lokasi }}" type="application/pdf" width="100%"
                                                     height="500" style="border: solid 1px #ccc;"></object>
@@ -65,6 +67,11 @@
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         @endif
+
+                                        @foreach ($pengajuan->persyaratan as $jembut)
+                                            <livewire:components.update-syarat :idnya="$jembut->id">
+                                        @endforeach
+
 
                                         @if (auth()->user()->hasRole('kecamatan'))
                                             @if ($kecamatan)
@@ -130,11 +137,15 @@
 
                             @if ($edit)
                                 @if (auth()->user()->hasRole('desa'))
-                                    @if ($desa)
+                                    {{-- @if ($desa) --}}
+
+                                    @if ($pengajuan->statusTerbaru->status_tp ?? '' == 'kirimKecamatan')
                                         <div class="card-footer">
-                                            <button type="submit" class="btn btn-info">Update</button>
+                                            <button type="button" class="btn btn-info"
+                                                wire:click='kirimKecamatan'>Kirim Ke Kecamatan</button>
                                         </div>
                                     @endif
+                                    {{-- @endif --}}
                                 @elseif(auth()->user()->hasRole('kecamatan'))
                                     @if ($kecamatan)
                                         <div class="card-footer">

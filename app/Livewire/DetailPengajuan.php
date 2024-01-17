@@ -233,12 +233,22 @@ class DetailPengajuan extends Component
 
     }
 
+    public function kirimKecamatan() {
+        StatusPengajuan::create([
+            'pengajuan_id' =>  $this->idnya ,
+            'status_tp' => 'STATUS_TP_01',
+            'posisi_st' => 'POSISI_ST_02',
+            'oleh' => auth()->user()->id,
+        ]);
+    }
+
 
     public function render()
     {
         $data = StatusPengajuan::with('pengajuannya', 'posisinya', 'usernya', 'statusnya')->where('pengajuan_id', $this->idnya)->orderBy('created_at', 'desc')->orderBy('id', 'desc')->get();
 
-        $pengajuan = ModelsPengajuan::find($this->idnya);
+        $pengajuan = ModelsPengajuan::with(['persyaratan.dokumen', 'statusTerbaru'])->find($this->idnya);
+        // dd($pengajuan);
 
         $status = ComCode::where('code_group', 'PENGAJUAN_TP')->get();
 
