@@ -51,6 +51,8 @@
                                                                             <th>Nama</th>
                                                                             <th>Email</th>
                                                                             <th>Role</th>
+                                                                            <th>Kecamatan</th>
+                                                                            <th>Kelurahan/Desa</th>
                                                                             <th>Aksi</th>
                                                                         </tr>
                                                                     </thead>
@@ -60,6 +62,8 @@
                                                                                 <td>{{ $item->name ?? '' }}</td>
                                                                                 <td>{{ $item->email ?? '' }}</td>
                                                                                 <td>{{ $item->roles()->first()->name ?? '-' }}
+                                                                                <td>{{ $item->kecamatannya->region_nm ?? '-' }}
+                                                                                <td>{{ $item->kelurahannya->region_nm ?? '-' }}
                                                                                 </td>
                                                                                 <td>
                                                                                     <a href="{{ route('admin.user', $item->id) }}"

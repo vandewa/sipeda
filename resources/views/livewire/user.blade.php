@@ -73,7 +73,7 @@
                                                                                     class="col-sm-3 col-form-label">Role</label>
                                                                                 <div class="col-sm-9">
                                                                                     <select class="form-control"
-                                                                                        wire:model='role'>
+                                                                                        wire:model.live='role'>
                                                                                         <option value="">Pilih
                                                                                             Role</option>
                                                                                         @foreach ($listRole ?? [] as $item)
@@ -89,6 +89,53 @@
                                                                                     @enderror
                                                                                 </div>
                                                                             </div>
+                                                                            @if ($role == 3 || $role == 4)
+                                                                                <div class="row mb-3">
+                                                                                    <label for="inputEmail3"
+                                                                                        class="col-sm-3 col-form-label">Kecamatan</label>
+                                                                                    <div class="col-sm-9">
+                                                                                        <select class="form-control"
+                                                                                            wire:model.live='kecamatan'>
+                                                                                            <option value="">Pilih
+                                                                                                Kecamatan</option>
+                                                                                            @foreach ($listKecamatan ?? [] as $item)
+                                                                                                <option
+                                                                                                    value="{{ $item['region_cd'] }}">
+                                                                                                    {{ $item['region_nm'] }}
+                                                                                                </option>
+                                                                                            @endforeach
+                                                                                        </select>
+                                                                                        @error('kecamatan')
+                                                                                            <span
+                                                                                                class="form-text text-danger">{{ $message }}</span>
+                                                                                        @enderror
+                                                                                    </div>
+                                                                                </div>
+                                                                                @if ($role == 4)
+                                                                                    <div class="row mb-3">
+                                                                                        <label for="inputEmail3"
+                                                                                            class="col-sm-3 col-form-label">Desa/Kelurahan</label>
+                                                                                        <div class="col-sm-9">
+                                                                                            <select class="form-control"
+                                                                                                wire:model='desa'>
+                                                                                                <option value="">
+                                                                                                    Pilih
+                                                                                                    Desa</option>
+                                                                                                @foreach ($listDesa ?? [] as $item)
+                                                                                                    <option
+                                                                                                        value="{{ $item['region_cd'] }}">
+                                                                                                        {{ $item['region_nm'] }}
+                                                                                                    </option>
+                                                                                                @endforeach
+                                                                                            </select>
+                                                                                            @error('desa')
+                                                                                                <span
+                                                                                                    class="form-text text-danger">{{ $message }}</span>
+                                                                                            @enderror
+                                                                                        </div>
+                                                                                    </div>
+                                                                                @endif
+                                                                            @endif
 
                                                                             @if ($edit)
                                                                                 <legend>Ganti Password</legend>

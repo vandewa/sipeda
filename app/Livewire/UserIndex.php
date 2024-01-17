@@ -47,7 +47,7 @@ class UserIndex extends Component
     }
     public function render()
     {
-        $data = User::cari($this->cari)
+        $data = User::with(['kelurahannya', 'kecamatannya'])->cari($this->cari)
             ->paginate(10);
 
         return view('livewire.user-index', [

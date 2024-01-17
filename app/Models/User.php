@@ -70,4 +70,14 @@ class User extends Authenticatable implements LaratrustUser
         }
 
     }
+
+    public function kecamatannya()
+    {
+        return $this->belongsTo(ComRegion::class, 'kecamatan');
+    }
+
+    public function kelurahannya()
+    {
+        return $this->belongsTo(ComRegion::class, 'kelurahan');
+    }
 }
