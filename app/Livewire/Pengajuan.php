@@ -85,14 +85,16 @@ class Pengajuan extends Component
 
     public function store()
     {
-        dd($this->syarat);
+
+
         $this->validate([
             'form.judul' => 'required',
-            'path' => 'required|mimes:pdf|max:4000',
+            'path' => 'required|mimes:pdf|max:40000',
+            'syarat.*.path' => 'required',
         ]);
 
 
-        unlink(storage_path('app/' . $this->namaPath));
+        // unlink(storage_path('app/' . $this->namaPath));
         $nama = date('Ymdhis') . '.pdf';
         $this->form['path'] = $this->path->storeAs('public/pengajuan', $nama);
         $this->form['user_id'] = auth()->user()->id;
@@ -100,12 +102,22 @@ class Pengajuan extends Component
 
         $pengajuan = ModelsPengajuan::create($this->form);
 
+        foreach($this->syarat as $item){
+
+            $simpanan = $item['path']->store('syarat', 'public');
+            $pengajuan->persyaratan()->create([
+                'pengumpulan_syarat_id' => $item['pengumpulan_syarat_id'],
+                'path' => $simpanan,
+            ]);
+        }
+
         StatusPengajuan::create([
             'pengajuan_id' => $pengajuan->id,
-            'status_tp' => 'STATUS_TP_01',
-            'posisi_st' => 'POSISI_ST_02',
+            'status_tp' => 'STATUS_TP_00',
+            'posisi_st' => 'POSISI_ST_01',
             'oleh' => auth()->user()->id,
         ]);
+
 
 
     }
@@ -150,20 +162,20 @@ class Pengajuan extends Component
         $this->edit = false;
     }
 
-    public function updated($property)
-    {
-        if ($property === 'path') {
-            $nama = date('Ymdhis') . '.pdf';
-            $this->lokasi = $this->path->storeAs('public/temporary', $nama);
-            $this->namaPath = $this->lokasi;
-            $this->lokasi = asset(str_replace('public', 'storage', $this->lokasi));
-            return view('livewire.pengajuan', [
-            ]);
-        }
+    // public function updated($property)
+    // {
+    //     // if ($property === 'path') {
+    //     //     $nama = date('Ymdhis') . '.pdf';
+    //     //     $this->lokasi = $this->path->storeAs('public/temporary', $nama);
+    //     //     $this->namaPath = $this->lokasi;
+    //     //     $this->lokasi = asset(str_replace('public', 'storage', $this->lokasi));
+    //     //     return view('livewire.pengajuan', [
+    //     //     ]);
+    //     // }
 
-      
 
-    }
+
+    // }
     public function render()
     {
         $pengumpulan = ModelsPengumpulan::all();

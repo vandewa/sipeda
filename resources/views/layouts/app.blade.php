@@ -38,6 +38,7 @@
     @stack('css')
 
     @vite([])
+    @livewireStyles
 
 </head>
 
@@ -124,14 +125,16 @@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ asset('AdminLTE/dist/js/pages/dashboard.js') }}"></script>
     <script src="https://kit.fontawesome.com/bb9305debb.js" crossorigin="anonymous"></script>
-    <script>
+    {{-- <script>
         $(function() {
             // Summernote
             $('#summernote').summernote()
         })
-    </script>
-    @stack('js')
+    </script> --}}
     @livewireScripts
+
+    @stack('js')
+
 
     <script>
         window.addEventListener('toast', event => {

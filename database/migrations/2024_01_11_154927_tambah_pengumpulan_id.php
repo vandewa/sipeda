@@ -11,7 +11,8 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('pengajuans', function (Blueprint $table) {
-            $table->bigInteger('pengumpulan_id')->nullable();
+            $table->foreignId('pengumpulan_id')->constrained()->onUpdate('cascade')
+            ->onDelete('cascade');
         });
     }
 

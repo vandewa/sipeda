@@ -36,24 +36,30 @@
 
                                                 <div class="form-group row">
                                                     <label for="inputEmail3" class="col-sm-3 col-form-label">Judul</label>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-8">
                                                         <input type="text" class="form-control" wire:model='form.judul'
                                                             placeholder="Judul">
                                                         @error('form.judul')
                                                             <span class="form-text text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
+
                                                 </div>
 
                                                 <div class="form-group row">
                                                     <label for="inputEmail3" class="col-sm-3 col-form-label">Upload File
                                                         <small class="text-danger">(*pdf)</small></label>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-8">
                                                         <input type="file" wire:model="path" class="form-control"
                                                             accept="application/pdf">
                                                         @error('path')
                                                             <span class="form-text text-danger">{{ $message }}</span>
                                                         @enderror
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <div wire:loading wire:target="save">
+                                                            <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -62,32 +68,30 @@
                                                         <label for="inputEmail3"
                                                             class="col-sm-3 col-form-label">{{ $item['name'] }}
                                                             <small class="text-danger">(*pdf)</small></label>
-                                                        <div class="col-sm-9">
+                                                        <div class="col-sm-8">
                                                             <input type="file"
                                                                 wire:model="syarat.{{ $index }}.path"
                                                                 class="form-control" accept="application/pdf">
-                                                            @error('path')
+                                                            @error('syarat.' . $index . '.path')
                                                                 <span class="form-text text-danger">{{ $message }}</span>
                                                             @enderror
                                                         </div>
+                                                        <div class="col-md-1">
+                                                            <div wire:loading wire:target="save">
+                                                                <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    @if ($item['path'])
-                                                        <object data="{{ $item['path'] }}" type="application/pdf"
-                                                            width="100%" height="500"
-                                                            style="border: solid 1px #ccc;"></object>
-                                                    @endif
                                                 @endforeach
 
-                                                @if ($path)
+                                                {{-- @if ($path)
                                                     <object data="{{ $lokasi }}" type="application/pdf" width="100%"
                                                         height="500" style="border: solid 1px #ccc;"></object>
-                                                @endif
+                                                @endif --}}
 
 
 
-                                                @error('path')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
+
 
                                             </div>
                                         </div>
@@ -212,20 +216,29 @@
                                             <td>-</td>
                                             <td>-</td>
                                             <td>{{ $item->judul ?? '' }}</td>
-                                            @if ($item->statusTerbaru->posisinya->code_nm == 'Desa')
+                                            @if ($item->statusTerbaru->posisi_st ?? '' == 'POSISI_ST_01')
                                                 <td>
-                                                    <span class="badge bg-dark">Desa</span>
+
+                                                    <span
+                                                        class="badge bg-dark">{{ $item->statusTerbaru->posisinya->code_nm }}</span>
                                                 </td>
-                                            @elseif($item->statusTerbaru->posisinya->code_nm == 'Kecamatan')
+                                            @elseif($item->statusTerbaru->posisi_st ?? '' == 'POSISI_ST_02')
                                                 <td>
-                                                    <span class="badge bg-info text-dark">Kecamatan</span>
+                                                    <span
+                                                        class="badge bg-info text-dark">{{ $item->statusTerbaru->posisinya->code_nm }}</span>
+                                                </td>
+                                            @elseif($item->statusTerbaru->posisi_st ?? '' == 'POSISI_ST_03')
+                                                <td>
+                                                    <span
+                                                        class="badge bg-success">{{ $item->statusTerbaru->posisinya->code_nm }}</span>
                                                 </td>
                                             @else
                                                 <td>
-                                                    <span class="badge bg-success">DINSOSPMD</span>
+                                                    <span
+                                                        class="badge bg-danger">{{ $item->statusTerbaru->posisinya->code_nm }}</span>
                                                 </td>
                                             @endif
-                                            @if ($item->statusTerbaru->pengajuannya)
+                                            @if ($item->statusTerbaru->pengajuannya ?? '')
                                                 <td>{{ $item->statusTerbaru->pengajuannya->code_nm ?? '' }}</td>
                                             @else
                                                 <td>{{ $item->statusTerbaru->statusnya->code_nm ?? '' }}</td>
@@ -235,7 +248,9 @@
                                                     class="btn btn-primary btn-flat btn-sm" data-toggle="tooltip"
                                                     data-placement="left" title="Detail"><i
                                                         class="mr-2 fas fa-eye"></i>Detail</a>
-                                                @if ($item->statusTerbaru->pengajuan_tp == 'PENGAJUAN_TP_01' && $item->statusTerbaru->posisi_st == 'POSISI_ST_03')
+                                                @if (
+                                                    $item->statusTerbaru->pengajuan_tp ??
+                                                        ('' == 'PENGAJUAN_TP_01' && $item->statusTerbaru->posisi_st ?? '' == 'POSISI_ST_03'))
                                                 @else
                                                     @if (auth()->user()->hasRole('desa'))
                                                         <button type="button" class="btn btn-danger btn-flat btn-sm"
