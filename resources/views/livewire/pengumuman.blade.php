@@ -74,7 +74,7 @@
                             <table class="table">
                                 <thead>
                                     <th>No</th>
-                                    <th>Judul</th>
+                                    <th>Pengumuman</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </thead>
