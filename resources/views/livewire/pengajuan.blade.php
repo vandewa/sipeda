@@ -63,8 +63,10 @@
                                                     </div>
                                                 </div>
 
-                                                <legend>Lampiran / syarat</legend>
-                                                <hr>
+                                                @if ($syarat)
+                                                    <legend>Lampiran / syarat</legend>
+                                                    <hr>
+                                                @endif
 
                                                 @foreach ($syarat as $index => $item)
                                                     <div class="form-group row">
