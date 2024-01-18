@@ -18,6 +18,7 @@ class User extends Component
         'password' => null,
         'kecamatan' => null,
         'kelurahan' => null,
+        'telepon' => null,
     ];
 
 

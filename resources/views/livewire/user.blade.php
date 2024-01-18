@@ -137,6 +137,23 @@
                                                                                 @endif
                                                                             @endif
 
+                                                                            <div class="row mb-2">
+                                                                                <label for="inputEmail3"
+                                                                                    class="col-sm-3 col-form-label">Nama
+                                                                                    <small class="text-danger">*</small>
+                                                                                </label>
+                                                                                <div class="col-sm-9">
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        wire:model='form.name'
+                                                                                        placeholder="Nomor WhatsApp">
+                                                                                    @error('form.name')
+                                                                                        <span
+                                                                                            class="form-text text-danger">{{ $message }}</span>
+                                                                                    @enderror
+                                                                                </div>
+                                                                            </div>
+
                                                                             @if ($edit)
                                                                                 <legend>Ganti Password</legend>
                                                                             @endif
@@ -162,7 +179,8 @@
                                                                                 <label for="inputEmail3"
                                                                                     class="col-sm-3 col-form-label">Konfirmasi
                                                                                     Password
-                                                                                    <small class="text-danger">*</small>
+                                                                                    <small
+                                                                                        class="text-danger">*</small>
                                                                                 </label>
                                                                                 <div class="col-sm-9">
                                                                                     <input type="password"

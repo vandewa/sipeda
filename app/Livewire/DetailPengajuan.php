@@ -52,6 +52,9 @@ class DetailPengajuan extends Component
         if ($this->posisi == 'POSISI_ST_01' && $this->cekStatus == 'STATUS_TP_02') {
             $this->desa = true;
         }
+        if ($this->posisi == 'POSISI_ST_01' && $this->cekStatus == 'STATUS_TP_00') {
+            $this->desa = true;
+        }
         if ($this->posisi == 'POSISI_ST_02' && $this->cekStatus == 'STATUS_TP_01') {
             $this->kecamatan = true;
         }
@@ -199,7 +202,7 @@ class DetailPengajuan extends Component
         ]);
 
         $cek = ModelsPengajuan::find($this->idnya);
-        if(Storage::exists($cek->path)){
+        if (Storage::exists($cek->path)) {
             Storage::delete($cek->path);
         }
         $nama = date('Ymdhis') . '.pdf';
@@ -224,7 +227,8 @@ class DetailPengajuan extends Component
     }
 
 
-    public function confirmKecamatan()  {
+    public function confirmKecamatan()
+    {
         $this->js(<<<'JS'
         Swal.fire({
             title: 'Apakah Anda yakin?',
@@ -243,9 +247,10 @@ class DetailPengajuan extends Component
         JS);
     }
 
-    public function kirimKecamatan() {
+    public function kirimKecamatan()
+    {
         StatusPengajuan::create([
-            'pengajuan_id' =>  $this->idnya ,
+            'pengajuan_id' => $this->idnya,
             'status_tp' => 'STATUS_TP_01',
             'posisi_st' => 'POSISI_ST_02',
             'oleh' => auth()->user()->id,

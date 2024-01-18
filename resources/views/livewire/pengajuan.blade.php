@@ -63,6 +63,9 @@
                                                     </div>
                                                 </div>
 
+                                                <legend>Lampiran / syarat</legend>
+                                                <hr>
+
                                                 @foreach ($syarat as $index => $item)
                                                     <div class="form-group row">
                                                         <label for="inputEmail3"
@@ -220,22 +223,22 @@
                                                 <td>
 
                                                     <span
-                                                        class="badge bg-dark">{{ $item->statusTerbaru->posisinya->code_nm }}</span>
+                                                        class="badge bg-dark">{{ $item->statusTerbaru->posisinya->code_nm ?? '' }}</span>
                                                 </td>
                                             @elseif($item->statusTerbaru->posisi_st ?? '' == 'POSISI_ST_02')
                                                 <td>
                                                     <span
-                                                        class="badge bg-info text-dark">{{ $item->statusTerbaru->posisinya->code_nm }}</span>
+                                                        class="badge bg-info text-dark">{{ $item->statusTerbaru->posisinya->code_nm ?? '' }}</span>
                                                 </td>
                                             @elseif($item->statusTerbaru->posisi_st ?? '' == 'POSISI_ST_03')
                                                 <td>
                                                     <span
-                                                        class="badge bg-success">{{ $item->statusTerbaru->posisinya->code_nm }}</span>
+                                                        class="badge bg-success">{{ $item->statusTerbaru->posisinya->code_nm ?? '' }}</span>
                                                 </td>
                                             @else
                                                 <td>
                                                     <span
-                                                        class="badge bg-danger">{{ $item->statusTerbaru->posisinya->code_nm }}</span>
+                                                        class="badge bg-danger">{{ $item->statusTerbaru->posisinya->code_nm ?? '' }}</span>
                                                 </td>
                                             @endif
                                             @if ($item->statusTerbaru->pengajuannya ?? '')
