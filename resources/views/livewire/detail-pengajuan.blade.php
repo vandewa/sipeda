@@ -151,8 +151,10 @@
                                     @if ($desa)
                                         @if ($pengajuan->statusTerbaru->status_tp ?? '' == 'kirimKecamatan')
                                             <div class="card-footer">
-                                                <button type="button" class="btn btn-primary animated bounce"
-                                                    wire:click='confirmKecamatan'>Kirim Ke Kecamatan</button>
+                                                <button type="button" class="btn btn-primary mr-5"
+                                                    wire:click='confirmKecamatan'>Kirim Ke Kecamatan
+                                                </button>
+                                                <img src="{{ asset('tangan.gif') }}">
                                             </div>
                                         @endif
                                     @endif
