@@ -66,10 +66,11 @@ class Pengajuan extends Component
 
     public function save()
     {
+        $a  ="";
         if ($this->edit) {
-            $this->storeUpdate();
+          $a=  $this->storeUpdate();
         } else {
-            $this->store();
+          $a=  $this->store();
         }
 
         $this->js(<<<'JS'
@@ -80,7 +81,9 @@ class Pengajuan extends Component
           })
         JS);
 
-        $this->redirect(Pengumpulan::class);
+        $this->redirectRoute('detail.pengajuan', $a);
+
+        // $this->redirect(Pengumpulan::class);
     }
 
     public function store()
@@ -118,8 +121,7 @@ class Pengajuan extends Component
             'oleh' => auth()->user()->id,
         ]);
 
-
-
+        return   $pengajuan->id;
     }
 
     public function delete($id)

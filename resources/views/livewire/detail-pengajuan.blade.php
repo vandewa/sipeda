@@ -151,7 +151,7 @@
                                     @if ($desa)
                                         @if ($pengajuan->statusTerbaru->status_tp ?? '' == 'kirimKecamatan')
                                             <div class="card-footer">
-                                                <button type="button" class="btn btn-primary"
+                                                <button type="button" class="btn btn-primary animated bounce"
                                                     wire:click='confirmKecamatan'>Kirim Ke Kecamatan</button>
                                             </div>
                                         @endif
@@ -295,8 +295,23 @@
 
 @push('js')
     <script>
-        setTimeout(() => {
-            window.scrollTo(0, document.body.scrollHeight);
-        }, 100);
+        // setTimeout(() => {
+        const totalPageHeight = document.body.scrollHeight;
+
+        // Mendapatkan posisi scroll saat ini
+        const currentScrollPosition = window.scrollY;
+
+        // Mendapatkan tinggi jendela browser
+        const windowHeight = window.innerHeight;
+
+        // Menghitung posisi scroll ke paling bawah
+        const scrollToBottom = totalPageHeight - windowHeight;
+
+        // Menganimasikan scroll ke paling bawah dengan efek smooth
+        window.scroll({
+            top: scrollToBottom,
+            left: 0,
+            behavior: 'smooth'
+        });
     </script>
 @endpush
