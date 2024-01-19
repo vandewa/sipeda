@@ -89,7 +89,7 @@ class Pengajuan extends Component
 
         $this->validate([
             'form.judul' => 'required',
-            'path' => 'required|mimes:pdf|max:40000',
+            'path' => 'required|mimes:pdf',
             'syarat.*.path' => 'required',
         ]);
 
