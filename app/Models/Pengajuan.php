@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\PangajuanSyarat;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pengajuan extends Model
 {
@@ -38,8 +38,19 @@ class Pengajuan extends Model
         return $this->belongsTo(Pengumpulan::class, 'pengumpulan_id');
     }
 
-    public function persyaratan()  {
+    public function persyaratan()
+    {
         return $this->hasMany(PangajuanSyarat::class, 'pengajuan_id');
+    }
+
+    public function kecamatan()
+    {
+        return $this->belongsTo(ComRegion::class, 'region_kec');
+    }
+
+    public function desa()
+    {
+        return $this->belongsTo(ComRegion::class, 'region_kel');
     }
 
 }

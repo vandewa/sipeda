@@ -63,7 +63,7 @@
                                                                                 <td>{{ $item->email ?? '' }}</td>
                                                                                 <td>{{ $item->roles()->first()->name ?? '-' }}
                                                                                 <td>{{ $item->kecamatannya->region_nm ?? '-' }}
-                                                                                <td>{{ $item->kelurahannya->region_nm ?? '-' }}
+                                                                                <td>{{ $item->desanya->region_nm ?? '-' }}
                                                                                 </td>
                                                                                 <td>
                                                                                     <a href="{{ route('admin.user', $item->id) }}"

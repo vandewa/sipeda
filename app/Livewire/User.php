@@ -16,8 +16,8 @@ class User extends Component
         'name' => null,
         'email' => null,
         'password' => null,
-        'kecamatan' => null,
-        'kelurahan' => null,
+        'region_kec' => null,
+        'region_kel' => null,
         'telepon' => null,
     ];
 
@@ -95,8 +95,8 @@ class User extends Component
 
         $this->form['telepon'] = konversi_nomor($this->form['telepon']);
         $this->form['password'] = bcrypt($this->form['password']);
-        $this->form['kecamatan'] = $this->kecamatan;
-        $this->form['kelurahan'] = $this->desa;
+        $this->form['region_kec'] = $this->kecamatan;
+        $this->form['region_kel'] = $this->desa;
         $a = ModelsUser::create($this->form);
         $a->addrole($this->role);
     }

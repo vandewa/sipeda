@@ -22,6 +22,8 @@ class Pengajuan extends Component
         'path' => '',
         'user_id' => '',
         'pengumpulan_id' => '',
+        'region_kec' => '',
+        'region_kel' => '',
     ];
 
     public $syarat = [];
@@ -66,11 +68,11 @@ class Pengajuan extends Component
 
     public function save()
     {
-        $a  ="";
+        $a = "";
         if ($this->edit) {
-          $a=  $this->storeUpdate();
+            $a = $this->storeUpdate();
         } else {
-          $a=  $this->store();
+            $a = $this->store();
         }
 
         $this->js(<<<'JS'
@@ -88,8 +90,6 @@ class Pengajuan extends Component
 
     public function store()
     {
-
-
         $this->validate([
             'form.judul' => 'required',
             'path' => 'required|mimes:pdf',
@@ -102,10 +102,12 @@ class Pengajuan extends Component
         $this->form['path'] = $this->path->storeAs('public/pengajuan', $nama);
         $this->form['user_id'] = auth()->user()->id;
         $this->form['pengumpulan_id'] = $this->idnya;
+        $this->form['region_kec'] = auth()->user()->region_kec;
+        $this->form['region_kel'] = auth()->user()->region_kel;
 
         $pengajuan = ModelsPengajuan::create($this->form);
 
-        foreach($this->syarat as $item){
+        foreach ($this->syarat as $item) {
 
             $simpanan = $item['path']->store('syarat', 'public');
             $pengajuan->persyaratan()->create([
@@ -121,7 +123,7 @@ class Pengajuan extends Component
             'oleh' => auth()->user()->id,
         ]);
 
-        return   $pengajuan->id;
+        return $pengajuan->id;
     }
 
     public function delete($id)
@@ -181,7 +183,7 @@ class Pengajuan extends Component
     public function render()
     {
         $pengumpulan = ModelsPengumpulan::all();
-        $data = ModelsPengajuan::with(['statusTerbaru', 'pengumpulan'])->cari($this->cari);
+        $data = ModelsPengajuan::with(['statusTerbaru', 'pengumpulan', 'kecamatan', 'desa'])->cari($this->cari);
         if ($this->idnya) {
             $data->where('pengumpulan_id', $this->idnya);
         }
@@ -193,6 +195,8 @@ class Pengajuan extends Component
         }
 
         $data = $data->orderBy('created_at', 'desc')->paginate(10);
+
+        // dd($data);
 
         return view('livewire.pengajuan', [
             'post' => $data,

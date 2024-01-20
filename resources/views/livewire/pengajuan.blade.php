@@ -218,8 +218,8 @@
                                             <td>{{ $loop->index + $post->firstItem() }}</td>
                                             <td>{{ $item->created_at ?? '' }}</td>
                                             <td>{{ $item->pengumpulan->judul ?? '' }}</td>
-                                            <td>-</td>
-                                            <td>-</td>
+                                            <td>{{ $item->kecamatan->region_nm ?? '' }}</td>
+                                            <td>{{ $item->desa->region_nm ?? '' }}</td>
                                             <td>{{ $item->judul ?? '' }}</td>
                                             @if ($item->statusTerbaru->posisi_st ?? '' == 'POSISI_ST_01')
                                                 <td>

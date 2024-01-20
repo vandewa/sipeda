@@ -173,7 +173,7 @@
                                   </li>
                               </ul>
                           </li>
-                          <li
+                          {{-- <li
                               class="nav-item
                                 {{ Request::segment(2) == 'list-role' ? 'menu-is-opening menu-open' : '' }}
                                 {{ Request::segment(2) == 'role' ? 'menu-is-opening menu-open' : '' }}
@@ -217,7 +217,7 @@
                                       </a>
                                   </li>
                               </ul>
-                          </li>
+                          </li> --}}
                       @endrole
                   </ul>
 
