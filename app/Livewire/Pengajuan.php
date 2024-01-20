@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Livewire\Pengumpulan;
+use App\Models\ComRegion;
 use Livewire\WithFileUploads;
 use App\Models\StatusPengajuan;
 use App\Models\Pengajuan as ModelsPengajuan;
@@ -183,9 +184,15 @@ class Pengajuan extends Component
     public function render()
     {
         $pengumpulan = ModelsPengumpulan::all();
-        $data = ModelsPengajuan::with(['statusTerbaru', 'pengumpulan', 'kecamatan', 'desa'])->cari($this->cari);
+        $data = ModelsPengajuan::with(['statusTerbaru', 'pengumpulan', 'kecamatan', 'desa'])
+            ->withCount('desa')
+            ->cari($this->cari);
+        $jml_desa = ComRegion::where('region_level', 4)->count();
+        $sudah = $data;
+
         if ($this->idnya) {
             $data->where('pengumpulan_id', $this->idnya);
+            $sudah->where('pengumpulan_id', $this->idnya);
         }
         if (auth()->user()->hasRole('kecamatan')) {
             $data->where('region_kec', auth()->user()->region_kec);
@@ -195,12 +202,18 @@ class Pengajuan extends Component
         }
 
         $data = $data->orderBy('created_at', 'desc')->paginate(10);
+        $sudah = $sudah->count();
+        $belum = $jml_desa - $sudah;
+
 
         // dd($data);
 
         return view('livewire.pengajuan', [
             'post' => $data,
-            'pengumpulan' => $pengumpulan
+            'pengumpulan' => $pengumpulan,
+            'sudah' => $sudah,
+            'belum' => $belum,
+            'jml_desa' => $jml_desa,
         ]);
     }
 }

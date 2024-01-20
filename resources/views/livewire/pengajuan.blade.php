@@ -140,7 +140,9 @@
                                                 <span class="info-box-icon"><i class="fas fa-home"></i></span>
                                                 <div class="info-box-content">
                                                     <span class="info-box-text">Desa</span>
-                                                    <span class="info-box-number">236</span>
+                                                    <span class="info-box-number">
+                                                        <h4> {{ $jml_desa }}</h4>
+                                                    </span>
                                                     <div class="progress">
                                                         <div class="progress-bar" style="width: 100%"></div>
                                                     </div>
@@ -158,7 +160,9 @@
                                                 <span class="info-box-icon"><i class="fas fa-check-double"></i></span>
                                                 <div class="info-box-content">
                                                     <span class="info-box-text">Mengumpulkan</span>
-                                                    <span class="info-box-number">236</span>
+                                                    <span class="info-box-number">
+                                                        <h4>{{ $sudah ?? 0 }}</h4>
+                                                    </span>
                                                     <div class="progress">
                                                         <div class="progress-bar" style="width: 70%"></div>
                                                     </div>
@@ -177,7 +181,9 @@
                                                 <span class="info-box-icon"><i class="fas fa-times-circle"></i></span>
                                                 <div class="info-box-content">
                                                     <span class="info-box-text">Belum Mengumpulkan</span>
-                                                    <span class="info-box-number">236</span>
+                                                    <span class="info-box-number">
+                                                        <h4>{{ $belum ?? 0 }}</h4>
+                                                    </span>
                                                     <div class="progress">
                                                         <div class="progress-bar" style="width: 70%"></div>
                                                     </div>
