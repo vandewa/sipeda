@@ -25,7 +25,7 @@ class User extends Component
     public function mount($id = '')
     {
         if ($id) {
-            $user = ModelsUser::find($id)->only(['name', 'email']);
+            $user = ModelsUser::find($id)->only(['name', 'email', 'telepon']);
             $data = ModelsUser::find($id);
             $this->form = $user;
             $this->role = $data->roles()->first()->id;
@@ -90,8 +90,10 @@ class User extends Component
             'role' => 'required',
             'kecamatan' => 'required_if:role,==,3',
             'desa' => 'required_if:role,==,4',
+            'form.telepon' => 'required',
         ]);
 
+        $this->form['telepon'] = konversi_nomor($this->form['telepon']);
         $this->form['password'] = bcrypt($this->form['password']);
         $this->form['kecamatan'] = $this->kecamatan;
         $this->form['kelurahan'] = $this->desa;

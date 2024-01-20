@@ -75,7 +75,7 @@
                     {{ '2024 - ' . date('Y') }};
                 @endif
 
-                <a href="#">Dinas Sosial dan Pemberdayaan Desa</a>.
+                <a href="#">Dinas Sosial, Pemberdayaan Masyarakat dan Desa</a>.
             </strong>
             All rights reserved.
 

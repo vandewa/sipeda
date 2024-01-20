@@ -70,7 +70,8 @@
 
                                                                             <div class="row mb-3">
                                                                                 <label for="inputEmail3"
-                                                                                    class="col-sm-3 col-form-label">Role</label>
+                                                                                    class="col-sm-3 col-form-label">Role<small
+                                                                                        class="text-danger">*</small></label>
                                                                                 <div class="col-sm-9">
                                                                                     <select class="form-control"
                                                                                         wire:model.live='role'>
@@ -89,7 +90,7 @@
                                                                                     @enderror
                                                                                 </div>
                                                                             </div>
-                                                                            @if ($role == 3 || $role == 4)
+                                                                            @if ($role ?? ('' == 3 || $role ?? '' == 4))
                                                                                 <div class="row mb-3">
                                                                                     <label for="inputEmail3"
                                                                                         class="col-sm-3 col-form-label">Kecamatan</label>
@@ -111,7 +112,7 @@
                                                                                         @enderror
                                                                                     </div>
                                                                                 </div>
-                                                                                @if ($role == 4)
+                                                                                @if ($role ?? '' == 4)
                                                                                     <div class="row mb-3">
                                                                                         <label for="inputEmail3"
                                                                                             class="col-sm-3 col-form-label">Desa/Kelurahan</label>
@@ -139,15 +140,15 @@
 
                                                                             <div class="row mb-2">
                                                                                 <label for="inputEmail3"
-                                                                                    class="col-sm-3 col-form-label">Nama
+                                                                                    class="col-sm-3 col-form-label">WhatsApp
                                                                                     <small class="text-danger">*</small>
                                                                                 </label>
                                                                                 <div class="col-sm-9">
                                                                                     <input type="text"
                                                                                         class="form-control"
-                                                                                        wire:model='form.name'
+                                                                                        wire:model='form.telepon'
                                                                                         placeholder="Nomor WhatsApp">
-                                                                                    @error('form.name')
+                                                                                    @error('form.telepon')
                                                                                         <span
                                                                                             class="form-text text-danger">{{ $message }}</span>
                                                                                     @enderror
