@@ -137,7 +137,7 @@
                                     <div class="row">
                                         <div class="col-md-4 col-sm-6 col-12">
                                             <div class="info-box bg-info">
-                                                <span class="info-box-icon"><i class="far fa-bookmark"></i></span>
+                                                <span class="info-box-icon"><i class="fas fa-home"></i></span>
                                                 <div class="info-box-content">
                                                     <span class="info-box-text">Desa</span>
                                                     <span class="info-box-number">236</span>
@@ -155,7 +155,7 @@
 
                                         <div class="col-md-4 col-sm-6 col-12">
                                             <div class="info-box bg-success">
-                                                <span class="info-box-icon"><i class="far fa-thumbs-up"></i></span>
+                                                <span class="info-box-icon"><i class="fas fa-check-double"></i></span>
                                                 <div class="info-box-content">
                                                     <span class="info-box-text">Mengumpulkan</span>
                                                     <span class="info-box-number">236</span>
@@ -163,7 +163,7 @@
                                                         <div class="progress-bar" style="width: 70%"></div>
                                                     </div>
                                                     <span class="progress-description">
-                                                        Jumlah Desa Yang Menhumpulkan
+                                                        Jumlah Desa Yang Mengumpulkan
                                                     </span>
                                                 </div>
 
@@ -174,7 +174,7 @@
 
                                         <div class="col-md-4 col-sm-6 col-12">
                                             <div class="info-box bg-danger">
-                                                <span class="info-box-icon"><i class="fas fa-comments"></i></span>
+                                                <span class="info-box-icon"><i class="fas fa-times-circle"></i></span>
                                                 <div class="info-box-content">
                                                     <span class="info-box-text">Belum Mengumpulkan</span>
                                                     <span class="info-box-number">236</span>
