@@ -219,7 +219,7 @@ class Pengajuan extends Component
             'post' => $data,
             'pengumpulan' => $pengumpulan,
             'sudah' => $sudah,
-            'belum' => $belum,
+            'belum' => $belum??"",
             'jml_desa' => $jml_desa??"",
         ]);
     }
