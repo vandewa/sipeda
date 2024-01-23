@@ -208,9 +208,10 @@ class Pengajuan extends Component
             $sudah = $sudah->where('region_kec', auth()->user()->region_kec);
         }
         $data = $data->orderBy('created_at', 'desc')->paginate(10);
+        if ($this->idnya) {
         $sudah = $sudah->count();
         $belum = $jml_desa - $sudah;
-
+        }
 
         // dd($data);
 
@@ -219,7 +220,7 @@ class Pengajuan extends Component
             'pengumpulan' => $pengumpulan,
             'sudah' => $sudah,
             'belum' => $belum,
-            'jml_desa' => $jml_desa,
+            'jml_desa' => $jml_desa??"",
         ]);
     }
 }
