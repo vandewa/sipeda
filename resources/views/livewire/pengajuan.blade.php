@@ -132,7 +132,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            @role(['dinsos', 'superadmin'])
+                            @role(['dinsos', 'superadmin', 'kecamatan'])
                                 @if ($idnya)
                                     <div class="row">
                                         <div class="col-md-4 col-sm-6 col-12">

@@ -1,6 +1,6 @@
 <div>
     <x-slot name="header">
-        <div class="row mb-2">
+        <div class="mb-2 row">
             <div class="col-sm-6">
                 <h1 class="m-0">User</h1>
             </div>
@@ -22,19 +22,19 @@
                                 aria-labelledby="custom-tabs-one-rm-tab">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="card card-success card-outline   card-tabs">
+                                        <div class="card card-success card-outline card-tabs">
                                             <div class="tab-content" id="custom-tabs-six-tabContent">
                                                 <div class="tab-pane fade show active" id="custom-tabs-six-riwayat-rm"
                                                     role="tabpanel" aria-labelledby="custom-tabs-six-riwayat-rm-tab">
                                                     <div class="card-body">
                                                         <div class="col-md-12">
                                                             {{-- <div class="card card-success card-outline"> --}}
-                                                            <form class="form-horizontal mt-2" wire:submit='save'>
+                                                            <form class="mt-2 form-horizontal" wire:submit='save'>
                                                                 <div class="card-body">
                                                                     <div class="row">
                                                                         <div class="col-md-8">
 
-                                                                            <div class="row mb-2">
+                                                                            <div class="mb-2 row">
                                                                                 <label for="inputEmail3"
                                                                                     class="col-sm-3 col-form-label">Nama
                                                                                     <small class="text-danger">*</small>
@@ -51,7 +51,7 @@
                                                                                 </div>
                                                                             </div>
 
-                                                                            <div class="row mb-2">
+                                                                            <div class="mb-2 row">
                                                                                 <label for="inputEmail3"
                                                                                     class="col-sm-3 col-form-label">Email
                                                                                     <small class="text-danger">*</small>
@@ -68,7 +68,7 @@
                                                                                 </div>
                                                                             </div>
 
-                                                                            <div class="row mb-3">
+                                                                            <div class="mb-3 row">
                                                                                 <label for="inputEmail3"
                                                                                     class="col-sm-3 col-form-label">Role<small
                                                                                         class="text-danger">*</small></label>
@@ -91,7 +91,7 @@
                                                                                 </div>
                                                                             </div>
                                                                             @if ($role ?? ('' == 3 || $role ?? '' == 4))
-                                                                                <div class="row mb-3">
+                                                                                <div class="mb-3 row">
                                                                                     <label for="inputEmail3"
                                                                                         class="col-sm-3 col-form-label">Kecamatan</label>
                                                                                     <div class="col-sm-9">
@@ -113,7 +113,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 @if ($role ?? '' == 4)
-                                                                                    <div class="row mb-3">
+                                                                                    <div class="mb-3 row">
                                                                                         <label for="inputEmail3"
                                                                                             class="col-sm-3 col-form-label">Desa/Kelurahan</label>
                                                                                         <div class="col-sm-9">
@@ -138,7 +138,7 @@
                                                                                 @endif
                                                                             @endif
 
-                                                                            <div class="row mb-2">
+                                                                            <div class="mb-2 row">
                                                                                 <label for="inputEmail3"
                                                                                     class="col-sm-3 col-form-label">WhatsApp
                                                                                     <small class="text-danger">*</small>
@@ -159,7 +159,7 @@
                                                                                 <legend>Ganti Password</legend>
                                                                             @endif
 
-                                                                            <div class="row mb-2">
+                                                                            <div class="mb-2 row">
                                                                                 <label for="inputEmail3"
                                                                                     class="col-sm-3 col-form-label">Password
                                                                                     <small class="text-danger">*</small>
@@ -176,7 +176,7 @@
                                                                                 </div>
                                                                             </div>
 
-                                                                            <div class="row mb-2">
+                                                                            <div class="mb-2 row">
                                                                                 <label for="inputEmail3"
                                                                                     class="col-sm-3 col-form-label">Konfirmasi
                                                                                     Password
@@ -201,7 +201,7 @@
                                                                     <button type="submit" class="btn btn-info">Simpan
                                                                     </button>
                                                                     <a href="{{ route('admin.user-index') }}"
-                                                                        class="btn btn-warning float-right">Kembali
+                                                                        class="float-right btn btn-warning">Kembali
                                                                     </a>
                                                                 </div>
                                                             </form>

@@ -103,6 +103,7 @@ class User extends Component
 
     public function storeUpdate()
     {
+
         $this->validate([
             'konfirmasi_password' => 'same:form.password',
             'form.name' => 'required',
@@ -111,6 +112,9 @@ class User extends Component
             'kecamatan' => 'required_if:role,==,3',
             'desa' => 'required_if:role,==,4',
         ]);
+        $this->form['telepon'] = konversi_nomor($this->form['telepon']);
+        $this->form['region_kec'] = $this->kecamatan;
+        $this->form['region_kel'] = $this->desa;
 
         if ($this->form['password'] ?? "") {
             $this->form['password'] = bcrypt($this->form['password']);
