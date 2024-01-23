@@ -189,7 +189,7 @@ class Pengajuan extends Component
             ->cari($this->cari);
         $jml_desa = ComRegion::where('region_level', 4);
         if(auth()->user()->hasRole('kecamatan')){
-            $jml_desa = $jml_desa->where('region_root', auth()->user()->region_kec)->count();
+            $jml_desa = $jml_desa->where('region_root', auth()->user()->region_kec);
         }
         $sudah = $data;
 
@@ -205,11 +205,13 @@ class Pengajuan extends Component
             $data->where('region_kel', auth()->user()->region_kel);
         }
         if(auth()->user()->hasRole('kecamatan')){
-            $sudah = $sudah->where('region_kec', auth()->user()->region_kec);
+           $sudah->where('region_kec', auth()->user()->region_kec);
         }
+        $sudah = $sudah->count();
+       $jml_desa = $jml_desa->count();
         $data = $data->orderBy('created_at', 'desc')->paginate(10);
         if ($this->idnya) {
-        $sudah = $sudah->count();
+
         $belum = $jml_desa - $sudah;
         }
 
