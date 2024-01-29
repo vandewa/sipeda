@@ -74,5 +74,5 @@
         </table>
 
     </div>
-    hr
+    <hr>
 </div>
