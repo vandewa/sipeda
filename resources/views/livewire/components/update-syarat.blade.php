@@ -67,7 +67,7 @@
                 <tr>
                     <td>{{ $a->created_at }}</td>
                     <td>Revisi {{ $index + 1 }}</td>
-                    <td> <a href="{{ url('storage', $a->path) }}" target="_blank"
+                    <td> <a href="{{ asset('storage/', $a->path) }}" target="_blank"
                             class="btn btn-primary btn-sm">Lihat</a> </td>
                 </tr>
             @endforeach
