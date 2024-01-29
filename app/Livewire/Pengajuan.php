@@ -92,15 +92,15 @@ class Pengajuan extends Component
     public function store()
     {
         $this->validate([
-            'form.judul' => 'required',
-            'path' => 'required|mimes:pdf',
-            'syarat.*.path' => 'required',
+            // 'form.judul' => 'required',
+            // 'path' => 'required|mimes:pdf',
+            'syarat.*.path' => 'required|mimes:pdf',
         ]);
 
 
         // unlink(storage_path('app/' . $this->namaPath));
-        $nama = date('Ymdhis') . '.pdf';
-        $this->form['path'] = $this->path->storeAs('public/pengajuan', $nama);
+        // $nama = date('Ymdhis') . '.pdf';
+        // $this->form['path'] = $this->path->storeAs('public/pengajuan', $nama);
         $this->form['user_id'] = auth()->user()->id;
         $this->form['pengumpulan_id'] = $this->idnya;
         $this->form['region_kec'] = auth()->user()->region_kec;

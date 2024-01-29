@@ -25,7 +25,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h4>Nama Dokumen: <b>{{ $pengajuan->judul ?? '' }}</b></h4>
+                                        {{-- <h4>Nama Dokumen: <b>{{ $pengajuan->judul ?? '' }}</b></h4>
                                         <object data="{{ asset(str_replace('public', 'storage', $pengajuan->path)) }}"
                                             type="application/pdf" width="100%" height="500"
                                             style="border: solid 1px #ccc;">
@@ -77,7 +77,7 @@
                                             @error('path')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
-                                        @endif
+                                        @endif --}}
 
                                         @foreach ($pengajuan->persyaratan as $jembut)
                                             <livewire:components.update-syarat :idnya="$jembut->id">
@@ -151,7 +151,7 @@
                                     @if ($desa)
                                         @if ($pengajuan->statusTerbaru->status_tp ?? '' == 'kirimKecamatan')
                                             <div class="card-footer">
-                                                <button type="button" class="btn btn-primary mr-5"
+                                                <button type="button" class="mr-5 btn btn-primary"
                                                     wire:click='confirmKecamatan'>Kirim Ke Kecamatan
                                                 </button>
                                                 <img src="{{ asset('tangan.gif') }}">
