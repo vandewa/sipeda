@@ -3,9 +3,10 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use App\Models\ComRegion;
+use App\Jobs\kirimWhatsapp;
 use Livewire\WithPagination;
 use App\Livewire\Pengumpulan;
-use App\Models\ComRegion;
 use Livewire\WithFileUploads;
 use App\Models\StatusPengajuan;
 use App\Models\Pengajuan as ModelsPengajuan;
@@ -91,6 +92,7 @@ class Pengajuan extends Component
 
     public function store()
     {
+
         $this->validate([
             // 'form.judul' => 'required',
             // 'path' => 'required|mimes:pdf',
@@ -125,6 +127,7 @@ class Pengajuan extends Component
         ]);
 
         return $pengajuan->id;
+
     }
 
     public function delete($id)
