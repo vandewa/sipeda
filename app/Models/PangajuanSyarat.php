@@ -18,4 +18,8 @@ class PangajuanSyarat extends Model
 
     }
 
+    public function history() {
+        return $this->hasMany(PengajuanSyaratHistory::class, 'pangajuan_syarat_id');
+    }
+
 }
