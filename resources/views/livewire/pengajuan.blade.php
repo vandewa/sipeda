@@ -74,12 +74,25 @@
                                                             class="col-sm-3 col-form-label">{{ $item['name'] }}
                                                             <small class="text-danger">(*pdf)</small></label>
                                                         <div class="col-sm-8">
-                                                            <input type="file"
-                                                                wire:model="syarat.{{ $index }}.path"
-                                                                class="form-control" accept="application/pdf">
-                                                            @error('syarat.' . $index . '.path')
-                                                                <span class="form-text text-danger">{{ $message }}</span>
-                                                            @enderror
+
+                                                            <div x-data="{ uploading: false, progress: 0 }"
+                                                                x-on:livewire-upload-start="uploading = true"
+                                                                x-on:livewire-upload-finish="uploading = false"
+                                                                x-on:livewire-upload-cancel="uploading = false"
+                                                                x-on:livewire-upload-error="uploading = false"
+                                                                x-on:livewire-upload-progress="progress = $event.detail.progress">
+                                                                <input type="file"
+                                                                    wire:model="syarat.{{ $index }}.path"
+                                                                    class="form-control" accept="application/pdf">
+                                                                @error('syarat.' . $index . '.path')
+                                                                    <span
+                                                                        class="form-text text-danger">{{ $message }}</span>
+                                                                @enderror
+                                                                <div x-show="uploading">
+                                                                    <progress max="100"
+                                                                        x-bind:value="progress"></progress>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div class="col-md-1">
 
@@ -112,6 +125,7 @@
                                     </div>
                                     <!-- /.card-body -->
                                     <div class="card-footer">
+
                                         <button type="submit" class="btn btn-info">Simpan</button>
                                         <button type="button" class="float-right btn btn-default"
                                             wire:click='batal'>Batal</button>
