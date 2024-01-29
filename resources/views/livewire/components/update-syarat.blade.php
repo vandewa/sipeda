@@ -30,4 +30,20 @@
 
         </div>
     @endif
+    <div class="row">
+        <br>
+        <h5 class="">Riwayat</h5>
+        <table class="table">
+
+            @foreach ($data->history ?? [] as $index => $a)
+                <tr>
+                    <td>{{ $a->created_at }}</td>
+                    <td>Revisi {{ $index + 1 }}</td>
+                    <td> <a href="{{ url('storage/', $a->path) }}" target="_blank"
+                            class="btn btn-primary btn-sm">Lihat</a> </td>
+                </tr>
+            @endforeach
+        </table>
+
+    </div>
 </div>
