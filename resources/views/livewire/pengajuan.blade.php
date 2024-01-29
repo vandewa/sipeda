@@ -82,8 +82,14 @@
                                                             @enderror
                                                         </div>
                                                         <div class="col-md-1">
+
+                                                            @if ($syarat[$index]['path'])
+                                                                <span class="fa-li"><i
+                                                                        class="fas fa-check-square"></i></span>
+                                                            @endif
                                                             <div wire:loading wire:target="syarat.{{ $index }}.path">
-                                                                Processing Payment...
+                                                                <span class="fa-li"><i
+                                                                        class="fas fa-spinner fa-pulse"></i></span>
                                                             </div>
 
                                                         </div>
