@@ -83,10 +83,17 @@
                                             <livewire:components.update-syarat :idnya="$jembut->id">
                                         @endforeach
 
+                                         {{-- jika disetujui kecamatan dan tampilkan pdf --}}
+                                         @if($cekPathKec)
+                                         <br>
+                                         <h4>Persetujuan Kecamatan</h4>
+                                         <object data="{{ asset(str_replace('public', 'storage', $cekPathKec)) }}" type="application/pdf" width="100%" height="500"style="border: solid 1px #ccc;">
+                                          </object>
+                                         @endif
 
                                         @if (auth()->user()->hasRole('kecamatan'))
                                             @if ($kecamatan)
-                                                <div class="form-group row">
+                                                <div class="mt-3 form-group row">
                                                     <label for="" class="col-sm-3 col-form-label">Status</label>
                                                     <div class="col-md-9">
                                                         <select class="form-control"
@@ -105,9 +112,10 @@
                                                 </div>
                                             @endif
                                         @endif
+                                        
                                         @if (auth()->user()->hasRole('dinsos'))
                                             @if ($dinsos)
-                                                <div class="form-group row">
+                                                <div class="mt-3 form-group row">
                                                     <label for="" class="col-sm-3 col-form-label">Status</label>
                                                     <div class="col-md-9">
                                                         <select class="form-control"
@@ -127,6 +135,7 @@
                                             @endif
                                         @endif
 
+                                        {{-- jika ditolak tampil keterangan --}}
                                         @if ($keterangan)
                                             <div class="form-group row">
                                                 <label for="" class="col-sm-3 col-form-label">Keterangan</label>
@@ -138,9 +147,34 @@
                                                 </div>
                                             </div>
                                         @endif
-
-
-
+                                        
+                                        {{-- jika disetujui input dan tampil pdf --}}
+                                        @if ($disetujui)
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-3 col-form-label">Upload File
+                                                <small class="text-danger">(*pdf)</small></label>
+                                            <div class="col-sm-8">
+                                                <input type="file" wire:model.live="pathKec" class="form-control"
+                                                    accept="application/pdf">
+                                                @error('pathKec')
+                                                    <span class="form-text text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div wire:loading wire:target="save">
+                                                    <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                            @if($pathKec)
+                                                <div class="form-group row">
+                                                    <object data="{{ asset(str_replace('public', 'storage', $lokasi)) }}" type="application/pdf" width="100%" height="500"
+                                                        style="border: solid 1px #ccc;">
+                                                    </object>
+                                                </div>
+                                            @endif
+                                        @endif
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -178,6 +212,8 @@
                         <!-- form start -->
                     </div>
                 </div>
+
+                {{-- history --}}
                 <div class="col-md-4">
                     <!-- The time line -->
                     <div class="timeline">
@@ -258,6 +294,15 @@
                                     @if ($item->keterangan)
                                         <div class="timeline-body">
                                             {{ $item->keterangan ?? '' }}
+                                        </div>
+                                    @endif
+                                    
+                                    @if ($item->path_kec && $item->pengajuan_tp == 'PENGAJUAN_TP_01' && $item->posisi_st == 'POSISI_ST_02')
+                                        <div class="timeline-body">
+                                         File persetujuan <br>
+                                         <a href="{{ url(str_replace('public', 'storage',$item->path_kec)) }}" target="_blank">
+                                             {{ url(str_replace('public', 'storage',$item->path_kec)) }}
+                                        </a>
                                         </div>
                                     @endif
                                 </div>

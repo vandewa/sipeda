@@ -31,8 +31,10 @@ class User extends Component
             $this->role = $data->roles()->first()->id;
             $this->edit = true;
             $this->user = $id;
-            $this->kecamatan = $data->kecamatan;
-            $this->desa = $data->kelurahan;
+            $this->kecamatan = $data->region_kec;
+            $this->desa = $data->region_kel;
+
+            
         }
 
         $this->listRole = Role::all()->toArray();

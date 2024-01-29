@@ -16,11 +16,13 @@ class DetailPengajuan extends Component
 {
     use WithFileUploads;
 
-    public $idnya, $edit = true, $keterangan = false, $posisi, $judul, $cek, $cekStatus, $desa = false, $kecamatan = false, $dinsos = false;
+    public $idnya, $edit = true, $keterangan = false, $posisi, $judul, $cek, $cekStatus, $desa = false, $kecamatan = false, $dinsos = false, $disetujui = false;
 
     public $lokasi;
     public $path;
+    public $pathKec;
     public $namaPath;
+    public $cekPathKec;
     public $formPengajuan = [
         'path' => '',
         'judul' => '',
@@ -32,6 +34,7 @@ class DetailPengajuan extends Component
         'posisi_st' => '',
         'keterangan' => '',
         'oleh' => '',
+        'path_kec' => '',
     ];
 
 
@@ -43,6 +46,10 @@ class DetailPengajuan extends Component
         $this->posisi = $dataPengajuan['posisi_st'];
         $this->cek = $dataPengajuan['pengajuan_tp'];
         $this->cekStatus = $dataPengajuan['status_tp'];
+
+        $this->cekPathKec = $dataPengajuan['path_kec'];
+        $this->form['path_kec'] = $dataPengajuan['path_kec'];
+
 
         $this->judul = ModelsPengajuan::with(['pengumpulan'])->find($id)->toArray();
         $a = ModelsPengajuan::find($this->idnya)->toArray();
@@ -69,13 +76,28 @@ class DetailPengajuan extends Component
         if ($property === 'form.pengajuan_tp') {
             if ($this->form['pengajuan_tp'] == 'PENGAJUAN_TP_02') {
                 $this->keterangan = true;
+                $this->disetujui = false;
+                $this->form['path_kec'] = null;
+
             }
 
             if ($this->form['pengajuan_tp'] == 'PENGAJUAN_TP_01') {
                 $this->form['keterangan'] = null;
                 $this->keterangan = false;
-
+                if(auth()->user()->hasRole('kecamatan')){
+                    $this->disetujui = true;
+                }
             }
+
+        }
+
+        if ($property === 'pathKec') {
+            $nama = date('Ymdhis') . '.pdf';
+            $this->lokasi = $this->pathKec->storeAs('public/temporary', $nama);
+            $this->namaPath = $this->lokasi;
+            $this->lokasi = asset(str_replace('public', 'storage', $this->lokasi));
+            return view('livewire.detail-pengajuan', [
+            ]);
         }
 
 
@@ -88,7 +110,6 @@ class DetailPengajuan extends Component
         } else {
             $this->store();
         }
-
     }
 
     public function storeUpdate()
@@ -115,15 +136,32 @@ class DetailPengajuan extends Component
 
     public function update()
     {
-        $this->validate([
-            'form.pengajuan_tp' => 'required',
-        ]);
+
+        if(auth()->user()->hasRole('dinsos')){
+            $this->validate([
+                'form.pengajuan_tp' => 'required',
+            ]);
+        } else{
+            $this->validate([
+                'form.pengajuan_tp' => 'required',
+                'pathKec' => 'mimes:pdf|max:4000',
+            ]);
+        }
+       
 
         $this->form['pengajuan_id'] = $this->idnya;
         $this->form['oleh'] = auth()->user()->id;
 
+          
+
         //jika status disetujui
         if ($this->form['pengajuan_tp'] == 'PENGAJUAN_TP_01') {
+
+            //cek jika ada file persetujuan
+            if($this->lokasi){
+                $nama = date('Ymdhis') . '.pdf';
+                $this->form['path_kec'] = $this->pathKec->storeAs('public/kecamatan', $nama);
+            } 
 
             //jika posisi di kecamatan
             if ($this->posisi == 'POSISI_ST_02') {
@@ -134,6 +172,7 @@ class DetailPengajuan extends Component
                     'pengajuan_tp' => $this->form['pengajuan_tp'],
                     'posisi_st' => $this->posisi,
                     'oleh' => auth()->user()->id,
+                    'path_kec' => $this->form['path_kec']??null
                 ]);
 
                 //membuat status menunggu respon dari dinsos
@@ -143,6 +182,7 @@ class DetailPengajuan extends Component
                     'posisi_st' => $this->form['posisi_st'],
                     'status_tp' => 'STATUS_TP_01',
                     'oleh' => auth()->user()->id,
+                    'path_kec' => $this->form['path_kec']??null
                 ]);
             }
 
@@ -155,6 +195,8 @@ class DetailPengajuan extends Component
                     'pengajuan_tp' => $this->form['pengajuan_tp'],
                     'posisi_st' => $this->posisi,
                     'oleh' => auth()->user()->id,
+                    'path_kec' => $this->form['path_kec']??null
+
                 ]);
             }
 
@@ -266,7 +308,6 @@ class DetailPengajuan extends Component
         $data = StatusPengajuan::with('pengajuannya', 'posisinya', 'usernya', 'statusnya')->where('pengajuan_id', $this->idnya)->orderBy('created_at', 'desc')->orderBy('id', 'desc')->get();
 
         $pengajuan = ModelsPengajuan::with(['persyaratan.dokumen', 'statusTerbaru'])->find($this->idnya);
-        // dd($pengajuan);
 
         $status = ComCode::where('code_group', 'PENGAJUAN_TP')->get();
 
