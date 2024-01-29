@@ -90,7 +90,9 @@
                                                                 @enderror
                                                                 <div x-show="uploading">
                                                                     <progress max="100"
-                                                                        x-bind:value="progress"></progress>
+                                                                        x-bind:value="progress"></progress> <span
+                                                                        x-text="progress"><!-- Will output: "bar" -->
+                                                                    </span> %
                                                                 </div>
                                                             </div>
                                                         </div>
