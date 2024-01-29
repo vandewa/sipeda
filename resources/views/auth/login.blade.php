@@ -18,7 +18,7 @@
 
 </head>
 
-<body class="img js-fullheight" style="background-image:url({{ asset('bg-11.jpg') }});object-fit:cover">
+<body class="img js-fullheight" style="background-image:url({{asset(str_replace('public', 'storage',App\Models\Background::find(1)->path_bupati)) }});object-fit:cover">
     <section class="ftco-section">
         <div class="container">
             <div class="row justify-content-center">
@@ -73,7 +73,7 @@
                 </div>
             </div>
         </div>
-        <div class="pt-3 container-fluid client bg-transparent">
+        <div class="pt-3 bg-transparent container-fluid client">
             <div class="container text-center">
                 <span class="small float-center" style="font-size: 10px; color:#fff;"><b>&copy;2023
                         <?php if (date('Y') == 2023) {

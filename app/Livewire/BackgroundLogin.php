@@ -9,38 +9,31 @@ use Livewire\Attributes\Validate;
 
 class BackgroundLogin extends Component
 {
+
     use WithFileUploads;
 
-    #[Validate('image|max:3000')]
     public $photo, $idHapus, $edit = false;
 
     public $form = [
         'path_bupati' => null,
-        'path_kadis' => null,
     ];
 
     public function mount()
     {
-        $data = Background::all()->toArray();
+        $data = Background::find(1);
         $this->form = $data;
-    }
-
-    public function getEdit($a)
-    {
-        $this->form = Background::find($a)->toArray();
-        $this->idHapus = $a;
-        $this->edit = true;
     }
 
     public function save()
     {
-        if ($this->edit) {
-            $this->storeUpdate();
-        } else {
-            $this->store();
-        }
+        $this->validate([
+            'photo' => 'required|image|max:3000'
+        ]);
 
-        $this->photo = null;
+        $nama = $this->photo->store('public/photos');
+        Background::where('id', 1)->update([
+            'path_bupati' => $nama
+        ]);
 
         $this->js(<<<'JS'
         Swal.fire({
@@ -49,23 +42,10 @@ class BackgroundLogin extends Component
             icon: 'success',
           })
         JS);
+
+        $this->redirect(BackgroundLogin::class);
+
     }
-
-    public function storeUpdate()
-    {
-        $this->validate([
-            'form2.perawatan_id' => 'required'
-        ]);
-
-        // if ($this->photo) {
-        //     $foto = $this->photo->store('public/photos');
-        //     $this->form2['path'] = $foto;
-        // }
-        
-        Background::find($this->idHapus)->update($this->form2);
-        $this->edit = false;
-    }
-
 
     public function render()
     {

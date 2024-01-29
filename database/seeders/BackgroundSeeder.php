@@ -18,10 +18,7 @@ class BackgroundSeeder extends Seeder
 
         $data = [
             [
-                'path_bupati' => 'bupati.png',
-            ],
-            [
-                'path_kadis' => 'Superadmin',
+                'path_bupati' => 'bg-1.jpg',
             ],
         ];
 
