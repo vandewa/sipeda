@@ -87,7 +87,7 @@
                                                                 <span class="fa-li"><i
                                                                         class="fas fa-check-square"></i></span>
                                                             @endif
-                                                            <div wire:loading wire:target="syarat.{{ $index }}.path">
+                                                            <div wire:loading>
                                                                 <div class="spinner-border text-primary" role="status">
                                                                     <span class="sr-only">Loading...</span>
                                                                 </div>
