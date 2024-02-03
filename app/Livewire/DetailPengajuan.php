@@ -162,12 +162,12 @@ class DetailPengajuan extends Component
 
         //jika status disetujui
         if ($this->form['pengajuan_tp'] == 'PENGAJUAN_TP_01') {
+            dd('ok');
 
             //cek jika ada file persetujuan
             if ($this->lokasi) {
                 $nama = date('Ymdhis') . '.pdf';
                 $this->form['path_kec'] = $this->pathKec->storeAs('public/kecamatan', $nama);
-                dd('ok');
             }
 
             //jika posisi di kecamatan
