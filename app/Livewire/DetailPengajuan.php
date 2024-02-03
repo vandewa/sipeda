@@ -131,7 +131,7 @@ class DetailPengajuan extends Component
                 cancelButtonText: 'Batal'
           }).then((result) => {
             if (result.isConfirmed) {
-                $wire.update()
+                $wire.updatekan()
             }
           })
         JS);
@@ -139,7 +139,7 @@ class DetailPengajuan extends Component
         // StatusPengajuan::create($this->form);
     }
 
-    public function update()
+    public function updatekan()
     {
         dd("cek");
         if(auth()->user()->hasRole('dinsos')){
