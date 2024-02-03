@@ -78,6 +78,7 @@
                               </p>
                           </a>
                       </li>
+
                       @role(['dinsos'])
                           <li
                               class="nav-item
@@ -145,16 +146,16 @@
                                       </a>
                                   </li>
                                   <li class="nav-item">
-                                    <a href="{{ route('admin.background') }}"
-                                        class="nav-link {{ Request::segment(2) == 'background' ? 'active' : '' }}">
-                                        @if (Request::segment(2) == 'background')
-                                            <i class="ml-2 far fa-dot-circle nav-icon"></i>
-                                        @else
-                                            <i class="ml-2 far fa-circle nav-icon"></i>
-                                        @endif
-                                        <p>Background</p>
-                                    </a>
-                                </li>
+                                      <a href="{{ route('admin.background') }}"
+                                          class="nav-link {{ Request::segment(2) == 'background' ? 'active' : '' }}">
+                                          @if (Request::segment(2) == 'background')
+                                              <i class="ml-2 far fa-dot-circle nav-icon"></i>
+                                          @else
+                                              <i class="ml-2 far fa-circle nav-icon"></i>
+                                          @endif
+                                          <p>Background</p>
+                                      </a>
+                                  </li>
                                   <li class="nav-item">
                                       <a href="{{ route('admin.region-index') }}"
                                           class="nav-link
@@ -218,6 +219,19 @@
                                   </li>
                               </ul>
                           </li> --}}
+                      @endrole
+                      @role(['desa', 'kecamatan'])
+                          <li class="nav-item">
+                              <a href="{{ route('profile', auth()->user()->id) }}"
+                                  class="nav-link
+                            {{ Request::segment(1) == 'profile' ? 'active' : '' }}
+                              ">
+                                  <i class="nav-icon fas fa-user-cog"></i>
+                                  <p>
+                                      Profile
+                                  </p>
+                              </a>
+                          </li>
                       @endrole
                   </ul>
 

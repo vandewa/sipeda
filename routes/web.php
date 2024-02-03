@@ -1,22 +1,23 @@
 <?php
 
-use App\Livewire\BackgroundLogin;
 use App\Livewire\User;
+use App\Livewire\Region;
+use App\Livewire\Profile;
 use App\Livewire\Pengajuan;
 use App\Livewire\User\Role;
 use App\Livewire\UserIndex;
 use App\Livewire\Pengumuman;
 use App\Livewire\Pengumpulan;
+use App\Livewire\RegionIndex;
 use App\Livewire\User\ListRole;
 use App\Livewire\JenisPengajuan;
+use App\Livewire\BackgroundLogin;
 use App\Livewire\DetailPengajuan;
 use App\Livewire\User\Permission;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
-use App\Livewire\Region;
-use App\Livewire\RegionIndex;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,5 +65,7 @@ Route::middleware([
 
     Route::get('/pengajuan/{id?}', Pengajuan::class)->name('pengajuan');
     Route::get('/detail-pengajuan/{id?}', DetailPengajuan::class)->name('detail.pengajuan');
+    Route::get('profile/{id?}', Profile::class)->name('profile');
+
 
 });
