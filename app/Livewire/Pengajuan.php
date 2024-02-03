@@ -207,9 +207,7 @@ class Pengajuan extends Component
         if (auth()->user()->hasRole('desa')) {
             $data->where('region_kel', auth()->user()->region_kel);
         }
-        if(auth()->user()->hasRole('kecamatan')){
-           $sudah->where('region_kec', auth()->user()->region_kec);
-        }
+
         $sudah = $sudah->count();
        $jml_desa = $jml_desa->count();
         $data = $data->orderBy('created_at', 'desc')->paginate(10);
