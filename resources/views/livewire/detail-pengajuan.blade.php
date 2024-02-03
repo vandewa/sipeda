@@ -331,9 +331,11 @@
                                         <div class="timeline-body">
                                             File persetujuan <br>
                                             <a href="{{ url(str_replace('public', 'storage', $item->path_kec)) }}"
+                                                class="badge badge-danger" target="_blank">Lihat Disini</a>
+                                            {{-- <a href="{{ url(str_replace('public', 'storage', $item->path_kec)) }}"
                                                 target="_blank">
                                                 {{ url(str_replace('public', 'storage', $item->path_kec)) }}
-                                            </a>
+                                            </a> --}}
                                         </div>
                                     @endif
                                 </div>
