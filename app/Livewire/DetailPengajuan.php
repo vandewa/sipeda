@@ -153,6 +153,9 @@ class DetailPengajuan extends Component
         //     }
         // }
 
+        dd('ok');
+
+
 
 
         $this->form['pengajuan_id'] = $this->idnya;
