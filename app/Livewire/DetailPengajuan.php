@@ -141,7 +141,7 @@ class DetailPengajuan extends Component
 
     public function updatekan()
     {
-        dd("cek");
+
         if(auth()->user()->hasRole('dinsos')){
             $this->validate([
                 'form.pengajuan_tp' => 'required',
