@@ -145,13 +145,13 @@ class DetailPengajuan extends Component
             'form.pengajuan_tp' => 'required',
         ]);
 
-        if (auth()->user()->hasRole('kecamatan')) {
-            if ($this->pathKec) {
-                $this->validate([
-                    'pathKec' => 'mimes:pdf|max:40000',
-                ]);
-            }
-        }
+        // if (auth()->user()->hasRole('kecamatan')) {
+        //     if ($this->pathKec) {
+        //         $this->validate([
+        //             'pathKec' => 'mimes:pdf|max:40000',
+        //         ]);
+        //     }
+        // }
 
 
 
