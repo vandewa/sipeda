@@ -224,6 +224,11 @@
                                     <!-- /.card-footer -->
                                 @endif
                             @endif
+                            <div wire:loading wire:target="save">
+                                <div class="loading-state">
+                                    <div class="loading"></div>
+                                </div>
+                            </div>
                         </form>
                         <!-- /.card-header -->
                         <!-- form start -->

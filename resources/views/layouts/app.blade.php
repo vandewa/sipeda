@@ -36,6 +36,35 @@
     <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .loading-state {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 10px solid #ddd;
+            border-top-color: orange;
+            animation: loading 1s linear infinite;
+        }
+
+        @keyframes loading {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 
     @stack('css')
 
