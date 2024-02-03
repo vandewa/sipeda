@@ -149,7 +149,7 @@ class DetailPengajuan extends Component
         } else{
             $this->validate([
                 'form.pengajuan_tp' => 'required',
-                'pathKec' => 'mimes:pdf|max:4000',
+                'pathKec' => 'mimes:pdf|max:40000',
             ]);
         }
 
