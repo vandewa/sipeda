@@ -218,7 +218,7 @@
                                 @elseif(auth()->user()->hasRole('kecamatan'))
                                     @if ($kecamatan)
                                         <div class="card-footer">
-                                            <button type="button" wire:click='save'
+                                            <button type="button" wire:click='updatePengajuan'
                                                 class="btn btn-info">Submit</button>
                                         </div>
                                     @endif
