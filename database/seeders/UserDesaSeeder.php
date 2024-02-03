@@ -31,7 +31,7 @@ class UserDesaSeeder extends Seeder
         $data = ComRegion::with(['root'])->where('region_level', 3)->get();
         foreach($data as $item){
             User::where('email', strtolower('admin'.'@'.$item->region_nm."id"))->update([
-                'email' => strtolower('admin'.'@'.$item->region_nm.".id")
+                'email' => strtolower('admin'.'@'.$item->region_nm.".go.id")
             ]);
             // $a = User::create([
             //     'name'=> 'Admin Desa '. $item->region_nm,
