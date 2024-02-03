@@ -141,6 +141,8 @@ class DetailPengajuan extends Component
 
     public function updatePengajuan()
     {
+        dd('ok');
+
         $this->validate([
             'form.pengajuan_tp' => 'required',
         ]);
@@ -153,7 +155,6 @@ class DetailPengajuan extends Component
         //     }
         // }
 
-        dd('ok');
 
 
 
