@@ -180,14 +180,14 @@ class DetailPengajuan extends Component
 
                 //kirim notif WhatsApp ke desa
                 $pesan = '*Notifikasi*' . "\n\n" .
-                    'Yth. Admin Desa ' . $this->cekUser['desanya']['region_nm'] . ' pengajuan ' . $this->judul['pengumpulan']['judul'] ?? "" . 'telah *Disetujui* oleh Kecamatan ' . $this->cekUser['kecamatannya']['region_nm'] ?? "" . "\n\n" .
+                    'Yth. Admin Desa ' . $this->cekUser['desanya']['region_nm'] . ' pengajuan ' . $this->judul['pengumpulan']['judul'] . 'telah *Disetujui* oleh Kecamatan ' . $this->cekUser['kecamatannya']['region_nm'] . "\n\n" .
                     'Terima Kasih';
 
                 kirimWhatsapp::dispatch($pesan, $this->cekUser['telepon']);
 
                 //kirim notif WhatsApp ke Dinsos
                 $pesan_dinsos = '*Notifikasi*' . "\n\n" .
-                    'Yth. Admin DINSOSPMD silahkan untuk mengecek data pengajuan ' . $this->judul['pengumpulan']['judul'] . 'dari *Desa ' . $this->cekUser['desanya']['region_nm'] ?? "" . '* pada link berikut ini:' . "\n\n" .
+                    'Yth. Admin DINSOSPMD silahkan untuk mengecek data pengajuan ' . $this->judul['pengumpulan']['judul'] . 'dari Desa ' . $this->cekUser['desanya']['region_nm'] . '* pada link berikut ini:' . "\n\n" .
                     url('detail-pengajuan/' . $this->idnya) . "\n\n" .
                     'Terima Kasih.'
                 ;
@@ -217,7 +217,7 @@ class DetailPengajuan extends Component
 
             }
 
-          //  jika posisi di dinsos
+            //  jika posisi di dinsos
             if ($this->posisi == 'POSISI_ST_03') {
 
                 //membuat status disetujui dari dinsos
