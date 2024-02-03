@@ -111,15 +111,8 @@ class DetailPengajuan extends Component
     public function save()
     {
         if ($this->edit && !$this->desa) {
-            $this->storeUpdate();
-        } else {
-            $this->store();
-        }
-    }
-
-    public function storeUpdate()
-    {
-        $this->js(<<<'JS'
+            // $this->storeUpdate();
+            $this->js(<<<'JS'
         Swal.fire({
             title: 'Apakah Anda yakin?',
                 text: "Apakah kamu ingin submit data ini? proses ini tidak dapat dikembalikan.",
@@ -135,6 +128,14 @@ class DetailPengajuan extends Component
             }
           })
         JS);
+        } else {
+            $this->store();
+        }
+    }
+
+    public function storeUpdate()
+    {
+
 
         // StatusPengajuan::create($this->form);
     }
