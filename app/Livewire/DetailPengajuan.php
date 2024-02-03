@@ -268,10 +268,10 @@ class DetailPengajuan extends Component
 
             //kirim notif WhatsApp ke desa (ditolak)
             $pesan = '*Notifikasi*' . "\n\n" .
-                'Yth. Admin Desa ' . $this->cekUser['desanya']['region_nm'] . ' pengajuan ' . $this->judul['pengumpulan']['judul'] . ' *Ditolak* oleh Kecamatan ' . $this->cekUser['kecamatannya']['region_nm'] . "\n" .
-                ($this->form['keterangan']) . "\n\n" .
-                ' Silahkan lihat pada link berikut ini' . "\n" .
-                url('detail-pengajuan/' . $this->idnya) . "\n" .
+                'Yth. Admin Desa ' . $this->cekUser['desanya']['region_nm'] . ' pengajuan ' . $this->judul['pengumpulan']['judul'] . ' *Ditolak* oleh Kecamatan ' . $this->cekUser['kecamatannya']['region_nm'] . "\n\n" .
+                '(' . $this->form['keterangan'] . ')' . "\n\n" .
+                'Silahkan lihat pada link berikut ini:' . "\n\n" .
+                url('detail-pengajuan/' . $this->idnya) . "\n\n" .
                 'Terima Kasih';
 
             kirimWhatsapp::dispatch($pesan, $this->cekUser['telepon']);
