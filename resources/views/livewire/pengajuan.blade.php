@@ -238,7 +238,7 @@
                                     <th>Jenis Pengajuan</th>
                                     <th>Kecamatan</th>
                                     <th>Desa</th>
-                                    <th>Judul</th>
+                                    {{-- <th>Judul</th> --}}
                                     <th>Posisi</th>
                                     <th>Status</th>
                                     <th></th>
@@ -251,7 +251,7 @@
                                             <td>{{ $item->pengumpulan->judul ?? '' }}</td>
                                             <td>{{ $item->kecamatan->region_nm ?? '' }}</td>
                                             <td>{{ $item->desa->region_nm ?? '' }}</td>
-                                            <td>{{ $item->judul ?? '' }}</td>
+                                            {{-- <td>{{ $item->judul ?? '' }}</td> --}}
                                             @if ($item->statusTerbaru->posisi_st ?? '' == 'POSISI_ST_01')
                                                 <td>
 
