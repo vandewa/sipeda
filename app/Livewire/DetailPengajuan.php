@@ -142,7 +142,7 @@ class DetailPengajuan extends Component
 
     public function updatePengajuan()
     {
-        dd('ok');
+        // dd('ok');
 
         $this->validate([
             'form.pengajuan_tp' => 'required',
@@ -167,7 +167,7 @@ class DetailPengajuan extends Component
 
         //jika status disetujui
         if ($this->form['pengajuan_tp'] == 'PENGAJUAN_TP_01') {
-            dd('ok');
+            // dd('ok');
 
             //cek jika ada file persetujuan
             if ($this->lokasi) {
@@ -217,33 +217,33 @@ class DetailPengajuan extends Component
 
             }
 
-            //jika posisi di dinsos
-            // if ($this->posisi == 'POSISI_ST_03') {
+          //  jika posisi di dinsos
+            if ($this->posisi == 'POSISI_ST_03') {
 
-            //     //membuat status disetujui dari dinsos
-            //     StatusPengajuan::create([
-            //         'pengajuan_id' => $this->form['pengajuan_id'],
-            //         'pengajuan_tp' => $this->form['pengajuan_tp'],
-            //         'posisi_st' => $this->posisi,
-            //         'oleh' => auth()->user()->id,
-            //         'path_kec' => $this->form['path_kec'] ?? null
-            //     ]);
+                //membuat status disetujui dari dinsos
+                StatusPengajuan::create([
+                    'pengajuan_id' => $this->form['pengajuan_id'],
+                    'pengajuan_tp' => $this->form['pengajuan_tp'],
+                    'posisi_st' => $this->posisi,
+                    'oleh' => auth()->user()->id,
+                    'path_kec' => $this->form['path_kec'] ?? null
+                ]);
 
-            //     //kirim notif WhatsApp ke desa
-            //     $pesan = '*Notifikasi*' . "\n\n" .
-            //         'Yth. Admin Desa ' . $this->cekUser['desanya']['region_nm'] . ' pengajuan ' . $this->judul['pengumpulan']['judul'] . 'telah *Disetujui* oleh Dinas Sosial, Pemberdayaan Masyarakat Dan Desa ' . $this->cekUser['kecamatannya']['region_nm'] . "\n\n" .
-            //         'Terima Kasih';
+                //kirim notif WhatsApp ke desa
+                $pesan = '*Notifikasi*' . "\n\n" .
+                    'Yth. Admin Desa ' . $this->cekUser['desanya']['region_nm'] . ' pengajuan ' . $this->judul['pengumpulan']['judul'] . 'telah *Disetujui* oleh Dinas Sosial, Pemberdayaan Masyarakat Dan Desa ' . $this->cekUser['kecamatannya']['region_nm'] . "\n\n" .
+                    'Terima Kasih';
 
-            //     kirimWhatsapp::dispatch($pesan, $this->cekUser['telepon']);
+                kirimWhatsapp::dispatch($pesan, $this->cekUser['telepon']);
 
-            //     //kirim notif WhatsApp ke Kecamatan
-            //     $pesan_kecamatan = '*Notifikasi*' . "\n\n" .
-            //         'Yth. Admin Kecamatan ' . $this->cekUser['kecamatannya']['region_nm'] . ' pengajuan ' . $this->judul['pengumpulan']['judul'] . 'telah *Disetujui* oleh Dinas Sosial, Pemberdayaan Masyarakat Dan Desa ' . $this->cekUser['kecamatannya']['region_nm'] . "\n\n" .
-            //         'Terima Kasih';
+                //kirim notif WhatsApp ke Kecamatan
+                $pesan_kecamatan = '*Notifikasi*' . "\n\n" .
+                    'Yth. Admin Kecamatan ' . $this->cekUser['kecamatannya']['region_nm'] . ' pengajuan ' . $this->judul['pengumpulan']['judul'] . 'telah *Disetujui* oleh Dinas Sosial, Pemberdayaan Masyarakat Dan Desa ' . $this->cekUser['kecamatannya']['region_nm'] . "\n\n" .
+                    'Terima Kasih';
 
-            //     kirimWhatsapp::dispatch($pesan_kecamatan, User::whereHasRole('kecamatan')->where('region_kec', $this->cekUser['kecamatannya']['region_cd'])->first()->telepon);
+                kirimWhatsapp::dispatch($pesan_kecamatan, User::whereHasRole('kecamatan')->where('region_kec', $this->cekUser['kecamatannya']['region_cd'])->first()->telepon);
 
-            // }
+            }
 
 
         } else {

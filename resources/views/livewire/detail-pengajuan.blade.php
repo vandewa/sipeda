@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="card card-success card-outline">
-                        <form class="mt-2 form-horizontal" wire:submit='save'>
+                        <div class="mt-2 form-horizontal">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -92,105 +92,111 @@
                                                 height="500"style="border: solid 1px #ccc;">
                                             </object>
                                         @endif
+                                        <form action=""wire:submit='save'>
+                                            @if (auth()->user()->hasRole('kecamatan'))
+                                                @if ($kecamatan)
+                                                    <div class="mt-3 form-group row">
+                                                        <label for=""
+                                                            class="col-sm-3 col-form-label">Status</label>
+                                                        <div class="col-md-9">
+                                                            <select class="form-control"
+                                                                wire:model.live="form.pengajuan_tp">
+                                                                <option value="">-- Pilih Status --</option>
+                                                                @foreach ($status ?? [] as $item)
+                                                                    <option value="{{ $item['com_cd'] }}">
+                                                                        {{ $item['code_nm'] }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                            @error('form.pengajuan_tp')
+                                                                <span
+                                                                    class="form-text text-danger">{{ $message }}</span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            @endif
 
-                                        @if (auth()->user()->hasRole('kecamatan'))
-                                            @if ($kecamatan)
-                                                <div class="mt-3 form-group row">
-                                                    <label for="" class="col-sm-3 col-form-label">Status</label>
+                                            @if (auth()->user()->hasRole('dinsos'))
+                                                @if ($dinsos)
+                                                    <div class="mt-3 form-group row">
+                                                        <label for=""
+                                                            class="col-sm-3 col-form-label">Status</label>
+                                                        <div class="col-md-9">
+                                                            <select class="form-control"
+                                                                wire:model.live="form.pengajuan_tp">
+                                                                <option value="">-- Pilih Status --</option>
+                                                                @foreach ($status ?? [] as $item)
+                                                                    <option value="{{ $item['com_cd'] }}">
+                                                                        {{ $item['code_nm'] }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                            @error('form.pengajuan_tp')
+                                                                <span
+                                                                    class="form-text text-danger">{{ $message }}</span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            @endif
+
+                                            {{-- jika ditolak tampil keterangan --}}
+                                            @if ($keterangan)
+                                                <div class="form-group row">
+                                                    <label for=""
+                                                        class="col-sm-3 col-form-label">Keterangan</label>
                                                     <div class="col-md-9">
-                                                        <select class="form-control"
-                                                            wire:model.live="form.pengajuan_tp">
-                                                            <option value="">-- Pilih Status --</option>
-                                                            @foreach ($status ?? [] as $item)
-                                                                <option value="{{ $item['com_cd'] }}">
-                                                                    {{ $item['code_nm'] }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                        @error('form.pengajuan_tp')
+                                                        <textarea wire:model="form.keterangan" class="form-control" rows="2"></textarea>
+                                                        @error('form.keterangan')
                                                             <span class="form-text text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                             @endif
-                                        @endif
 
-                                        @if (auth()->user()->hasRole('dinsos'))
-                                            @if ($dinsos)
-                                                <div class="mt-3 form-group row">
-                                                    <label for="" class="col-sm-3 col-form-label">Status</label>
-                                                    <div class="col-md-9">
-                                                        <select class="form-control"
-                                                            wire:model.live="form.pengajuan_tp">
-                                                            <option value="">-- Pilih Status --</option>
-                                                            @foreach ($status ?? [] as $item)
-                                                                <option value="{{ $item['com_cd'] }}">
-                                                                    {{ $item['code_nm'] }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                        @error('form.pengajuan_tp')
-                                                            <span class="form-text text-danger">{{ $message }}</span>
-                                                        @enderror
+                                            {{-- jika disetujui input dan tampil pdf --}}
+                                            @if ($disetujui)
+                                                <div class="form-group row">
+                                                    <label for="inputEmail3" class="col-sm-3 col-form-label">Upload File
+                                                        <small class="text-danger">(*pdf)</small></label>
+                                                    <div class="col-sm-9">
+                                                        <div x-data="{ uploading: false, progress: 0 }"
+                                                            x-on:livewire-upload-start="uploading = true"
+                                                            x-on:livewire-upload-finish="uploading = false"
+                                                            x-on:livewire-upload-cancel="uploading = false"
+                                                            x-on:livewire-upload-error="uploading = false"
+                                                            x-on:livewire-upload-progress="progress = $event.detail.progress">
+                                                            <input type="file" wire:model.live="pathKec"
+                                                                class="form-control" accept="application/pdf">
+                                                            @error('pathKec')
+                                                                <span
+                                                                    class="form-text text-danger">{{ $message }}</span>
+                                                            @enderror
+                                                            <div x-show="uploading">
+                                                                <progress max="100"
+                                                                    x-bind:value="progress"></progress> <span
+                                                                    x-text="progress"><!-- Will output: "bar" -->
+                                                                </span> %
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            @endif
-                                        @endif
-
-                                        {{-- jika ditolak tampil keterangan --}}
-                                        @if ($keterangan)
-                                            <div class="form-group row">
-                                                <label for="" class="col-sm-3 col-form-label">Keterangan</label>
-                                                <div class="col-md-9">
-                                                    <textarea wire:model="form.keterangan" class="form-control" rows="2"></textarea>
-                                                    @error('form.keterangan')
-                                                        <span class="form-text text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                        @endif
-
-                                        {{-- jika disetujui input dan tampil pdf --}}
-                                        @if ($disetujui)
-                                            <div class="form-group row">
-                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Upload File
-                                                    <small class="text-danger">(*pdf)</small></label>
-                                                <div class="col-sm-9">
-                                                    <div x-data="{ uploading: false, progress: 0 }"
-                                                        x-on:livewire-upload-start="uploading = true"
-                                                        x-on:livewire-upload-finish="uploading = false"
-                                                        x-on:livewire-upload-cancel="uploading = false"
-                                                        x-on:livewire-upload-error="uploading = false"
-                                                        x-on:livewire-upload-progress="progress = $event.detail.progress">
-                                                        <input type="file" wire:model.live="pathKec"
-                                                            class="form-control" accept="application/pdf">
-                                                        @error('pathKec')
-                                                            <span class="form-text text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                        <div x-show="uploading">
-                                                            <progress max="100"
-                                                                x-bind:value="progress"></progress> <span
-                                                                x-text="progress"><!-- Will output: "bar" -->
-                                                            </span> %
+                                                    <div class="col-md-1">
+                                                        <div wire:loading wire:target="save">
+                                                            <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-1">
-                                                    <div wire:loading wire:target="save">
-                                                        <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                                                @if ($pathKec)
+                                                    <div class="form-group row">
+                                                        <object
+                                                            data="{{ asset(str_replace('public', 'storage', $lokasi)) }}"
+                                                            type="application/pdf" width="100%" height="500"
+                                                            style="border: solid 1px #ccc;">
+                                                        </object>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            @if ($pathKec)
-                                                <div class="form-group row">
-                                                    <object
-                                                        data="{{ asset(str_replace('public', 'storage', $lokasi)) }}"
-                                                        type="application/pdf" width="100%" height="500"
-                                                        style="border: solid 1px #ccc;">
-                                                    </object>
-                                                </div>
+                                                @endif
                                             @endif
-                                        @endif
 
                                     </div>
                                 </div>
@@ -212,7 +218,8 @@
                                 @elseif(auth()->user()->hasRole('kecamatan'))
                                     @if ($kecamatan)
                                         <div class="card-footer">
-                                            <button type="submit" class="btn btn-info">Submit</button>
+                                            <button type="button" wire:click='updatePengajuan'
+                                                class="btn btn-info">Submit</button>
                                         </div>
                                     @endif
                                 @else
@@ -229,6 +236,7 @@
                                     <div class="loading"></div>
                                 </div>
                             </div>
+                        </div>
                         </form>
                         <!-- /.card-header -->
                         <!-- form start -->
