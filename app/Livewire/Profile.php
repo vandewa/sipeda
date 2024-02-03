@@ -16,14 +16,13 @@ class Profile extends Component
         'name' => null,
         'email' => null,
         'password' => null,
-        'region_kec' => null,
-        'region_kel' => null,
         'telepon' => null,
     ];
 
 
-    public function mount($id = '')
+    public function mount()
     {
+        $id = auth()->user()->id;
         if ($id) {
             $user = ModelsUser::find($id)->only(['name', 'email', 'telepon']);
             $data = ModelsUser::find($id);
@@ -31,8 +30,6 @@ class Profile extends Component
             $this->role = $data->roles()->first()->id;
             $this->edit = true;
             $this->user = $id;
-            $this->kecamatan = $data->region_kec;
-            $this->desa = $data->region_kel;
 
 
         }
@@ -79,7 +76,7 @@ class Profile extends Component
           })
         JS);
 
-        return redirect(route('admin.user-index'));
+        // return redirect(route('admin.user-index'));
     }
 
     public function store()
@@ -89,9 +86,8 @@ class Profile extends Component
             'form.password' => 'required',
             'form.name' => 'required',
             'form.email' => 'required|unique:users,email',
-            'role' => 'required',
-            'kecamatan' => 'required_if:role,==,3',
-            'desa' => 'required_if:role,==,4',
+
+
             'form.telepon' => 'required',
         ]);
 
@@ -109,9 +105,8 @@ class Profile extends Component
         $this->validate([
             'form.name' => 'required',
             'form.email' => 'required|email|unique:users,email,' . $this->user,
-            'role' => 'required',
-            'kecamatan' => 'required_if:role,==,3',
-            'desa' => 'required_if:role,==,4',
+
+
         ]);
 
         if (filled($this->form['password'] ?? null)) {
@@ -129,8 +124,7 @@ class Profile extends Component
         }
 
         ModelsUser::find($this->user)->update($this->form);
-        $this->reset();
-        $this->edit = false;
+
 
     }
 
@@ -155,9 +149,7 @@ class Profile extends Component
     public function render()
     {
         return view('livewire.profile', [
-            'listRole' => $this->ambilRole(),
-            'listKecamatan' => $this->ambilKecamatan(),
-            'listDesa' => $this->changeKel()
+
         ]);
     }
 }

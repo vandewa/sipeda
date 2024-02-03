@@ -68,75 +68,8 @@
                                                                                 </div>
                                                                             </div>
 
-                                                                            <div class="mb-3 row">
-                                                                                <label for="inputEmail3"
-                                                                                    class="col-sm-3 col-form-label">Role<small
-                                                                                        class="text-danger">*</small></label>
-                                                                                <div class="col-sm-9">
-                                                                                    <select class="form-control"
-                                                                                        wire:model.live='role'>
-                                                                                        <option value="">Pilih
-                                                                                            Role</option>
-                                                                                        @foreach ($listRole ?? [] as $item)
-                                                                                            <option
-                                                                                                value="{{ $item['id'] }}">
-                                                                                                {{ $item['name'] }}
-                                                                                            </option>
-                                                                                        @endforeach
-                                                                                    </select>
-                                                                                    @error('role')
-                                                                                        <span
-                                                                                            class="form-text text-danger">{{ $message }}</span>
-                                                                                    @enderror
-                                                                                </div>
-                                                                            </div>
-                                                                            @if ($role ?? ('' == 3 || $role ?? '' == 4))
-                                                                                <div class="mb-3 row">
-                                                                                    <label for="inputEmail3"
-                                                                                        class="col-sm-3 col-form-label">Kecamatan</label>
-                                                                                    <div class="col-sm-9">
-                                                                                        <select class="form-control"
-                                                                                            wire:model.live='kecamatan'>
-                                                                                            <option value="">Pilih
-                                                                                                Kecamatan</option>
-                                                                                            @foreach ($listKecamatan ?? [] as $item)
-                                                                                                <option
-                                                                                                    value="{{ $item['region_cd'] }}">
-                                                                                                    {{ $item['region_nm'] }}
-                                                                                                </option>
-                                                                                            @endforeach
-                                                                                        </select>
-                                                                                        @error('kecamatan')
-                                                                                            <span
-                                                                                                class="form-text text-danger">{{ $message }}</span>
-                                                                                        @enderror
-                                                                                    </div>
-                                                                                </div>
-                                                                                @if ($role ?? '' == 4)
-                                                                                    <div class="mb-3 row">
-                                                                                        <label for="inputEmail3"
-                                                                                            class="col-sm-3 col-form-label">Desa/Kelurahan</label>
-                                                                                        <div class="col-sm-9">
-                                                                                            <select class="form-control"
-                                                                                                wire:model='desa'>
-                                                                                                <option value="">
-                                                                                                    Pilih
-                                                                                                    Desa</option>
-                                                                                                @foreach ($listDesa ?? [] as $item)
-                                                                                                    <option
-                                                                                                        value="{{ $item['region_cd'] }}">
-                                                                                                        {{ $item['region_nm'] }}
-                                                                                                    </option>
-                                                                                                @endforeach
-                                                                                            </select>
-                                                                                            @error('desa')
-                                                                                                <span
-                                                                                                    class="form-text text-danger">{{ $message }}</span>
-                                                                                            @enderror
-                                                                                        </div>
-                                                                                    </div>
-                                                                                @endif
-                                                                            @endif
+                                                                        
+
 
                                                                             <div class="mb-2 row">
                                                                                 <label for="inputEmail3"

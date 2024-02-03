@@ -222,7 +222,7 @@
                       @endrole
                       @role(['desa', 'kecamatan'])
                           <li class="nav-item">
-                              <a href="{{ route('profile', auth()->user()->id) }}"
+                              <a href="{{ route('profile') }}"
                                   class="nav-link
                             {{ Request::segment(1) == 'profile' ? 'active' : '' }}
                               ">
