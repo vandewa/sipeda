@@ -238,7 +238,7 @@ class DetailPengajuan extends Component
 
                 //kirim notif WhatsApp ke Kecamatan
                 $pesan_kecamatan = '*Notifikasi*' . "\n\n" .
-                    'Yth. Admin Kecamatan ' . $this->cekUser['kecamatannya']['region_nm'] . ' pengajuan ' . $this->judul['pengumpulan']['judul'] . 'telah *Disetujui* oleh Dinas Sosial, Pemberdayaan Masyarakat Dan Desa ' . $this->cekUser['kecamatannya']['region_nm'] . "\n\n" .
+                    'Yth. Admin Kecamatan ' . $this->cekUser['kecamatannya']['region_nm'] . ' pengajuan ' . $this->judul['pengumpulan']['judul'] . ' oleh Desa '. $this->cekUser['desanya']['region_nm'].' telah *Disetujui* oleh Dinas Sosial, Pemberdayaan Masyarakat Dan Desa ' . "\n\n" .
                     'Terima Kasih';
 
                 kirimWhatsapp::dispatch($pesan_kecamatan, User::whereHasRole('kecamatan')->where('region_kec', $this->cekUser['kecamatannya']['region_cd'])->first()->telepon);
