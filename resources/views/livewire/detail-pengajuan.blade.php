@@ -353,7 +353,7 @@
                                 </span>
                                 <h3 class="timeline-header no-border">
                                     <a href="#">{{ $pengajuan->user->name ?? '' }}</a>
-                                    melakukan pengajuan dengan judul {{ $pengajuan->judul ?? '' }}
+                                    melakukan pengajuan {{ $judul['pengumpulan']['judul'] ?? '' }}
                                 </h3>
                             </div>
                         </div>

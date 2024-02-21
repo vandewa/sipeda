@@ -1,6 +1,12 @@
 <div>
     <div class="mt-3">
         <h4>Nama Dokumen: <b>{{ $data->dokumen->name ?? '' }}</b></h4>
+        <div class="mb-3">
+            <a href="{{ asset('storage/' . $data->path) }}" target="_blank">
+                <span class="badge bg-primary" style="font-size:15px;">Lihat dokumen
+                    {{ $data->dokumen->name ?? '' }}</span>
+            </a>
+        </div>
         <object data="{{ asset('storage/' . $data->path) }}" type="application/pdf" width="100%" height="500"
             style="border: solid 1px #ccc;">
         </object>
@@ -13,7 +19,7 @@
         <div class="row">
             <div class="col-md-3">Update</div>
             <div class="col-md-9">
-                <input type="file" class="form-control" wire:model.live='file'>
+                <input type="file" class="form-control" wire:model.live='file' accept="application/pdf">
             </div>
             <div>
                 @if (session()->has('message'))

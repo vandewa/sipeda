@@ -30,43 +30,13 @@ class Profile extends Component
             $this->role = $data->roles()->first()->id;
             $this->edit = true;
             $this->user = $id;
-
-
         }
-
-        $this->listRole = Role::all()->toArray();
-        $this->ambilKecamatan();
-        $this->changeKel();
     }
-
-    public function ambilRole()
-    {
-        return Role::all()->toArray();
-    }
-
-    public function ambilKecamatan()
-    {
-        return ComRegion::where('region_level', '3')->get()->toArray();
-    }
-    // public function ambilDesa()
-    // {
-    //     return ComRegion::where('region_level', '4')->get()->toArray();
-    // }
-
-    public function changeKel()
-    {
-        return ComRegion::where('region_root', $this->kecamatan)->get()->toArray();
-    }
-
 
     public function save()
     {
 
-        if ($this->edit) {
-            $this->storeUpdate();
-        } else {
-            $this->store();
-        }
+        $this->storeUpdate();
 
         $this->js(<<<'JS'
         Swal.fire({
@@ -79,34 +49,12 @@ class Profile extends Component
         // return redirect(route('admin.user-index'));
     }
 
-    public function store()
-    {
-        $this->validate([
-            'konfirmasi_password' => 'required|same:form.password',
-            'form.password' => 'required',
-            'form.name' => 'required',
-            'form.email' => 'required|unique:users,email',
-
-
-            'form.telepon' => 'required',
-        ]);
-
-        $this->form['telepon'] = konversi_nomor($this->form['telepon']);
-        $this->form['password'] = bcrypt($this->form['password']);
-        $this->form['region_kec'] = $this->kecamatan;
-        $this->form['region_kel'] = $this->desa;
-        $a = ModelsUser::create($this->form);
-        $a->addrole($this->role);
-    }
-
     public function storeUpdate()
     {
 
         $this->validate([
             'form.name' => 'required',
             'form.email' => 'required|email|unique:users,email,' . $this->user,
-
-
         ]);
 
         if (filled($this->form['password'] ?? null)) {
@@ -116,36 +64,13 @@ class Profile extends Component
         }
 
         $this->form['telepon'] = konversi_nomor($this->form['telepon']);
-        $this->form['region_kec'] = $this->kecamatan;
-        $this->form['region_kel'] = $this->desa;
 
         if ($this->form['password'] ?? "") {
             $this->form['password'] = bcrypt($this->form['password']);
         }
 
         ModelsUser::find($this->user)->update($this->form);
-
-
     }
-
-    public function updated($property)
-    {
-        if ($property === 'kecamatan') {
-            $this->changeKel($this->kecamatan);
-        }
-        if ($property === 'role') {
-            if ($this->role == 1 || $this->role == 2) {
-                $this->desa = null;
-                $this->kecamatan = null;
-            }
-
-            if ($this->role == 3) {
-                $this->desa = null;
-            }
-        }
-    }
-
-
     public function render()
     {
         return view('livewire.profile', [
