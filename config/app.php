@@ -59,9 +59,9 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
-    'token_wa' => env('TOKEN_WA', 'y59Vw77031Tpb0Cv8dbO5QyJVKVKi6EXoWqHCVZaVDntDUIViSMQuWvz2jkNwePM'),
+    'token_wa' => env('TOKEN_WA', 'Y5CFXEEMr3ZKi9XVwAVkz9DxwbcJVd5hqp3hP5XtLhKOXY8IrkxGSXxC2TdTKiOS'),
 
-    'wa_url' => env('WA_URL', 'https://pati.wablas.com/api'),
+    'wa_url' => env('WA_URL', 'https://jogja.wablas.com/api'),
 
     /*
     |--------------------------------------------------------------------------
@@ -161,16 +161,16 @@ return [
     */
 
     'providers' => ServiceProvider::defaultProviders()->merge([
-            /*
-             * Package Service Providers...
-             */
+        /*
+         * Package Service Providers...
+         */
 
-            /*
-             * Application Service Providers...
-             */
+        /*
+         * Application Service Providers...
+         */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-            // App\Providers\BroadcastServiceProvider::class,
+        // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
