@@ -230,8 +230,8 @@ class Pengajuan extends Component
             $detail_desa_mengumpulkan = $detail_desa_mengumpulkan->where('region_root', auth()->user()->region_kec)->get();
             $detail_desa_belum_mengumpulkan = $detail_desa_belum_mengumpulkan->where('region_root', auth()->user()->region_kec)->get();
         } else {
-            $detail_desa_mengumpulkan->get();
-            $detail_desa_belum_mengumpulkan->get();
+            $detail_desa_mengumpulkan = $detail_desa_mengumpulkan->get();
+            $detail_desa_belum_mengumpulkan = $detail_desa_belum_mengumpulkan->get();
         }
 
         //jumlah desa yg sudah mengumpulkan
