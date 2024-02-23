@@ -190,40 +190,70 @@ class Pengajuan extends Component
         $data = ModelsPengajuan::with(['statusTerbaru', 'pengumpulan', 'kecamatan', 'desa'])
             ->withCount('desa')
             ->cari($this->cari);
-        $jml_desa = ComRegion::where('region_level', 4);
-        if(auth()->user()->hasRole('kecamatan')){
-            $jml_desa = $jml_desa->where('region_root', auth()->user()->region_kec);
+
+        $desa = ComRegion::where('region_level', 4);
+
+        if (auth()->user()->hasRole('kecamatan')) {
+            $desa = $desa->where('region_root', auth()->user()->region_kec);
         }
+
         $sudah = $data;
 
+        //filter berdasarkan jenis pengumpulan
         if ($this->idnya) {
             $data->where('pengumpulan_id', $this->idnya);
-
-
         }
+        //filter berdasarkan kecamatan
         if (auth()->user()->hasRole('kecamatan')) {
             $data->where('region_kec', auth()->user()->region_kec);
         }
+        //filter berdasarkan desa
         if (auth()->user()->hasRole('desa')) {
             $data->where('region_kel', auth()->user()->region_kel);
         }
 
-        $sudah = $sudah->count();
-       $jml_desa = $jml_desa->count();
-        $data = $data->orderBy('created_at', 'desc')->paginate(10);
-        if ($this->idnya) {
+        $cek = $sudah->get();
 
-        $belum = $jml_desa - $sudah;
+        $judul_pengumpulan = $sudah->first()->pengumpulan->judul ?? '-';
+
+        //mengumpulkan desa yang di filter
+        $array_desa = [];
+        foreach ($cek as $item) {
+            $array_desa[] = $item->region_kel;
         }
 
-        // dd($data);
+        $detail_desa_mengumpulkan = ComRegion::with(['root'])->where('region_level', 4)->whereIn('region_cd', $array_desa);
+
+        $detail_desa_belum_mengumpulkan = ComRegion::with(['root'])->where('region_level', 4)->whereNotIn('region_cd', $array_desa);
+
+        if (auth()->user()->hasRole('kecamatan')) {
+            $detail_desa_mengumpulkan = $detail_desa_mengumpulkan->where('region_root', auth()->user()->region_kec)->get();
+            $detail_desa_belum_mengumpulkan = $detail_desa_belum_mengumpulkan->where('region_root', auth()->user()->region_kec)->get();
+        } else {
+            $detail_desa_mengumpulkan->get();
+            $detail_desa_belum_mengumpulkan->get();
+        }
+
+        //jumlah desa yg sudah mengumpulkan
+        $sudah = $sudah->count();
+        //jumlah desa semuanya
+        $jml_desa = $desa->count();
+
+        $data = $data->orderBy('created_at', 'desc')->paginate(10);
+        //hitung jumlah desa yang belum mengumpulkan
+        if ($this->idnya) {
+            $belum = $jml_desa - $sudah;
+        }
 
         return view('livewire.pengajuan', [
             'post' => $data,
             'pengumpulan' => $pengumpulan,
             'sudah' => $sudah,
-            'belum' => $belum??"",
-            'jml_desa' => $jml_desa??"",
+            'belum' => $belum ?? "",
+            'jml_desa' => $jml_desa ?? "",
+            'judul_pengumpulan' => $judul_pengumpulan ?? "-",
+            'detail_desa_mengumpulkan' => $detail_desa_mengumpulkan ?? null,
+            'detail_desa_belum_mengumpulkan' => $detail_desa_belum_mengumpulkan ?? null,
         ]);
     }
 }

@@ -181,43 +181,45 @@
                                         </div>
 
                                         <div class="col-md-4 col-sm-6 col-12">
-                                            <div class="info-box bg-success">
-                                                <span class="info-box-icon"><i class="fas fa-check-double"></i></span>
-                                                <div class="info-box-content">
-                                                    <span class="info-box-text">Mengumpulkan</span>
-                                                    <span class="info-box-number">
-                                                        <h4>{{ $sudah ?? 0 }}</h4>
-                                                    </span>
-                                                    <div class="progress">
-                                                        <div class="progress-bar" style="width: 70%"></div>
+                                            <a href="#" data-toggle="modal" data-target="#exampleModalLong">
+                                                <div class="info-box bg-success">
+                                                    <span class="info-box-icon"><i class="fas fa-check-double"></i></span>
+                                                    <div class="info-box-content">
+                                                        <span class="info-box-text">Mengumpulkan</span>
+                                                        <span class="info-box-number">
+                                                            <h4>{{ $sudah ?? 0 }}</h4>
+                                                        </span>
+                                                        <div class="progress">
+                                                            <div class="progress-bar" style="width: 70%"></div>
+                                                        </div>
+                                                        <span class="progress-description">
+                                                            Jumlah Desa Yang Mengumpulkan
+                                                        </span>
                                                     </div>
-                                                    <span class="progress-description">
-                                                        Jumlah Desa Yang Mengumpulkan
-                                                    </span>
+
                                                 </div>
-
-                                            </div>
-
+                                            </a>
                                         </div>
 
 
                                         <div class="col-md-4 col-sm-6 col-12">
-                                            <div class="info-box bg-danger">
-                                                <span class="info-box-icon"><i class="fas fa-times-circle"></i></span>
-                                                <div class="info-box-content">
-                                                    <span class="info-box-text">Belum Mengumpulkan</span>
-                                                    <span class="info-box-number">
-                                                        <h4>{{ $belum ?? 0 }}</h4>
-                                                    </span>
-                                                    <div class="progress">
-                                                        <div class="progress-bar" style="width: 70%"></div>
+                                            <a href="#" data-toggle="modal" data-target="#modalLong">
+                                                <div class="info-box bg-danger">
+                                                    <span class="info-box-icon"><i class="fas fa-times-circle"></i></span>
+                                                    <div class="info-box-content">
+                                                        <span class="info-box-text">Belum Mengumpulkan</span>
+                                                        <span class="info-box-number">
+                                                            <h4>{{ $belum ?? 0 }}</h4>
+                                                        </span>
+                                                        <div class="progress">
+                                                            <div class="progress-bar" style="width: 70%"></div>
+                                                        </div>
+                                                        <span class="progress-description">
+                                                            Jumlah Desa Belum Mengumpulkan
+                                                        </span>
                                                     </div>
-                                                    <span class="progress-description">
-                                                        Jumlah Desa Belum Mengumpulkan
-                                                    </span>
                                                 </div>
-
-                                            </div>
+                                            </a>
 
                                         </div>
 
@@ -307,4 +309,90 @@
 
         </div>
     </section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Desa Yang Mengumpulkan
+                        {{ $judul_pengumpulan }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table">
+                                    <thead>
+                                        <th>No</th>
+                                        <th>Kecamatan</th>
+                                        <th>Kelurahan / Desa</th>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($detail_desa_mengumpulkan as $item)
+                                            <tr wire:key='{{ $item->id }}'>
+                                                <td>{{ $loop->index + $post->firstItem() }}</td>
+                                                <td>{{ $item->root->region_nm ?? '-' }}</td>
+                                                <td>{{ $item->region_nm ?? '-' }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modalLong" tabindex="-1" role="dialog" aria-labelledby="modalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLongTitle">Desa Belum Mengumpulkan {{ $judul_pengumpulan }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table">
+                                    <thead>
+                                        <th>No</th>
+                                        <th>Kecamatan</th>
+                                        <th>Kelurahan / Desa</th>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($detail_desa_belum_mengumpulkan as $item)
+                                            <tr wire:key='{{ $item->id }}'>
+                                                <td>{{ $loop->index + $post->firstItem() }}</td>
+                                                <td>{{ $item->root->region_nm ?? '-' }}</td>
+                                                <td>{{ $item->region_nm ?? '-' }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
