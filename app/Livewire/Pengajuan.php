@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\User;
 use Livewire\Component;
 use App\Models\ComRegion;
 use App\Jobs\kirimWhatsapp;
@@ -37,6 +38,8 @@ class Pengajuan extends Component
     public $namaPath;
     public $judul;
     public $idnya;
+    public $cekUser;
+    public $pengajuan;
 
     public function mount($id = '')
     {
@@ -184,6 +187,45 @@ class Pengajuan extends Component
 
 
     // }
+
+    public function keDesa($id)
+    {
+        StatusPengajuan::create([
+            'pengajuan_id' => $id,
+            'posisi_st' => 'POSISI_ST_01',
+            'status_tp' => 'STATUS_TP_02',
+            'oleh' => auth()->user()->id,
+        ]);
+
+        $a = ModelsPengajuan::find($id)->toArray();
+        $this->pengajuan = ModelsPengajuan::with(['pengumpulan'])->find($id)->toArray();
+
+        $terakhirKedua = StatusPengajuan::where('pengajuan_id', $id)->latest()->skip(1)
+            ->first();
+
+        $this->cekUser = User::with('kecamatannya', 'desanya')->find($a['user_id'])->toArray();
+
+        //kirim notifikasi ditolak ke desa dari kecamatan yang ditolak dari DinsosPMD
+        $pesan = '*Notifikasi*' . "\n\n" .
+            'Yth. Admin Desa ' . $this->cekUser['desanya']['region_nm'] . ' pengajuan ' . $this->pengajuan['pengumpulan']['judul'] . ' *Ditolak* oleh Dinas Sosial, Pemberdayaan Masyarakat Dan Desa ' . "\n\n" .
+            '(' . $terakhirKedua->keterangan . ')' . "\n\n" .
+            'Silahkan lihat pada link berikut ini:' . "\n\n" .
+            url('detail-pengajuan/' . $this->idnya) . "\n\n" .
+            'Terima Kasih';
+
+        kirimWhatsapp::dispatch($pesan, $this->cekUser['telepon']);
+
+
+        $this->js(<<<'JS'
+        Swal.fire({
+            title: 'Berhasil!',
+            text: 'Data berhasil dikembalikan ke Desa.',
+            icon: 'success',
+          })
+        JS);
+
+    }
+
     public function render()
     {
         $pengumpulan = ModelsPengumpulan::all();

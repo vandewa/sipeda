@@ -10,7 +10,7 @@ use Livewire\WithFileUploads;
 use Livewire\Attributes\Validate;
 use App\Models\Pengumpulan as ModelsPengumpulan;
 
-class Pengumpulan extends Component
+class   Pengumpulan extends Component
 {
     use WithPagination;
 

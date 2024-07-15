@@ -240,7 +240,6 @@
                                     <th>Jenis Pengajuan</th>
                                     <th>Kecamatan</th>
                                     <th>Desa</th>
-                                    {{-- <th>Judul</th> --}}
                                     <th>Posisi</th>
                                     <th>Status</th>
                                     <th></th>
@@ -253,10 +252,10 @@
                                             <td>{{ $item->pengumpulan->judul ?? '' }}</td>
                                             <td>{{ $item->kecamatan->region_nm ?? '' }}</td>
                                             <td>{{ $item->desa->region_nm ?? '' }}</td>
-                                            {{-- <td>{{ $item->judul ?? '' }}</td> --}}
+
+                                            {{-- POSISI --}}
                                             @if ($item->statusTerbaru->posisi_st ?? '' == 'POSISI_ST_01')
                                                 <td>
-
                                                     <span
                                                         class="badge bg-dark">{{ $item->statusTerbaru->posisinya->code_nm ?? '' }}</span>
                                                 </td>
@@ -276,24 +275,57 @@
                                                         class="badge bg-danger">{{ $item->statusTerbaru->posisinya->code_nm ?? '' }}</span>
                                                 </td>
                                             @endif
+                                            {{-- ENDPOSISI --}}
+
+                                            {{-- STATUS --}}
                                             @if ($item->statusTerbaru->pengajuannya ?? '')
                                                 <td>{{ $item->statusTerbaru->pengajuannya->code_nm ?? '' }}</td>
                                             @else
                                                 <td>{{ $item->statusTerbaru->statusnya->code_nm ?? '' }}</td>
                                             @endif
+                                            {{-- END STATUS --}}
+
                                             <td>
-                                                <a href="{{ route('detail.pengajuan', $item->id) }}"
-                                                    class="btn btn-primary btn-flat btn-sm" data-toggle="tooltip"
-                                                    data-placement="left" title="Detail"><i
-                                                        class="mr-2 fas fa-eye"></i>Detail</a>
-                                                @if (
-                                                    $item->statusTerbaru->pengajuan_tp ??
-                                                        ('' == 'PENGAJUAN_TP_01' && $item->statusTerbaru->posisi_st ?? '' == 'POSISI_ST_03'))
-                                                @else
-                                                    @if (auth()->user()->hasRole('desa'))
-                                                        <button type="button" class="btn btn-danger btn-flat btn-sm"
-                                                            wire:click="delete('{{ $item->id }}')"><i
-                                                                class="mr-2 fas fa-trash"></i>Hapus</button>
+                                                {{-- TOMBOL --}}
+
+                                                {{-- jika posisi ditolak dari dinsos lalu berada di kecamatan --}}
+                                                @if ($item->statusTerbaru)
+                                                    @if ($item->statusTerbaru->statusnya)
+                                                        @if ($item->statusTerbaru->posisi_st == 'POSISI_ST_02' && $item->statusTerbaru->statusnya->com_cd == 'STATUS_TP_02')
+                                                            {{-- jika role bukan dinsos --}}
+
+                                                            @if (!auth()->user()->hasRole('dinsos'))
+                                                                <button type="button"
+                                                                    class="btn btn-warning btn-flat btn-sm"
+                                                                    wire:click="keDesa('{{ $item->id }}')"><i
+                                                                        class="mr-2 fas fa-arrow-circle-right"></i>Teruskan
+                                                                    Ke
+                                                                    Desa</button>
+                                                            @else
+                                                                <a href="{{ route('detail.pengajuan', $item->id) }}"
+                                                                    class="btn btn-primary btn-flat btn-sm"
+                                                                    data-toggle="tooltip" data-placement="left"
+                                                                    title="Detail"><i
+                                                                        class="mr-2 fas fa-eye"></i>Detail</a>
+                                                            @endif
+                                                        @else
+                                                            <a href="{{ route('detail.pengajuan', $item->id) }}"
+                                                                class="btn btn-primary btn-flat btn-sm"
+                                                                data-toggle="tooltip" data-placement="left"
+                                                                title="Detail"><i
+                                                                    class="mr-2 fas fa-eye"></i>Detail</a>
+                                                            @if (
+                                                                $item->statusTerbaru->pengajuan_tp ??
+                                                                    ('' == 'PENGAJUAN_TP_01' && $item->statusTerbaru->posisi_st ?? '' == 'POSISI_ST_03'))
+                                                            @else
+                                                                @if (auth()->user()->hasRole('desa'))
+                                                                    <button type="button"
+                                                                        class="btn btn-danger btn-flat btn-sm"
+                                                                        wire:click="delete('{{ $item->id }}')"><i
+                                                                            class="mr-2 fas fa-trash"></i>Hapus</button>
+                                                                @endif
+                                                            @endif
+                                                        @endif
                                                     @endif
                                                 @endif
                                             </td>
