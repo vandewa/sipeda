@@ -294,7 +294,7 @@ class DetailPengajuan extends Component
                     '(' . $this->form['keterangan'] . ')' . "\n\n" .
                     'Silahkan teruskan ke Desa' . $this->cekUser['desanya']['region_nm'] . "\n\n" .
                     'Lihat pada link berikut ini:' . "\n\n" .
-                    url('detail-pengajuan/' . $this->idnya) . "\n\n" .
+                    url('pengajuan') . "\n\n" .
                     'Terima Kasih';
 
             }
