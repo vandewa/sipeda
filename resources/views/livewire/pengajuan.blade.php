@@ -5,7 +5,7 @@
                 @if ($judul)
                     <h1 class="m-0">{{ $judul['judul'] ?? '' }}</h1>
                 @else
-                    <h1 class="m-0">Pengajuan</h1>
+                    <h1 class="m-0">Data Pengajuan</h1>
                 @endif
             </div>
             <div class="col-sm-6">
@@ -14,7 +14,7 @@
                         <li class="breadcrumb-item"><a href="{{ route('admin.pengajuan') }}">Kembali</a></li>
                         <li class="breadcrumb-item active">Pengajuan {{ $judul['judul'] ?? '' }}</li>
                     @else
-                        <li class="breadcrumb-item active">Pengajuan</li>
+                        {{-- <li class="breadcrumb-item active">Pengajuan</li> --}}
                     @endif
                 </ol>
             </div>
@@ -141,12 +141,8 @@
                     @endrole
 
                     <!-- /.card -->
-
                     <div class="card card-success card-outline">
                         <div class="card-header">
-                            <div class="card-title">
-                                Data Pengajuan
-                            </div>
                             <div class="card-tools">
                                 <select class="form-control" wire:model.live='idPosisiDokumen'>
                                     <option value="">Semua Posisi Dokumen</option>
