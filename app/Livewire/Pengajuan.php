@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\ComCode;
 use App\Models\User;
 use Livewire\Component;
 use App\Models\ComRegion;
@@ -12,6 +13,7 @@ use Livewire\WithFileUploads;
 use App\Models\StatusPengajuan;
 use App\Models\Pengajuan as ModelsPengajuan;
 use App\Models\Pengumpulan as ModelsPengumpulan;
+use Illuminate\Support\Facades\DB;
 
 
 class Pengajuan extends Component
@@ -40,6 +42,9 @@ class Pengajuan extends Component
     public $idnya;
     public $cekUser;
     public $pengajuan;
+    public $idDesa;
+    public $idKecamatan;
+    public $idPosisiDokumen;
 
     public function mount($id = '')
     {
@@ -229,9 +234,32 @@ class Pengajuan extends Component
     public function render()
     {
         $pengumpulan = ModelsPengumpulan::all();
-        $data = ModelsPengajuan::with(['statusTerbaru', 'pengumpulan', 'kecamatan', 'desa'])
-            ->withCount('desa')
-            ->cari($this->cari);
+        $semua_desa = ComRegion::where('region_level', '4')->orderBy('region_nm', 'asc')->get();
+        $semua_kecamatan = ComRegion::where('region_level', '3')->orderBy('region_nm', 'asc')->get();
+        $posisi_dokumen = ComCode::where('code_group', 'POSISI_ST')->get();
+
+
+        $data = ModelsPengajuan::select('pengajuans.*')
+            ->selectSub(function ($query) {
+                $query->from('com_regions')
+                    ->selectRaw('COUNT(*)')
+                    ->whereColumn('pengajuans.region_kel', 'com_regions.region_cd')
+                    ->whereNull('com_regions.deleted_at');
+            }, 'desa_count');
+
+        // ->get();
+
+        // $data = ModelsPengajuan::with(['statusTerbaru', 'pengumpulan', 'kecamatan', 'desa'])
+        //     ->withCount('desa')
+        //     ->cari($this->cari)
+        //     ->whereHas('statusTerbaru', function ($query) {
+        //         $query->select(DB::raw('MAX(id) as max_id'))
+        //             ->groupBy('pengajuan_id')
+        //             ->having('posisi_st', 'POSISI_ST_01');
+
+        //     });
+        // // dd($data->toSql());
+        // // dd($data->get());
 
         $desa = ComRegion::where('region_level', 4);
 
@@ -241,21 +269,40 @@ class Pengajuan extends Component
 
         $sudah = $data;
 
-        //filter berdasarkan jenis pengumpulan
+        //filter berdasarkan jenis pengumpulan 
         if ($this->idnya) {
             $data->where('pengumpulan_id', $this->idnya);
         }
-        //filter berdasarkan kecamatan
+
+        //filter berdasarkan kecamatan 
+        if ($this->idKecamatan) {
+            $data->where('region_kec', $this->idKecamatan);
+        }
+
+        //filter berdasarkan posisi dokumen 
+        if ($this->idPosisiDokumen) {
+            $data->whereExists(function ($query) {
+                $query->select(DB::raw(1))
+                    ->from(DB::raw('(SELECT pengajuan_id, MAX(id) AS max_id FROM status_pengajuans GROUP BY pengajuan_id) AS sp'))
+                    ->join('status_pengajuans AS sp2', 'sp.max_id', '=', 'sp2.id')
+                    ->whereColumn('pengajuans.id', 'sp2.pengajuan_id')
+                    ->where('sp2.posisi_st', $this->idPosisiDokumen);
+            });
+        }
+
+        //filter berdasarkan user kecamatan mana
         if (auth()->user()->hasRole('kecamatan')) {
             $data->where('region_kec', auth()->user()->region_kec);
         }
-        //filter berdasarkan desa
+
+        //filter berdasarkan user desa mana
         if (auth()->user()->hasRole('desa')) {
             $data->where('region_kel', auth()->user()->region_kel);
         }
 
         $cek = $sudah->get();
 
+        //menampilkan judul pengajuan
         $judul_pengumpulan = $sudah->first()->pengumpulan->judul ?? '-';
 
         //mengumpulkan desa yang di filter
@@ -278,10 +325,12 @@ class Pengajuan extends Component
 
         //jumlah desa yg sudah mengumpulkan
         $sudah = $sudah->count();
+
         //jumlah desa semuanya
         $jml_desa = $desa->count();
 
         $data = $data->orderBy('created_at', 'desc')->paginate(10);
+
         //hitung jumlah desa yang belum mengumpulkan
         if ($this->idnya) {
             $belum = $jml_desa - $sudah;
@@ -290,6 +339,9 @@ class Pengajuan extends Component
         return view('livewire.pengajuan', [
             'post' => $data,
             'pengumpulan' => $pengumpulan,
+            'semua_desa' => $semua_desa,
+            'semua_kecamatan' => $semua_kecamatan,
+            'posisi_dokumen' => $posisi_dokumen,
             'sudah' => $sudah,
             'belum' => $belum ?? "",
             'jml_desa' => $jml_desa ?? "",

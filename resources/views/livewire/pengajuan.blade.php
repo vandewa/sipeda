@@ -148,8 +148,24 @@
                                 Data Pengajuan
                             </div>
                             <div class="card-tools">
-                                <select name="" class="form-control" id="" wire:model.live='idnya'>
-                                    <option value="">Semua</option>
+                                <select class="form-control" wire:model.live='idPosisiDokumen'>
+                                    <option value="">Semua Posisi Dokumen</option>
+                                    @foreach ($posisi_dokumen as $item)
+                                        <option value="{{ $item->com_cd }}">{{ $item->code_nm }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="card-tools">
+                                <select class="form-control" wire:model.live='idKecamatan'>
+                                    <option value="">Semua Kecamatan</option>
+                                    @foreach ($semua_kecamatan as $item)
+                                        <option value="{{ $item->region_cd }}">{{ $item->region_nm }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="card-tools">
+                                <select class="form-control" wire:model.live='idnya'>
+                                    <option value="">Semua Jenis Pengajuan</option>
                                     @foreach ($pengumpulan as $item)
                                         <option value="{{ $item->id }}">{{ $item->judul }}</option>
                                     @endforeach
@@ -158,7 +174,7 @@
                         </div>
                         <div class="card-body">
                             @role(['dinsos', 'superadmin', 'kecamatan'])
-                                @if ($idnya)
+                                @if ($idnya && !$idKecamatan)
                                     <div class="row">
                                         <div class="col-md-4 col-sm-6 col-12">
                                             <div class="info-box bg-info">
@@ -220,18 +236,16 @@
                                                     </div>
                                                 </div>
                                             </a>
-
                                         </div>
-
                                     </div>
                                 @endif
                             @endrole
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-md-2">
                                     <input type="text" class="form-control" placeholder="cari"
                                         wire:model.live='cari'>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <table class="table">
                                 <thead>
@@ -254,17 +268,17 @@
                                             <td>{{ $item->desa->region_nm ?? '' }}</td>
 
                                             {{-- POSISI --}}
-                                            @if ($item->statusTerbaru->posisi_st ?? '' == 'POSISI_ST_01')
+                                            @if ($item->statusTerbaru->posisi_st == 'POSISI_ST_01')
                                                 <td>
                                                     <span
                                                         class="badge bg-dark">{{ $item->statusTerbaru->posisinya->code_nm ?? '' }}</span>
                                                 </td>
-                                            @elseif($item->statusTerbaru->posisi_st ?? '' == 'POSISI_ST_02')
+                                            @elseif($item->statusTerbaru->posisi_st == 'POSISI_ST_02')
                                                 <td>
                                                     <span
                                                         class="badge bg-info text-dark">{{ $item->statusTerbaru->posisinya->code_nm ?? '' }}</span>
                                                 </td>
-                                            @elseif($item->statusTerbaru->posisi_st ?? '' == 'POSISI_ST_03')
+                                            @elseif($item->statusTerbaru->posisi_st == 'POSISI_ST_03')
                                                 <td>
                                                     <span
                                                         class="badge bg-success">{{ $item->statusTerbaru->posisinya->code_nm ?? '' }}</span>
@@ -272,7 +286,8 @@
                                             @else
                                                 <td>
                                                     <span
-                                                        class="badge bg-danger">{{ $item->statusTerbaru->posisinya->code_nm ?? '' }}</span>
+                                                        class="badge bg-danger">{{ $item->statusTerbaru->posisinya->com_cd ?? '' }}</span>
+                                                    D
                                                 </td>
                                             @endif
                                             {{-- ENDPOSISI --}}
@@ -293,7 +308,6 @@
                                                     @if ($item->statusTerbaru->statusnya)
                                                         @if ($item->statusTerbaru->posisi_st == 'POSISI_ST_02' && $item->statusTerbaru->statusnya->com_cd == 'STATUS_TP_02')
                                                             {{-- jika role bukan dinsos --}}
-
                                                             @if (!auth()->user()->hasRole('dinsos'))
                                                                 <button type="button"
                                                                     class="btn btn-warning btn-flat btn-sm"
@@ -326,6 +340,12 @@
                                                                 @endif
                                                             @endif
                                                         @endif
+                                                    @else
+                                                        <a href="{{ route('detail.pengajuan', $item->id) }}"
+                                                            class="btn btn-success btn-flat btn-sm"
+                                                            data-toggle="tooltip" data-placement="left"
+                                                            title="Detail"><i
+                                                                class="mr-2 fas fa-search-plus"></i>Lihat</a>
                                                     @endif
                                                 @endif
                                             </td>
