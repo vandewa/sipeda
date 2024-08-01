@@ -141,6 +141,7 @@
                                                                             <div class="mb-2 row">
                                                                                 <label for="inputEmail3"
                                                                                     class="col-sm-3 col-form-label">WhatsApp
+                                                                                    Admin
                                                                                     <small class="text-danger">*</small>
                                                                                 </label>
                                                                                 <div class="col-sm-9">
@@ -154,6 +155,22 @@
                                                                                     @enderror
                                                                                 </div>
                                                                             </div>
+                                                                            <div class="mb-2 row">
+                                                                                <label for="inputEmail3"
+                                                                                    class="col-sm-3 col-form-label">WhatsApp
+                                                                                    Kepala Desa
+                                                                                </label>
+                                                                                <div class="col-sm-9">
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        wire:model='form.no_kades'
+                                                                                        placeholder="Nomor WhatsApp Kepala Desa">
+                                                                                    @error('form.no_kades')
+                                                                                        <span
+                                                                                            class="form-text text-danger">{{ $message }}</span>
+                                                                                    @enderror
+                                                                                </div>
+                                                                            </div>
 
                                                                             @if ($edit)
                                                                                 <legend>Ganti Password</legend>
@@ -162,7 +179,8 @@
                                                                             <div class="mb-2 row">
                                                                                 <label for="inputEmail3"
                                                                                     class="col-sm-3 col-form-label">Password
-                                                                                    <small class="text-danger">*</small>
+                                                                                    <small
+                                                                                        class="text-danger">*</small>
                                                                                 </label>
                                                                                 <div class="col-sm-9">
                                                                                     <input type="password"

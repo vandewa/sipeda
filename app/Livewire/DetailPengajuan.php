@@ -176,7 +176,13 @@ class DetailPengajuan extends Component
                     $this->judul['pengumpulan']['judul'] . ' telah *Disetujui* oleh Kecamatan ' . $this->cekUser['kecamatannya']['region_nm'] . "\n\n" .
                     'Terima Kasih';
 
+                $pesan_kades = '*Notifikasi*' . "\n\n" .
+                    'Yth. Kepala Desa ' . $this->cekUser['desanya']['region_nm'] . ' pengajuan ' .
+                    $this->judul['pengumpulan']['judul'] . ' telah *Disetujui* oleh Kecamatan ' . $this->cekUser['kecamatannya']['region_nm'] . "\n\n" .
+                    'Terima Kasih';
+
                 kirimWhatsapp::dispatch($pesan, $this->cekUser['telepon']);
+                kirimWhatsapp::dispatch($pesan_kades, $this->cekUser['no_kades']);
 
                 //kirim notif WhatsApp ke Dinsos
                 $pesan_dinsos = '*Notifikasi*' . "\n\n" .
@@ -229,7 +235,13 @@ class DetailPengajuan extends Component
                     $this->judul['pengumpulan']['judul'] . 'telah *Disetujui* oleh Dinas Sosial, Pemberdayaan Masyarakat Dan Desa ' . "\n\n" .
                     'Terima Kasih';
 
+                $pesan_kades = '*Notifikasi*' . "\n\n" .
+                    'Yth. Admin Desa ' . $this->cekUser['desanya']['region_nm'] . ' pengajuan ' .
+                    $this->judul['pengumpulan']['judul'] . 'telah *Disetujui* oleh Dinas Sosial, Pemberdayaan Masyarakat Dan Desa ' . "\n\n" .
+                    'Terima Kasih';
+
                 kirimWhatsapp::dispatch($pesan, $this->cekUser['telepon']);
+                kirimWhatsapp::dispatch($pesan_kades, $this->cekUser['no_kades']);
 
                 //kirim notif WhatsApp ke Kecamatan
                 $pesan_kecamatan = '*Notifikasi*' . "\n\n" .

@@ -218,7 +218,15 @@ class Pengajuan extends Component
             url('detail-pengajuan/' . $this->idnya) . "\n\n" .
             'Terima Kasih';
 
+        $pesan_kades = '*Notifikasi*' . "\n\n" .
+            'Yth. Kepala Desa ' . $this->cekUser['desanya']['region_nm'] . ' pengajuan ' . $this->pengajuan['pengumpulan']['judul'] . ' *Ditolak* oleh Dinas Sosial, Pemberdayaan Masyarakat Dan Desa ' . "\n\n" .
+            '(' . $terakhirKedua->keterangan . ')' . "\n\n" .
+            'Silahkan lihat pada link berikut ini:' . "\n\n" .
+            url('detail-pengajuan/' . $this->idnya) . "\n\n" .
+            'Terima Kasih';
+
         kirimWhatsapp::dispatch($pesan, $this->cekUser['telepon']);
+        kirimWhatsapp::dispatch($pesan_kades, $this->cekUser['no_kades']);
 
 
         $this->js(<<<'JS'

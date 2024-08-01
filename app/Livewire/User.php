@@ -19,13 +19,14 @@ class User extends Component
         'region_kec' => null,
         'region_kel' => null,
         'telepon' => null,
+        'no_kades' => null,
     ];
 
 
     public function mount($id = '')
     {
         if ($id) {
-            $user = ModelsUser::find($id)->only(['name', 'email', 'telepon']);
+            $user = ModelsUser::find($id)->only(['name', 'email', 'telepon', 'no_kades']);
             $data = ModelsUser::find($id);
             $this->form = $user;
             $this->role = $data->roles()->first()->id;
