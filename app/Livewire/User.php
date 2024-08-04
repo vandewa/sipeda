@@ -10,7 +10,7 @@ use App\Models\User as ModelsUser;
 class User extends Component
 {
 
-    public $role, $listRole, $konfirmasi_password, $idHapus, $edit = false, $user, $kecamatan, $desa;
+    public $role, $listRole, $konfirmasi_password, $idHapus, $edit = false, $user, $kecamatan, $desa, $gantiPassword = false;
 
     public $form = [
         'name' => null,
