@@ -59,7 +59,7 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
-    'token_wa' => env('TOKEN_WA', 'Y5CFXEEMr3ZKi9XVwAVkz9DxwbcJVd5hqp3hP5XtLhKOXY8IrkxGSXxC2TdTKiOS'),
+    'token_wa' => env('TOKEN_WA', 'OdfOFcRU828BYMhkLMFe8mP8IyAyKypt40S6M3YgV5Yr4qc4H6kjgjw.WTN9DDTC'),
 
     'wa_url' => env('WA_URL', 'https://jogja.wablas.com/api'),
 
