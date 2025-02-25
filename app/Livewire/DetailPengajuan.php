@@ -333,7 +333,7 @@ class DetailPengajuan extends Component
 
         $this->validate([
             'formPengajuan.judul' => 'required',
-            'path' => 'required|mimes:pdf|max:4000',
+            'path' => 'required|mimes:pdf|max:26288',
         ]);
 
         $cek = ModelsPengajuan::find($this->idnya);
