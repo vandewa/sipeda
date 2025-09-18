@@ -6,11 +6,12 @@ use Storage;
 use App\Models\User;
 use App\Models\ComCode;
 use Livewire\Component;
+use App\Models\ComRegion;
 use App\Jobs\kirimWhatsapp;
 use App\Livewire\Pengajuan;
-use App\Models\ComRegion;
 use Livewire\WithFileUploads;
 use App\Models\StatusPengajuan;
+use Illuminate\Support\Facades\Log;
 use App\Models\Pengajuan as ModelsPengajuan;
 use App\Models\Pengumpulan as ModelsPengumpulan;
 
@@ -40,40 +41,125 @@ class DetailPengajuan extends Component
     ];
 
 
+    // public function mount($id = '')
+    // {
+    //     $this->idnya = $id;
+    //     $dataPengajuan = StatusPengajuan::where('pengajuan_id', $this->idnya)->orderBy('created_at', 'desc')->orderBy('id', 'desc')->first()->toArray();
+
+    //     $this->posisi = $dataPengajuan['posisi_st'];
+    //     $this->cek = $dataPengajuan['pengajuan_tp'];
+    //     $this->cekStatus = $dataPengajuan['status_tp'];
+
+    //     $this->cekPathKec = $dataPengajuan['path_kec'];
+    //     $this->form['path_kec'] = $dataPengajuan['path_kec'];
+
+
+    //     $this->judul = ModelsPengajuan::with(['pengumpulan'])->find($id)->toArray();
+    //     $a = ModelsPengajuan::find($this->idnya)->toArray();
+
+
+    //     $this->formPengajuan['judul'] = $a['judul'];
+    //     $this->cekUser = User::with('kecamatannya', 'desanya')->find($a['user_id'])->toArray();
+
+
+    //     if ($this->posisi == 'POSISI_ST_01' && $this->cekStatus == 'STATUS_TP_02') {
+    //         $this->desa = true;
+    //     }
+    //     if ($this->posisi == 'POSISI_ST_01' && $this->cekStatus == 'STATUS_TP_00') {
+    //         $this->desa = true;
+    //     }
+    //     if ($this->posisi == 'POSISI_ST_02' && $this->cekStatus == 'STATUS_TP_01') {
+    //         $this->kecamatan = true;
+    //     }
+    //     if ($this->posisi == 'POSISI_ST_03' && $this->cekStatus == 'STATUS_TP_01') {
+    //         $this->dinsos = true;
+    //     }
+
+    // }
+
     public function mount($id = '')
     {
+        // Validasi input ID
+        if (empty($id)) {
+            throw new \InvalidArgumentException('ID pengajuan tidak boleh kosong');
+        }
+
         $this->idnya = $id;
-        $dataPengajuan = StatusPengajuan::where('pengajuan_id', $this->idnya)->orderBy('created_at', 'desc')->orderBy('id', 'desc')->first()->toArray();
 
-        $this->posisi = $dataPengajuan['posisi_st'];
-        $this->cek = $dataPengajuan['pengajuan_tp'];
-        $this->cekStatus = $dataPengajuan['status_tp'];
+        try {
+            // Ambil data pengajuan dengan pengecekan null
+            $dataPengajuan = StatusPengajuan::where('pengajuan_id', $this->idnya)
+                ->orderBy('created_at', 'desc')
+                ->orderBy('id', 'desc')
+                ->first();
 
-        $this->cekPathKec = $dataPengajuan['path_kec'];
-        $this->form['path_kec'] = $dataPengajuan['path_kec'];
+            if (!$dataPengajuan) {
+                throw new \Exception('Data pengajuan tidak ditemukan');
+            }
 
+            // Set properties dari data pengajuan langsung dari object
+            $this->posisi = $dataPengajuan->posisi_st;
+            $this->cek = $dataPengajuan->pengajuan_tp;
+            $this->cekStatus = $dataPengajuan->status_tp;
+            $this->cekPathKec = $dataPengajuan->path_kec;
+            $this->form['path_kec'] = $dataPengajuan->path_kec;
 
-        $this->judul = ModelsPengajuan::with(['pengumpulan'])->find($id)->toArray();
-        $a = ModelsPengajuan::find($this->idnya)->toArray();
+            // Ambil data pengajuan utama dengan relasi dalam satu query
+            $pengajuan = ModelsPengajuan::with(['pengumpulan', 'user.kecamatannya', 'user.desanya'])
+                ->find($id);
 
+            if (!$pengajuan) {
+                throw new \Exception('Data pengajuan utama tidak ditemukan');
+            }
 
-        $this->formPengajuan['judul'] = $a['judul'];
-        $this->cekUser = User::with('kecamatannya', 'desanya')->find($a['user_id'])->toArray();
+            // Set data judul dan form
+            $this->judul = $pengajuan->toArray();
+            $this->formPengajuan['judul'] = $pengajuan->judul;
 
+            // Validasi user exists
+            if (!$pengajuan->user) {
+                throw new \Exception('Data user tidak ditemukan');
+            }
 
-        if ($this->posisi == 'POSISI_ST_01' && $this->cekStatus == 'STATUS_TP_02') {
-            $this->desa = true;
+            $this->cekUser = $pengajuan->user->toArray();
+
+            // Reset semua status flags
+            $this->desa = false;
+            $this->kecamatan = false;
+            $this->dinsos = false;
+
+            // Set status flags berdasarkan posisi dan status dengan switch case untuk performa
+            switch ($this->posisi) {
+                case 'POSISI_ST_01':
+                    if (in_array($this->cekStatus, ['STATUS_TP_02', 'STATUS_TP_00'])) {
+                        $this->desa = true;
+                    }
+                    break;
+
+                case 'POSISI_ST_02':
+                    if ($this->cekStatus === 'STATUS_TP_01') {
+                        $this->kecamatan = true;
+                    }
+                    break;
+
+                case 'POSISI_ST_03':
+                    if ($this->cekStatus === 'STATUS_TP_01') {
+                        $this->dinsos = true;
+                    }
+                    break;
+            }
+
+        } catch (\Exception $e) {
+            // Log error untuk debugging
+            Log::error("Error in mount function: " . $e->getMessage(), [
+                'id' => $id,
+                'user_id' => auth()->id() ?? 'guest',
+                'timestamp' => now()
+            ]);
+
+            // Re-throw untuk handling di level atas
+            throw $e;
         }
-        if ($this->posisi == 'POSISI_ST_01' && $this->cekStatus == 'STATUS_TP_00') {
-            $this->desa = true;
-        }
-        if ($this->posisi == 'POSISI_ST_02' && $this->cekStatus == 'STATUS_TP_01') {
-            $this->kecamatan = true;
-        }
-        if ($this->posisi == 'POSISI_ST_03' && $this->cekStatus == 'STATUS_TP_01') {
-            $this->dinsos = true;
-        }
-
     }
 
     public function updated($property)
